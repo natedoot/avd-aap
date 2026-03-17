@@ -67,6 +67,6 @@
 
             {{ changes_description }}
             
-        token: "{{ token }}"
+        token: "{{ github_token }}"
         path: "{{ repository['path'] }}"
         include: ["{{ artifacts_folder }}"]
