@@ -49,7 +49,7 @@
 
 | Management Interface | Description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management1 | OOB_MANAGEMENT | oob | MGMT | 172.20.1.2/24 | 172.20.1.1 |
+| Management1 | OOB_MANAGEMENT | oob | MGMT | 192.168.0.10/24 | 172.20.1.1 |
 
 ##### IPv6
 
@@ -65,7 +65,7 @@ interface Management1
    description OOB_MANAGEMENT
    no shutdown
    vrf MGMT
-   ip address 172.20.1.2/24
+   ip address 192.168.0.10/24
 ```
 
 ### IP Name Servers
