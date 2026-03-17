@@ -66,11 +66,7 @@
             {{ changes_name }}
 
             {{ changes_description }}
-            {% if cv_deploy_results.change_control.id is not none %}
-            Change Control: https://{{ cv_server }}/cv/provisioning/change-control?ccId={{ cv_deploy_results.change_control.id }}
-            {% else %}
-            CloudVision designed configuration was already up to date. No Change Control created.
-            {% endif %}
+            
         token: "{{ token }}"
         path: "{{ repository['path'] }}"
         include: ["{{ artifacts_folder }}"]
