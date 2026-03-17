@@ -7,7 +7,7 @@
     - arista.avd
     - ansible.scm
   vars:
-    artifacts_repository: https://github.com/arista-netdevops-community/avd-aap
+    artifacts_repository: https://github.com/natedoot/avd-aap
     artifacts_branch: main
     artifacts_folder: artifacts
     changes_name: "Configuration changes by Ansible Automation Platform"

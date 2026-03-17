@@ -15,9 +15,10 @@ jobs:
     - name: Launch Job Template
       uses: fjogeleit/http-request-action@v1
       with:
-        url: 'https://aap-rippley.demoredhat.com/api/controller/v2/job_templates/12/launch/'
+        url: 'https://sandbox-aap-nate-shaw-dev.apps.rm1.0a51.p1.openshiftapps.com/api/controller/v2/job_templates/10/github/'
         method: 'POST'
-        username: ${{ secrets.AAP_USER }}
-        password: ${{ secrets.AAP_PASSWORD }}
+        bearerToken: ${{ secrets.AAP_TOKEN }}
+        # username: ${{ secrets.AAP_USER }}
+        # password: ${{ secrets.AAP_PASSWORD }}
         customHeaders: '{"Content-Type": "application/json"}'
         ignoreSsl: true
