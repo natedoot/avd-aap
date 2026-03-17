@@ -14,6 +14,7 @@
     changes_description: |
       Triggered by commit: AAP Job ID
       Job: JobID HERE
+    github_token: "{{ lookup('env', 'GITHUB_TOKEN') }}"
 
   tasks:
     - name: Retrieve latest artifacts
