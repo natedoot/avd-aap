@@ -12,8 +12,8 @@
     artifacts_folder: artifacts
     changes_name: "Configuration changes by Ansible Automation Platform"
     changes_description: |
-      Triggered by commit: {{ artifacts_repository }}/commit/{{ awx_project_revision }}
-      Job: https://{{ awx_execution_node }}/execution/jobs/playbook/{{ awx_job_id }}
+      Triggered by commit: AAP Job ID
+      Job: JobID HERE
 
   tasks:
     - name: Retrieve latest artifacts
