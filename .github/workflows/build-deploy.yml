@@ -12,38 +12,35 @@ jobs:
   launch-job-template:
     runs-on: ubuntu-latest
     steps:
-    - name: Send signed GitHub-style webhook to AAP
-      env:
-        AAP_WEBHOOK_URL: ${{ secrets.AAP_WEBHOOK_URL }}
-        AAP_WEBHOOK_SECRET: ${{ secrets.AAP_WEBHOOK_SECRET }}
-      run: |
-        set -euo pipefail
+      - name: Launch AAP job template
+        env:
+          AAP_BASE_URL: ${{ secrets.AAP_WEBHOOK_URL }}
+          AAP_TOKEN: ${{ secrets.AAP_TOKEN }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_SERVER_URL: ${{ github.server_url }}
+        run: |
+          set -euo pipefail
 
-        payload_file="$GITHUB_EVENT_PATH"
-        delivery_id="$(uuidgen | tr '[:upper:]' '[:lower:]')"
+          cat > launch_payload.json <<EOF
+          {
+            "extra_vars": {
+              "github_repository": "${GITHUB_REPOSITORY}",
+              "github_ref_name": "${GITHUB_REF_NAME}",
+              "github_sha": "${GITHUB_SHA}",
+              "github_event_name": "${GITHUB_EVENT_NAME}",
+              "github_run_id": "${GITHUB_RUN_ID}",
+              "github_run_url": "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+            }
+          }
+          EOF
 
-        echo "GITHUB_EVENT_NAME=$GITHUB_EVENT_NAME"
-        echo "GITHUB_EVENT_PATH=$GITHUB_EVENT_PATH"
-
-        test -n "$payload_file"
-        test -f "$payload_file"
-
-        signature_hex="$(openssl dgst -sha256 -hmac "$AAP_WEBHOOK_SECRET" "$payload_file" | sed 's/^.*= //')"
-        signature="sha256=${signature_hex}"
-
-        http_code="$(
-          curl -sS -o /tmp/aap_webhook_response.txt -w '%{http_code}' \
+          curl --fail --show-error --silent \
             -X POST \
             -H "Content-Type: application/json" \
-            -H "X-GitHub-Event: $GITHUB_EVENT_NAME" \
-            -H "X-GitHub-Delivery: $delivery_id" \
-            -H "X-Hub-Signature-256: $signature" \
-            --data-binary @"$payload_file" \
-            "$AAP_WEBHOOK_URL"
-        )"
-
-        echo "AAP returned HTTP $http_code"
-        cat /tmp/aap_webhook_response.txt
-
-        test "$http_code" -ge 200
-        test "$http_code" -lt 300
+            -H "Authorization: Bearer ${AAP_TOKEN}" \
+            --data @launch_payload.json \
+            "${AAP_BASE_URL}/api/controller/v2/job_templates/10/launch/"
