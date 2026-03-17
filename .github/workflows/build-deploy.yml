@@ -12,22 +12,27 @@ jobs:
   launch-job-template:
     runs-on: ubuntu-latest
     steps:
-      - name: Send signed GitHub-style webhook to AAP
-        env:
-          AAP_WEBHOOK_URL: ${{ secrets.AAP_WEBHOOK_URL }}
-          AAP_WEBHOOK_SECRET: ${{ secrets.AAP_WEBHOOK_SECRET }}
-          GITHUB_EVENT_NAME: ${{ github.event_name }}
-          GITHUB_EVENT_PATH: ${{ github.event_path }}
-        run: |
-          set -euo pipefail
+    - name: Send signed GitHub-style webhook to AAP
+      env:
+        AAP_WEBHOOK_URL: ${{ secrets.AAP_WEBHOOK_URL }}
+        AAP_WEBHOOK_SECRET: ${{ secrets.AAP_WEBHOOK_SECRET }}
+      run: |
+        set -euo pipefail
 
-          payload_file="$GITHUB_EVENT_PATH"
-          delivery_id="$(uuidgen | tr '[:upper:]' '[:lower:]')"
+        payload_file="$GITHUB_EVENT_PATH"
+        delivery_id="$(uuidgen | tr '[:upper:]' '[:lower:]')"
 
-          signature="sha256=$(openssl dgst -sha256 -hmac "$AAP_WEBHOOK_SECRET" -hex < "$payload_file" | awk '{print $2}')"
+        echo "GITHUB_EVENT_NAME=$GITHUB_EVENT_NAME"
+        echo "GITHUB_EVENT_PATH=$GITHUB_EVENT_PATH"
 
-          echo "Posting event '$GITHUB_EVENT_NAME' to AAP"
-          curl --fail --show-error --silent \
+        test -n "$payload_file"
+        test -f "$payload_file"
+
+        signature_hex="$(openssl dgst -sha256 -hmac "$AAP_WEBHOOK_SECRET" "$payload_file" | sed 's/^.*= //')"
+        signature="sha256=${signature_hex}"
+
+        http_code="$(
+          curl -sS -o /tmp/aap_webhook_response.txt -w '%{http_code}' \
             -X POST \
             -H "Content-Type: application/json" \
             -H "X-GitHub-Event: $GITHUB_EVENT_NAME" \
@@ -35,5 +40,10 @@ jobs:
             -H "X-Hub-Signature-256: $signature" \
             --data-binary @"$payload_file" \
             "$AAP_WEBHOOK_URL"
+        )"
 
-          echo "AAP webhook triggered successfully"
+        echo "AAP returned HTTP $http_code"
+        cat /tmp/aap_webhook_response.txt
+
+        test "$http_code" -ge 200
+        test "$http_code" -lt 300
