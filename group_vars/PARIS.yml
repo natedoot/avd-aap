@@ -42,6 +42,7 @@ custom_structured_configuration_daemon_terminattr:
 
 name_servers:
   - 1.1.1.1
+  - 2.2.2.2
 
 timezone: Europe/Paris
 
