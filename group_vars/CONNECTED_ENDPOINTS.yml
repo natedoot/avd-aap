@@ -16,10 +16,10 @@ servers:
         profile: server
         vlans: 11,21
 
-  # - name: server2
-  #   adapters:
-  #     - endpoint_ports: [ eth1, eth2 ]
-  #       switch_ports: [ Ethernet1, Ethernet1 ]
-  #       switches: [ dc1-leaf2a, dc1-leaf2b ]
-  #       profile: server
-  #       vlans: 12,22
+  - name: server2
+    adapters:
+      - endpoint_ports: [ eth1, eth2 ]
+        switch_ports: [ Ethernet1, Ethernet1 ]
+        switches: [ dc1-leaf2a, dc1-leaf2b ]
+        profile: server
+        vlans: 12,22
