@@ -12,12 +12,28 @@ jobs:
   launch-job-template:
     runs-on: ubuntu-latest
     steps:
-    - name: Launch Job Template
-      uses: fjogeleit/http-request-action@v1
-      with:
-        url: 'https://sandbox-aap-nate-shaw-dev.apps.rm1.0a51.p1.openshiftapps.com/api/controller/v2/job_templates/10/github/'
-        method: 'POST'
-        username: ${{ secrets.AAP_USER }}
-        password: ${{ secrets.AAP_PASSWORD }}
-        customHeaders: '{"Content-Type": "application/json"}'
-        ignoreSsl: true
+      - name: Send signed GitHub-style webhook to AAP
+        env:
+          AAP_WEBHOOK_URL: ${{ secrets.AAP_WEBHOOK_URL }}
+          AAP_WEBHOOK_SECRET: ${{ secrets.AAP_WEBHOOK_SECRET }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: |
+          set -euo pipefail
+
+          payload_file="$GITHUB_EVENT_PATH"
+          delivery_id="$(uuidgen | tr '[:upper:]' '[:lower:]')"
+
+          signature="sha256=$(openssl dgst -sha256 -hmac "$AAP_WEBHOOK_SECRET" -hex < "$payload_file" | awk '{print $2}')"
+
+          echo "Posting event '$GITHUB_EVENT_NAME' to AAP"
+          curl --fail --show-error --silent \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -H "X-GitHub-Event: $GITHUB_EVENT_NAME" \
+            -H "X-GitHub-Delivery: $delivery_id" \
+            -H "X-Hub-Signature-256: $signature" \
+            --data-binary @"$payload_file" \
+            "$AAP_WEBHOOK_URL"
+
+          echo "AAP webhook triggered successfully"
