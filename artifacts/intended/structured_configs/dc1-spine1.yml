@@ -62,6 +62,8 @@ hostname: dc1-spine1
 ip_name_servers:
 - ip_address: 1.1.1.1
   vrf: MGMT
+- ip_address: 2.2.2.2
+  vrf: MGMT
 ip_routing: true
 is_deployed: true
 local_users:

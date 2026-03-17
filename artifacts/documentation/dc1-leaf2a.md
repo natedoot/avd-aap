@@ -90,11 +90,13 @@ interface Management1
 | Name Server | VRF | Priority |
 | ----------- | --- | -------- |
 | 1.1.1.1 | MGMT | - |
+| 2.2.2.2 | MGMT | - |
 
 #### IP Name Servers Device Configuration
 
 ```eos
 ip name-server vrf MGMT 1.1.1.1
+ip name-server vrf MGMT 2.2.2.2
 ```
 
 ### Clock Settings
