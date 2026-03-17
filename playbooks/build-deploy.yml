@@ -16,16 +16,16 @@
       Job: https://{{ awx_execution_node }}/execution/jobs/playbook/{{ awx_job_id }}
 
   tasks:
-    # - name: Retrieve latest artifacts
-    #   delegate_to: localhost
-    #   run_once: true
-    #   git_retrieve:
-    #     origin:
-    #       url: "{{ artifacts_repository }}"
-    #     branch:
-    #       name: "{{ artifacts_branch }}"
-    #       duplicate_detection: false
-    #   register: repository
+    - name: Retrieve latest artifacts
+      delegate_to: localhost
+      run_once: true
+      git_retrieve:
+        origin:
+          url: "{{ artifacts_repository }}"
+        branch:
+          name: "{{ artifacts_branch }}"
+          duplicate_detection: false
+      register: repository
 
     - name: Generate AVD structured configurations
       import_role:
