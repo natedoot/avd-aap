@@ -1,1 +1,7 @@
 avd-ee/context
+.devcontainer/
+digital-twin/
+documentation/
+intended/
+*.tok
+act-inventory.yml

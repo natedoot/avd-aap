@@ -35,3 +35,5 @@
         cv_workspace_name: "{{ changes_name }}"
         cv_workspace_description: "{{ changes_description }}"
         cv_change_control_description: "{{ changes_description }}"
+        cv_server: www.cv-prod-us-central1-b.arista.io
+        cv_token: "{{ lookup('env', 'CV_TOKEN') }}"

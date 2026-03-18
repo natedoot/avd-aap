@@ -1,36 +1,41 @@
 ---
 all:
   children:
-    PARIS:
-      vars:
-        ansible_httpapi_use_ssl: true
-        ansible_httpapi_validate_certs: true
+    DC1_FABRIC:
       children:
         DC1:
           children:
-            DC1_SPINES:
-              vars:
-                type: spine
+            SPINES:
               hosts:
                 dc1-spine1:
-                  ansible_host: 192.168.0.10
+                  ansible_host: 192.168.0.101
                 dc1-spine2:
-                  ansible_host: 192.168.0.11
-            DC1_L3_LEAVES:
-              vars:
-                type: l3leaf
+                  ansible_host: 192.168.0.102
+            L3_LEAVES:
               hosts:
                 dc1-leaf1a:
-                  ansible_host: 192.168.0.12
+                  ansible_host: 192.168.0.103
                 dc1-leaf1b:
-                  ansible_host: 192.168.0.13
+                  ansible_host: 192.168.0.104
                 dc1-leaf2a:
-                  ansible_host: 192.168.0.14
+                  ansible_host: 192.168.0.105
                 dc1-leaf2b:
-                  ansible_host: 192.168.0.15
+                  ansible_host: 192.168.0.106
+                dc1-leaf3a:
+                  ansible_host: 192.168.0.107
+                dc1-leaf3b:
+                  ansible_host: 192.168.0.108
+
     NETWORK_SERVICES:
       children:
-        DC1_L3_LEAVES:
+        L3_LEAVES:
     CONNECTED_ENDPOINTS:
       children:
-        DC1_L3_LEAVES:
+        L3_LEAVES:
+    ACT:
+      children:
+        DC1_FABRIC:
+    ANSIBLE_STUFF:
+      children:
+        DC1_FABRIC:
+    
