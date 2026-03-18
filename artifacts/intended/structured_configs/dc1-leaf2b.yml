@@ -4,15 +4,6 @@ aaa_authorization:
 aaa_root:
   disabled: true
 config_end: true
-daemon_terminattr:
-  cvaddrs:
-  - apiserver.cv-staging.corp.arista.io:443
-  cvauth:
-    method: token-secure
-    token_file: /tmp/cv-onboarding-token
-  cvvrf: default
-  disable_aaa: true
-  smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
 enable_password:
   disabled: true
 ethernet_interfaces:
@@ -46,14 +37,14 @@ ethernet_interfaces:
   switchport:
     enabled: false
 - name: Ethernet4
-  description: SERVERS_dc1-leaf2-server1_PCI2
+  description: SERVER_dc1-leaf2-server1_PCI2
   shutdown: false
   channel_group:
     id: 4
     mode: active
   peer: dc1-leaf2-server1
   peer_interface: PCI2
-  peer_type: servers
+  peer_type: server
 hostname: dc1-leaf2b
 ip_igmp_snooping:
   globally_enabled: true
@@ -62,11 +53,12 @@ ip_name_servers:
   vrf: default
 ip_routing: true
 ip_virtual_router_mac_address: 00:1c:73:00:00:99
+is_deployed: true
 local_users:
 - name: admin
   privilege: 15
   role: network-admin
-  sha512_password: $6$BCMoyHe.H36WXSft$FZZ9ZAncv7pshopfIbtJ4XxxBVfjfDLQj8cOiUp.64PuxRRquq0uApFmnTpyngUWCOqtldmOL/GxJ.Cjd6nxU/
+  sha512_password: $6$uvAdkfgXMogaI31a$s2pkc9g5uzKUfOCDEx8YAuAcNCnY.IiF/W3IBMW9o4rTlHF1KxDeTgNUmGAqxI2hFHXMvlrOrZdfP8KPMoHa3.
 - name: cvpadmin
   privilege: 15
   role: network-admin
@@ -102,7 +94,6 @@ management_interfaces:
   ip_address: 192.168.0.106/24
   type: oob
 metadata:
-  is_deployed: true
   platform: vEOS-LAB
   fabric_name: DC1_FABRIC
 mlag_configuration:
@@ -132,7 +123,7 @@ port_channel_interfaces:
       groups:
       - MLAG
 - name: Port-Channel4
-  description: SERVERS_dc1-leaf2-server1
+  description: SERVER_dc1-leaf2-server1
   shutdown: false
   mlag: 4
   spanning_tree_portfast: edge

@@ -5,15 +5,12 @@
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
   - [IP Name Servers](#ip-name-servers)
-  - [Clock Settings](#clock-settings)
   - [NTP](#ntp)
   - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
   - [Local Users](#local-users)
   - [Enable Password](#enable-password)
   - [AAA Authorization](#aaa-authorization)
-- [Monitoring](#monitoring)
-  - [TerminAttr Daemon](#terminattr-daemon)
 - [Spanning Tree](#spanning-tree)
   - [Spanning Tree Summary](#spanning-tree-summary)
   - [Spanning Tree Device Configuration](#spanning-tree-device-configuration)
@@ -21,14 +18,12 @@
   - [Internal VLAN Allocation Policy Summary](#internal-vlan-allocation-policy-summary)
   - [Internal VLAN Allocation Policy Device Configuration](#internal-vlan-allocation-policy-device-configuration)
 - [Interfaces](#interfaces)
-  - [Switchport Default](#switchport-default)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Loopback Interfaces](#loopback-interfaces)
 - [Routing](#routing)
   - [Service Routing Protocols Model](#service-routing-protocols-model)
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
-  - [Static Routes](#static-routes)
   - [Router BGP](#router-bgp)
 - [BFD](#bfd)
   - [Router BFD](#router-bfd)
@@ -49,13 +44,13 @@
 
 | Management Interface | Description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management1 | OOB_MANAGEMENT | oob | MGMT | 192.168.0.10/24 | 172.20.1.1 |
+| Management1 | OOB_MANAGEMENT | oob | default | 192.168.0.101/24 | - |
 
 ##### IPv6
 
 | Management Interface | Description | Type | VRF | IPv6 Address | IPv6 Gateway |
 | -------------------- | ----------- | ---- | --- | ------------ | ------------ |
-| Management1 | OOB_MANAGEMENT | oob | MGMT | - | - |
+| Management1 | OOB_MANAGEMENT | oob | default | - | - |
 
 #### Management Interfaces Device Configuration
 
@@ -64,8 +59,7 @@
 interface Management1
    description OOB_MANAGEMENT
    no shutdown
-   vrf MGMT
-   ip address 192.168.0.10/24
+   ip address 192.168.0.101/24
 ```
 
 ### IP Name Servers
@@ -74,27 +68,12 @@ interface Management1
 
 | Name Server | VRF | Priority |
 | ----------- | --- | -------- |
-| 1.1.1.1 | MGMT | - |
-| 2.2.2.2 | MGMT | - |
+| 169.254.169.254 | default | - |
 
 #### IP Name Servers Device Configuration
 
 ```eos
-ip name-server vrf MGMT 1.1.1.1
-ip name-server vrf MGMT 2.2.2.2
-```
-
-### Clock Settings
-
-#### Clock Timezone Settings
-
-Clock Timezone is set to **Europe/Paris**.
-
-#### Clock Device Configuration
-
-```eos
-!
-clock timezone Europe/Paris
+ip name-server vrf default 169.254.169.254
 ```
 
 ### NTP
@@ -105,20 +84,20 @@ clock timezone Europe/Paris
 
 | Interface | VRF |
 | --------- | --- |
-| Management1 | MGMT |
+| Management1 | default |
 
 ##### NTP Servers
 
 | Server | VRF | Preferred | Burst | iBurst | Version | Min Poll | Max Poll | Local-interface | Key |
 | ------ | --- | --------- | ----- | ------ | ------- | -------- | -------- | --------------- | --- |
-| 0.pool.ntp.org | MGMT | True | - | - | - | - | - | - | - |
+| pool.ntp.org | default | True | - | True | - | - | - | - | - |
 
 #### NTP Device Configuration
 
 ```eos
 !
-ntp local-interface vrf MGMT Management1
-ntp server vrf MGMT 0.pool.ntp.org prefer
+ntp local-interface Management1
+ntp server pool.ntp.org prefer iburst
 ```
 
 ### Management API HTTP
@@ -127,13 +106,13 @@ ntp server vrf MGMT 0.pool.ntp.org prefer
 
 | HTTP | HTTPS | UNIX-Socket | Default Services |
 | ---- | ----- | ----------- | ---------------- |
-| False | True | - | False |
+| False | True | - | - |
 
 #### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
-| MGMT | - | - |
+| default | - | - |
 
 #### Management API HTTP Device Configuration
 
@@ -141,10 +120,9 @@ ntp server vrf MGMT 0.pool.ntp.org prefer
 !
 management api http-commands
    protocol https
-   no default-services
    no shutdown
    !
-   vrf MGMT
+   vrf default
       no shutdown
 ```
 
@@ -156,15 +134,15 @@ management api http-commands
 
 | User | Privilege | Role | Disabled | Shell |
 | ---- | --------- | ---- | -------- | ----- |
-| ansible | 15 | network-admin | False | - |
-| mtache | 15 | network-admin | False | - |
+| admin | 15 | network-admin | False | - |
+| cvpadmin | 15 | network-admin | False | - |
 
 #### Local Users Device Configuration
 
 ```eos
 !
-username ansible privilege 15 role network-admin secret sha512 <removed>
-username mtache privilege 15 role network-admin secret sha512 <removed>
+username admin privilege 15 role network-admin secret sha512 <removed>
+username cvpadmin privilege 15 role network-admin secret sha512 <removed>
 ```
 
 ### Enable Password
@@ -186,25 +164,6 @@ Authorization for configuration commands is disabled.
 ```eos
 aaa authorization exec default local
 !
-```
-
-## Monitoring
-
-### TerminAttr Daemon
-
-#### TerminAttr Daemon Summary
-
-| CV Compression | CloudVision Servers | VRF | Authentication | Smash Excludes | Ingest Exclude | Bypass AAA |
-| -------------- | ------------------- | --- | -------------- | -------------- | -------------- | ---------- |
-| gzip | apiserver.arista.io:443 | MGMT | certs,/persist/secure/ssl/terminattr/primary/certs/client.crt,/persist/secure/ssl/terminattr/primary/keys/client.key | ale,flexCounter,hardware,kni,pulse,strata | - | False |
-
-#### TerminAttr Daemon Device Configuration
-
-```eos
-!
-daemon TerminAttr
-   exec /usr/bin/TerminAttr -cvaddr=apiserver.arista.io:443 -cvauth=certs,/persist/secure/ssl/terminattr/primary/certs/client.crt,/persist/secure/ssl/terminattr/primary/keys/client.key -cvvrf=MGMT -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -taillogs
-   no shutdown
 ```
 
 ## Spanning Tree
@@ -237,19 +196,6 @@ vlan internal order ascending range 1006 1199
 
 ## Interfaces
 
-### Switchport Default
-
-#### Switchport Defaults Summary
-
-- Default Switchport Mode: routed
-
-#### Switchport Default Device Configuration
-
-```eos
-!
-switchport default mode routed
-```
-
 ### Ethernet Interfaces
 
 #### Ethernet Interfaces Summary
@@ -265,42 +211,58 @@ switchport default mode routed
 
 | Interface | Description | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1/1 | P2P_dc1-leaf1a_Ethernet49/1 | - | 10.255.255.0/31 | default | 1500 | False | - | - |
-| Ethernet2/1 | P2P_dc1-leaf1b_Ethernet49/1 | - | 10.255.255.4/31 | default | 1500 | False | - | - |
-| Ethernet3/1 | P2P_dc1-leaf2a_Ethernet49/1 | - | 10.255.255.8/31 | default | 1500 | False | - | - |
-| Ethernet4/1 | P2P_dc1-leaf2b_Ethernet49/1 | - | 10.255.255.12/31 | default | 1500 | False | - | - |
+| Ethernet1 | P2P_dc1-leaf1a_Ethernet1 | - | 1.1.255.0/31 | default | 1500 | False | - | - |
+| Ethernet2 | P2P_dc1-leaf1b_Ethernet1 | - | 1.1.255.4/31 | default | 1500 | False | - | - |
+| Ethernet3 | P2P_dc1-leaf2a_Ethernet1 | - | 1.1.255.8/31 | default | 1500 | False | - | - |
+| Ethernet4 | P2P_dc1-leaf2b_Ethernet1 | - | 1.1.255.12/31 | default | 1500 | False | - | - |
+| Ethernet5 | P2P_dc1-leaf3a_Ethernet1 | - | 1.1.255.16/31 | default | 1500 | False | - | - |
+| Ethernet6 | P2P_dc1-leaf3b_Ethernet1 | - | 1.1.255.20/31 | default | 1500 | False | - | - |
 
 #### Ethernet Interfaces Device Configuration
 
 ```eos
 !
-interface Ethernet1/1
-   description P2P_dc1-leaf1a_Ethernet49/1
+interface Ethernet1
+   description P2P_dc1-leaf1a_Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 10.255.255.0/31
+   ip address 1.1.255.0/31
 !
-interface Ethernet2/1
-   description P2P_dc1-leaf1b_Ethernet49/1
+interface Ethernet2
+   description P2P_dc1-leaf1b_Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 10.255.255.4/31
+   ip address 1.1.255.4/31
 !
-interface Ethernet3/1
-   description P2P_dc1-leaf2a_Ethernet49/1
+interface Ethernet3
+   description P2P_dc1-leaf2a_Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 10.255.255.8/31
+   ip address 1.1.255.8/31
 !
-interface Ethernet4/1
-   description P2P_dc1-leaf2b_Ethernet49/1
+interface Ethernet4
+   description P2P_dc1-leaf2b_Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 10.255.255.12/31
+   ip address 1.1.255.12/31
+!
+interface Ethernet5
+   description P2P_dc1-leaf3a_Ethernet1
+   no shutdown
+   mtu 1500
+   no switchport
+   ip address 1.1.255.16/31
+!
+interface Ethernet6
+   description P2P_dc1-leaf3b_Ethernet1
+   no shutdown
+   mtu 1500
+   no switchport
+   ip address 1.1.255.20/31
 ```
 
 ### Loopback Interfaces
@@ -311,7 +273,7 @@ interface Ethernet4/1
 
 | Interface | Description | VRF | IP Address |
 | --------- | ----------- | --- | ---------- |
-| Loopback0 | ROUTER_ID | default | 10.255.0.1/32 |
+| Loopback0 | ROUTER_ID | default | 1.1.0.1/32 |
 
 ##### IPv6
 
@@ -326,7 +288,7 @@ interface Ethernet4/1
 interface Loopback0
    description ROUTER_ID
    no shutdown
-   ip address 10.255.0.1/32
+   ip address 1.1.0.1/32
 ```
 
 ## Routing
@@ -347,14 +309,12 @@ service routing protocols model multi-agent
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | True |
-| MGMT | False |
 
 #### IP Routing Device Configuration
 
 ```eos
 !
 ip routing
-no ip routing vrf MGMT
 ```
 
 ### IPv6 Routing
@@ -364,22 +324,7 @@ no ip routing vrf MGMT
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | False |
-| MGMT | false |
-
-### Static Routes
-
-#### Static Routes Summary
-
-| VRF | Destination Prefix | Next Hop IP | Exit interface | Administrative Distance | Tag | Route Name | Metric |
-| --- | ------------------ | ----------- | -------------- | ----------------------- | --- | ---------- | ------ |
-| MGMT | 0.0.0.0/0 | 172.20.1.1 | - | 1 | - | - | - |
-
-#### Static Routes Device Configuration
-
-```eos
-!
-ip route vrf MGMT 0.0.0.0/0 172.20.1.1
-```
+| default | false |
 
 ### Router BGP
 
@@ -389,10 +334,11 @@ ASN Notation: asplain
 
 | BGP AS | Router ID |
 | ------ | --------- |
-| 65100 | 10.255.0.1 |
+| 65100 | 1.1.0.1 |
 
 | BGP Tuning |
 | ---------- |
+| update wait-install |
 | no bgp default ipv4-unicast |
 | maximum-paths 4 ecmp 4 |
 
@@ -422,14 +368,18 @@ ASN Notation: asplain
 
 | Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain | Route-Reflector Client | Passive | TTL Max Hops |
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- | ---------------------- | ------- | ------------ |
-| 10.255.0.3 | 65101 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
-| 10.255.0.4 | 65101 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
-| 10.255.0.5 | 65102 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
-| 10.255.0.6 | 65102 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
-| 10.255.255.1 | 65101 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
-| 10.255.255.5 | 65101 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
-| 10.255.255.9 | 65102 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
-| 10.255.255.13 | 65102 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 1.1.0.3 | 65101 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
+| 1.1.0.4 | 65101 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
+| 1.1.0.5 | 65102 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
+| 1.1.0.6 | 65102 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
+| 1.1.0.7 | 65103 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
+| 1.1.0.8 | 65103 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - | - | - | - |
+| 1.1.255.1 | 65101 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 1.1.255.5 | 65101 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 1.1.255.9 | 65102 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 1.1.255.13 | 65102 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 1.1.255.17 | 65103 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 1.1.255.21 | 65103 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
 
 #### Router BGP EVPN Address Family
 
@@ -444,7 +394,8 @@ ASN Notation: asplain
 ```eos
 !
 router bgp 65100
-   router-id 10.255.0.1
+   router-id 1.1.0.1
+   update wait-install
    no bgp default ipv4-unicast
    maximum-paths 4 ecmp 4
    neighbor EVPN-OVERLAY-PEERS peer group
@@ -457,30 +408,42 @@ router bgp 65100
    neighbor IPv4-UNDERLAY-PEERS peer group
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 10.255.0.3 peer group EVPN-OVERLAY-PEERS
-   neighbor 10.255.0.3 remote-as 65101
-   neighbor 10.255.0.3 description dc1-leaf1a_Loopback0
-   neighbor 10.255.0.4 peer group EVPN-OVERLAY-PEERS
-   neighbor 10.255.0.4 remote-as 65101
-   neighbor 10.255.0.4 description dc1-leaf1b_Loopback0
-   neighbor 10.255.0.5 peer group EVPN-OVERLAY-PEERS
-   neighbor 10.255.0.5 remote-as 65102
-   neighbor 10.255.0.5 description dc1-leaf2a_Loopback0
-   neighbor 10.255.0.6 peer group EVPN-OVERLAY-PEERS
-   neighbor 10.255.0.6 remote-as 65102
-   neighbor 10.255.0.6 description dc1-leaf2b_Loopback0
-   neighbor 10.255.255.1 peer group IPv4-UNDERLAY-PEERS
-   neighbor 10.255.255.1 remote-as 65101
-   neighbor 10.255.255.1 description dc1-leaf1a_Ethernet49/1
-   neighbor 10.255.255.5 peer group IPv4-UNDERLAY-PEERS
-   neighbor 10.255.255.5 remote-as 65101
-   neighbor 10.255.255.5 description dc1-leaf1b_Ethernet49/1
-   neighbor 10.255.255.9 peer group IPv4-UNDERLAY-PEERS
-   neighbor 10.255.255.9 remote-as 65102
-   neighbor 10.255.255.9 description dc1-leaf2a_Ethernet49/1
-   neighbor 10.255.255.13 peer group IPv4-UNDERLAY-PEERS
-   neighbor 10.255.255.13 remote-as 65102
-   neighbor 10.255.255.13 description dc1-leaf2b_Ethernet49/1
+   neighbor 1.1.0.3 peer group EVPN-OVERLAY-PEERS
+   neighbor 1.1.0.3 remote-as 65101
+   neighbor 1.1.0.3 description dc1-leaf1a_Loopback0
+   neighbor 1.1.0.4 peer group EVPN-OVERLAY-PEERS
+   neighbor 1.1.0.4 remote-as 65101
+   neighbor 1.1.0.4 description dc1-leaf1b_Loopback0
+   neighbor 1.1.0.5 peer group EVPN-OVERLAY-PEERS
+   neighbor 1.1.0.5 remote-as 65102
+   neighbor 1.1.0.5 description dc1-leaf2a_Loopback0
+   neighbor 1.1.0.6 peer group EVPN-OVERLAY-PEERS
+   neighbor 1.1.0.6 remote-as 65102
+   neighbor 1.1.0.6 description dc1-leaf2b_Loopback0
+   neighbor 1.1.0.7 peer group EVPN-OVERLAY-PEERS
+   neighbor 1.1.0.7 remote-as 65103
+   neighbor 1.1.0.7 description dc1-leaf3a_Loopback0
+   neighbor 1.1.0.8 peer group EVPN-OVERLAY-PEERS
+   neighbor 1.1.0.8 remote-as 65103
+   neighbor 1.1.0.8 description dc1-leaf3b_Loopback0
+   neighbor 1.1.255.1 peer group IPv4-UNDERLAY-PEERS
+   neighbor 1.1.255.1 remote-as 65101
+   neighbor 1.1.255.1 description dc1-leaf1a_Ethernet1
+   neighbor 1.1.255.5 peer group IPv4-UNDERLAY-PEERS
+   neighbor 1.1.255.5 remote-as 65101
+   neighbor 1.1.255.5 description dc1-leaf1b_Ethernet1
+   neighbor 1.1.255.9 peer group IPv4-UNDERLAY-PEERS
+   neighbor 1.1.255.9 remote-as 65102
+   neighbor 1.1.255.9 description dc1-leaf2a_Ethernet1
+   neighbor 1.1.255.13 peer group IPv4-UNDERLAY-PEERS
+   neighbor 1.1.255.13 remote-as 65102
+   neighbor 1.1.255.13 description dc1-leaf2b_Ethernet1
+   neighbor 1.1.255.17 peer group IPv4-UNDERLAY-PEERS
+   neighbor 1.1.255.17 remote-as 65103
+   neighbor 1.1.255.17 description dc1-leaf3a_Ethernet1
+   neighbor 1.1.255.21 peer group IPv4-UNDERLAY-PEERS
+   neighbor 1.1.255.21 remote-as 65103
+   neighbor 1.1.255.21 description dc1-leaf3b_Ethernet1
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn
@@ -519,14 +482,14 @@ router bfd
 
 | Sequence | Action |
 | -------- | ------ |
-| 10 | permit 10.255.0.0/27 eq 32 |
+| 10 | permit 1.1.0.0/27 eq 32 |
 
 #### Prefix-lists Device Configuration
 
 ```eos
 !
 ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-   seq 10 permit 10.255.0.0/27 eq 32
+   seq 10 permit 1.1.0.0/27 eq 32
 ```
 
 ### Route-maps
@@ -553,11 +516,8 @@ route-map RM-CONN-2-BGP permit 10
 
 | VRF Name | IP Routing |
 | -------- | ---------- |
-| MGMT | disabled |
 
 ### VRF Instances Device Configuration
 
 ```eos
-!
-vrf instance MGMT
 ```

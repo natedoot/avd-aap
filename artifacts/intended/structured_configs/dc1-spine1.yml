@@ -4,15 +4,6 @@ aaa_authorization:
 aaa_root:
   disabled: true
 config_end: true
-daemon_terminattr:
-  cvaddrs:
-  - apiserver.cv-staging.corp.arista.io:443
-  cvauth:
-    method: token-secure
-    token_file: /tmp/cv-onboarding-token
-  cvvrf: default
-  disable_aaa: true
-  smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
 enable_password:
   disabled: true
 ethernet_interfaces:
@@ -81,11 +72,12 @@ ip_name_servers:
 - ip_address: 169.254.169.254
   vrf: default
 ip_routing: true
+is_deployed: true
 local_users:
 - name: admin
   privilege: 15
   role: network-admin
-  sha512_password: $6$BCMoyHe.H36WXSft$FZZ9ZAncv7pshopfIbtJ4XxxBVfjfDLQj8cOiUp.64PuxRRquq0uApFmnTpyngUWCOqtldmOL/GxJ.Cjd6nxU/
+  sha512_password: $6$uvAdkfgXMogaI31a$s2pkc9g5uzKUfOCDEx8YAuAcNCnY.IiF/W3IBMW9o4rTlHF1KxDeTgNUmGAqxI2hFHXMvlrOrZdfP8KPMoHa3.
 - name: cvpadmin
   privilege: 15
   role: network-admin
@@ -107,7 +99,6 @@ management_interfaces:
   ip_address: 192.168.0.101/24
   type: oob
 metadata:
-  is_deployed: true
   platform: vEOS-LAB
   fabric_name: DC1_FABRIC
 ntp:
