@@ -20,11 +20,11 @@ p2p_uplinks_mtu: 1500
 # Set default uplink, downlink, and MLAG interfaces based on node type
 default_interfaces:
   - types: [ spine ]
-    platforms: [ default ]
+    platforms: [ vEOS-LAB ]
     uplink_interfaces: [ Ethernet1-2 ]
     downlink_interfaces: [ Ethernet1-8 ]
   - types: [ l3leaf ]
-    platforms: [ default ]
+    platforms: [ vEOS-LAB ]
     uplink_interfaces: [ Ethernet1-2 ]
     mlag_interfaces: [ Ethernet3 ]
     downlink_interfaces: [ Ethernet4 ]
@@ -34,8 +34,8 @@ cv_settings:
   cvaas:
     enabled: true
     clusters:
-      - name: feature_testing
-        region: staging
+      - name: prod
+        region: us-central1-b
         vrf: default
   terminattr:
 
