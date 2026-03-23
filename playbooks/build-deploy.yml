@@ -7,53 +7,52 @@
     - arista.avd
     - ansible.scm
   vars:
-    artifacts_repository: https://github.com/natedoot/avd-aap
-    artifacts_branch: main
-    artifacts_folder: documentation
-    changes_name: "Configuration changes by Ansible Automation Platform"
-    changes_description: |
-      Triggered by commit: AAP Job ID
-      Job: JobID HERE
+    fabric_dir_name: "{{ fabric_name }}"
     github_token: "{{ lookup('env', 'GITHUB_TOKEN') }}"
     cv_token: "{{ lookup('env', 'CV_TOKEN') }}"
 
   tasks:
-    - name: Retrieve latest artifacts
+    - name: Retrieve a repository from a distant location and make it available to the local EE
+      ansible.scm.git_retrieve:
+        origin:
+          url: "https://github.com/natedoot/avd-aap.git"
+        parent_directory: /tmp/
+        branch:
+          name: main
+          duplicate_detection: no
+      register: repository
       delegate_to: localhost
       run_once: true
-      git_retrieve:
-        origin:
-          url: "{{ artifacts_repository }}"
-        branch:
-          name: "{{ artifacts_branch }}"
-          duplicate_detection: false
-      register: repository
 
-    - name: Generate AVD structured configurations
-      import_role:
+    - name: Generate intended variables
+      include_role:
         name: eos_designs
 
-    - name: Generate EOS intended configuration and device documentation
-      import_role:
+    - name: Generate device intended config and documentation
+      include_role:
         name: eos_cli_config_gen
-    
-    - name: Deploy configurations and tags to CloudVision
-      import_role:
-        name: cv_deploy
-      vars:
-        cv_server: www.cv-prod-us-central1-b.arista.io
 
-    - name: Publish artifacts
-      #when: eos_config.changed
-      run_once: true
+    - name: copy
+      ansible.builtin.copy:
+        dest: '{{ item.dest }}'
+        src: '{{ item.src }}'
+        force: true
       delegate_to: localhost
-      git_publish:
-        commit:
-          message: |
-            {{ changes_name }}
+      run_once: true
+      loop:
+       - dest: /tmp/avd/inventory/intended/
+         src:  /runner/inventory/intended/structured_configs
+       - dest: /tmp/avd/inventory/intended/
+         src:  /runner/inventory/intended/configs
+       - dest: /tmp/avd/inventory/documentation/
+         src:  /runner/inventory/documentation/DC1_FABRIC
 
-            {{ changes_description }}
-            
-        token: "{{ github_token }}"
+    - name: Publish the changes
+      ansible.scm.git_publish:
         path: "{{ repository['path'] }}"
-        include: ["{{ artifacts_folder }}"]
+        token: "{{ github_token }}"
+        user:
+          name: "natedoot"
+          email: "nate.shaw@arista.com"
+      delegate_to: localhost
+      run_once: true
