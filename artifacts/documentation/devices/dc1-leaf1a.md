@@ -11,8 +11,6 @@
   - [Local Users](#local-users)
   - [Enable Password](#enable-password)
   - [AAA Authorization](#aaa-authorization)
-- [Monitoring](#monitoring)
-  - [TerminAttr Daemon](#terminattr-daemon)
 - [MLAG](#mlag)
   - [MLAG Summary](#mlag-summary)
   - [MLAG Device Configuration](#mlag-device-configuration)
@@ -183,25 +181,6 @@ aaa authorization exec default local
 !
 ```
 
-## Monitoring
-
-### TerminAttr Daemon
-
-#### TerminAttr Daemon Summary
-
-| CV Compression | CloudVision Servers | VRF | Authentication | Smash Excludes | Ingest Exclude | Bypass AAA |
-| -------------- | ------------------- | --- | -------------- | -------------- | -------------- | ---------- |
-| gzip | apiserver.cv-prod-us-central1-b.arista.io:443 | default | token-secure,/tmp/cv-onboarding-token | ale,flexCounter,hardware,kni,pulse,strata | - | True |
-
-#### TerminAttr Daemon Device Configuration
-
-```eos
-!
-daemon TerminAttr
-   exec /usr/bin/TerminAttr -cvaddr=apiserver.cv-prod-us-central1-b.arista.io:443 -cvauth=token-secure,/tmp/cv-onboarding-token -cvvrf=default -disableaaa -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -taillogs
-   no shutdown
-```
-
 ## MLAG
 
 ### MLAG Summary
@@ -319,7 +298,7 @@ vlan 4094
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet3 | MLAG_dc1-leaf1b_Ethernet3 | *trunk | *- | *- | *MLAG | 3 |
-| Ethernet4 | SERVERS_dc1-leaf1-server1_PCI1 | *trunk | *11-12,21-22 | *4092 | *- | 4 |
+| Ethernet4 | SERVER_dc1-leaf1-server1_PCI1 | *trunk | *11-12,21-22 | *4092 | *- | 4 |
 
 *Inherited from Port-Channel Interface
 
@@ -354,7 +333,7 @@ interface Ethernet3
    channel-group 3 mode active
 !
 interface Ethernet4
-   description SERVERS_dc1-leaf1-server1_PCI1
+   description SERVER_dc1-leaf1-server1_PCI1
    no shutdown
    channel-group 4 mode active
 ```
@@ -368,7 +347,7 @@ interface Ethernet4
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel3 | MLAG_dc1-leaf1b_Port-Channel3 | trunk | - | - | MLAG | - | - | - | - |
-| Port-Channel4 | SERVERS_dc1-leaf1-server1_Bond1 | trunk | 11-12,21-22 | 4092 | - | - | - | 4 | - |
+| Port-Channel4 | SERVER_dc1-leaf1-server1_Bond1 | trunk | 11-12,21-22 | 4092 | - | - | - | 4 | - |
 
 #### Port-Channel Interfaces Device Configuration
 
@@ -382,7 +361,7 @@ interface Port-Channel3
    switchport
 !
 interface Port-Channel4
-   description SERVERS_dc1-leaf1-server1_Bond1
+   description SERVER_dc1-leaf1-server1_Bond1
    no shutdown
    switchport trunk native vlan 4092
    switchport trunk allowed vlan 11-12,21-22
@@ -513,8 +492,8 @@ interface Vlan4094
 
 ##### VRF to VNI and Multicast Group Mappings
 
-| VRF | VNI | Overlay Multicast Group to Encap Mappings |
-| --- | --- | ----------------------------------------- |
+| VRF | VNI | Multicast Group |
+| ---- | --- | --------------- |
 | VRF10 | 10 | - |
 
 #### VXLAN Interface Device Configuration
@@ -646,9 +625,9 @@ ASN Notation: asplain
 
 ##### EVPN Peer Groups
 
-| Peer Group | Activate | Route-map In | Route-map Out | Peer-tag In | Peer-tag Out | Encapsulation | Next-hop-self Source Interface |
-| ---------- | -------- | ------------ | ------------- | ----------- | ------------ | ------------- | ------------------------------ |
-| EVPN-OVERLAY-PEERS | True | - | - | - | - | default | - |
+| Peer Group | Activate | Route-map In | Route-map Out | Encapsulation | Next-hop-self Source Interface |
+| ---------- | -------- | ------------ | ------------- | ------------- | ------------------------------ |
+| EVPN-OVERLAY-PEERS | True |  - | - | default | - |
 
 #### Router BGP VLANs
 
