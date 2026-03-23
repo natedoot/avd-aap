@@ -43,6 +43,19 @@
         documentation_filename: "{{ root_dir }}/{{ documentation_dir_name }}/{{ inventory_hostname }}.md"
       vars:
         root_dir: "{{ repository['path'] }}/{{ artifacts_folder }}"
+    
+    - name: Deploy configurations and tags to CloudVision
+      when: eos_config.changed
+      delegate_to: cloudvision
+      import_role:
+        name: cv_deploy
+      vars:
+        root_dir: "{{ repository['path'] }}/{{ artifacts_folder }}"
+        cv_register_detailed_results: true
+        cv_workspace_name: "{{ changes_name }}"
+        cv_workspace_description: "{{ changes_description }}"
+        cv_change_control_description: "{{ changes_description }}"
+        cv_server: www.cv-prod-us-central1-b.arista.io
 
     - name: Publish artifacts
       when: eos_config.changed
