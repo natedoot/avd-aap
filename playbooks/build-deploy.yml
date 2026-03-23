@@ -47,7 +47,7 @@
         documentation_filename: "{{ root_dir }}/{{ documentation_dir_name }}/{{ inventory_hostname }}.md"
     
     - name: Deploy configurations and tags to CloudVision
-      when: eos_config.changed
+      #when: eos_config.changed
       #delegate_to: cloudvision
       import_role:
         name: cv_deploy
@@ -60,7 +60,7 @@
         cv_server: www.cv-prod-us-central1-b.arista.io
 
     - name: Publish artifacts
-      when: eos_config.changed
+      #when: eos_config.changed
       run_once: true
       delegate_to: localhost
       git_publish:
