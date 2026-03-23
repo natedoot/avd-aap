@@ -32,20 +32,37 @@
       include_role:
         name: eos_cli_config_gen
 
-    - name: copy
+    - name: Check generated AVD paths
+      ansible.builtin.stat:
+        path: "{{ item }}"
+      loop:
+        - /runner/project/intended/structured_configs
+        - /runner/project/intended/configs
+        - /runner/project/documentation/DC1_FABRIC
+      delegate_to: localhost
+      run_once: true
+      register: avd_paths
+
+    - name: Show generated AVD path checks
+      ansible.builtin.debug:
+        var: avd_paths.results
+      run_once: true
+
+    - name: Copy generated artifacts into repository
       ansible.builtin.copy:
-        dest: '{{ item.dest }}'
-        src: '{{ item.src }}'
+        dest: "{{ item.dest }}"
+        src: "{{ item.src }}"
         force: true
+        remote_src: true
       delegate_to: localhost
       run_once: true
       loop:
-      - dest: /tmp/avd/intended/
-        src:  /runner/intended/structured_configs
-      - dest: /tmp/avd/intended/
-        src:  /runner/intended/configs
-      - dest: /tmp/avd/documentation/
-        src:  /runner/documentation/DC1_FABRIC
+        - dest: "{{ repository.path }}/intended/"
+          src: /runner/project/intended/structured_configs
+        - dest: "{{ repository.path }}/intended/"
+          src: /runner/project/intended/configs
+        - dest: "{{ repository.path }}/documentation/"
+          src: /runner/project/documentation/DC1_FABRIC
 
     - name: Publish the changes
       ansible.scm.git_publish:
@@ -56,9 +73,10 @@
           email: "nate.shaw@arista.com"
       delegate_to: localhost
       run_once: true
-    
+
     - name: Provision CV with AVD configuration
       include_role:
         name: cv_deploy
       vars:
         cv_server: www.cv-prod-us-central1-b.arista.io
+        cv_token: "{{ cv_token }}"

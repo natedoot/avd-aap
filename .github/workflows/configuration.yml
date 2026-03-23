@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - 'artifacts/intended/**'
-      - 'artifacts/documentation/**'
+      - 'intended/**'
+      - 'documentation/**'
 
 jobs:
   save-configuration:
@@ -21,8 +21,8 @@ jobs:
       with:
         name: ${{ steps.generate-name.outputs.artifact }}
         path: |
-          artifacts/intended/
-          artifacts/documentation/
+          intended/
+          documentation/
     - name: Save summary
       run: |
-        cat artifacts/documentation/fabric/*-documentation.md >> $GITHUB_STEP_SUMMARY
+        cat documentation/fabric/*-documentation.md >> $GITHUB_STEP_SUMMARY

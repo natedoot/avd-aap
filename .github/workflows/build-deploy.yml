@@ -44,4 +44,4 @@ jobs:
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${AAP_TOKEN}" \
             --data @launch_payload.json \
-            "${AAP_BASE_URL}/api/controller/v2/job_templates/16/launch/"
+            "https://18.215.158.162/api/controller/v2/job_templates/16/launch/"
