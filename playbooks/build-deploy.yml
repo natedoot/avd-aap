@@ -79,4 +79,3 @@
         name: cv_deploy
       vars:
         cv_server: www.cv-prod-us-central1-b.arista.io
-        cv_token: "{{ cv_token }}"
