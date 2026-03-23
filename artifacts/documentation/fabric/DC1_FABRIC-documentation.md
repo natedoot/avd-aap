@@ -17,14 +17,14 @@
 
 | POD | Type | Node | Management IP | Platform | Provisioned in CloudVision | Serial Number |
 | --- | ---- | ---- | ------------- | -------- | -------------------------- | ------------- |
-| DC1_FABRIC | l3leaf | dc1-leaf1a | 192.168.0.103/24 | vEOS-lab | Provisioned | - |
-| DC1_FABRIC | l3leaf | dc1-leaf1b | 192.168.0.104/24 | vEOS-lab | Provisioned | - |
-| DC1_FABRIC | l3leaf | dc1-leaf2a | 192.168.0.105/24 | vEOS-lab | Provisioned | - |
-| DC1_FABRIC | l3leaf | dc1-leaf2b | 192.168.0.106/24 | vEOS-lab | Provisioned | - |
-| DC1_FABRIC | l3leaf | dc1-leaf3a | 192.168.0.107/24 | vEOS-lab | Provisioned | - |
-| DC1_FABRIC | l3leaf | dc1-leaf3b | 192.168.0.108/24 | vEOS-lab | Provisioned | - |
-| DC1_FABRIC | spine | dc1-spine1 | 192.168.0.101/24 | vEOS-lab | Provisioned | - |
-| DC1_FABRIC | spine | dc1-spine2 | 192.168.0.102/24 | vEOS-lab | Provisioned | - |
+| DC1_FABRIC | l3leaf | dc1-leaf1a | 192.168.0.103/24 | vEOS-LAB | Provisioned | - |
+| DC1_FABRIC | l3leaf | dc1-leaf1b | 192.168.0.104/24 | vEOS-LAB | Provisioned | - |
+| DC1_FABRIC | l3leaf | dc1-leaf2a | 192.168.0.105/24 | vEOS-LAB | Provisioned | - |
+| DC1_FABRIC | l3leaf | dc1-leaf2b | 192.168.0.106/24 | vEOS-LAB | Provisioned | - |
+| DC1_FABRIC | l3leaf | dc1-leaf3a | 192.168.0.107/24 | vEOS-LAB | Provisioned | - |
+| DC1_FABRIC | l3leaf | dc1-leaf3b | 192.168.0.108/24 | vEOS-LAB | Provisioned | - |
+| DC1_FABRIC | spine | dc1-spine1 | 192.168.0.101/24 | vEOS-LAB | Provisioned | - |
+| DC1_FABRIC | spine | dc1-spine2 | 192.168.0.102/24 | vEOS-LAB | Provisioned | - |
 
 > Provision status is based on Ansible inventory declaration and do not represent real status from CloudVision.
 

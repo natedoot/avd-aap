@@ -4,15 +4,6 @@ aaa_authorization:
 aaa_root:
   disabled: true
 config_end: true
-daemon_terminattr:
-  cvaddrs:
-  - apiserver.cv-staging.corp.arista.io:443
-  cvauth:
-    method: token-secure
-    token_file: /tmp/cv-onboarding-token
-  cvvrf: default
-  disable_aaa: true
-  smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
 enable_password:
   disabled: true
 ethernet_interfaces:
@@ -53,11 +44,12 @@ ip_name_servers:
   vrf: default
 ip_routing: true
 ip_virtual_router_mac_address: 00:1c:73:00:00:99
+is_deployed: true
 local_users:
 - name: admin
   privilege: 15
   role: network-admin
-  sha512_password: $6$BCMoyHe.H36WXSft$FZZ9ZAncv7pshopfIbtJ4XxxBVfjfDLQj8cOiUp.64PuxRRquq0uApFmnTpyngUWCOqtldmOL/GxJ.Cjd6nxU/
+  sha512_password: $6$uvAdkfgXMogaI31a$s2pkc9g5uzKUfOCDEx8YAuAcNCnY.IiF/W3IBMW9o4rTlHF1KxDeTgNUmGAqxI2hFHXMvlrOrZdfP8KPMoHa3.
 - name: cvpadmin
   privilege: 15
   role: network-admin
@@ -76,11 +68,6 @@ loopback_interfaces:
   shutdown: false
   vrf: VRF10
   ip_address: 10.255.10.8/32
-- name: Loopback11
-  description: DIAG_VRF_VRF11
-  shutdown: false
-  vrf: VRF11
-  ip_address: 10.255.11.8/32
 management_api_http:
   enable_https: true
   enable_vrfs:
@@ -93,17 +80,8 @@ management_interfaces:
   ip_address: 192.168.0.108/24
   type: oob
 metadata:
-  is_deployed: true
-  platform: vEOS-lab
+  platform: vEOS-LAB
   fabric_name: DC1_FABRIC
-  digital_twin:
-    environment: act
-    node_type: veos
-    ip_addr: 192.168.0.108/24
-    version: 4.33.2F
-    username: admin
-    password: admin
-    internet_access: true
 mlag_configuration:
   domain_id: DC1_L3_LEAF3
   local_interface: Vlan4094
@@ -174,6 +152,8 @@ router_bgp:
   maximum_paths:
     paths: 4
     ecmp: 4
+  updates:
+    wait_install: true
   bgp:
     default:
       ipv4_unicast: false
@@ -243,22 +223,6 @@ router_bgp:
       - 10012:10012
     redistribute_routes:
     - learned
-  - id: 21
-    tenant: TENANT1
-    rd: 1.1.0.8:10021
-    route_targets:
-      both:
-      - 10021:10021
-    redistribute_routes:
-    - learned
-  - id: 22
-    tenant: TENANT1
-    rd: 1.1.0.8:10022
-    route_targets:
-      both:
-      - 10022:10022
-    redistribute_routes:
-    - learned
   - id: 3401
     tenant: TENANT1
     rd: 1.1.0.8:13401
@@ -300,30 +264,12 @@ router_bgp:
         route_targets:
         - '10:10'
     router_id: 1.1.0.8
+    updates:
+      wait_install: true
     neighbors:
     - ip_address: 1.1.1.104
       peer_group: MLAG-IPv4-UNDERLAY-PEER
       description: dc1-leaf3a_Vlan3009
-    redistribute:
-      connected:
-        enabled: true
-        route_map: RM-CONN-2-BGP-VRFS
-  - name: VRF11
-    rd: 1.1.0.8:11
-    route_targets:
-      import:
-      - address_family: evpn
-        route_targets:
-        - '11:11'
-      export:
-      - address_family: evpn
-        route_targets:
-        - '11:11'
-    router_id: 1.1.0.8
-    neighbors:
-    - ip_address: 1.1.1.104
-      peer_group: MLAG-IPv4-UNDERLAY-PEER
-      description: dc1-leaf3a_Vlan3010
     redistribute:
       connected:
         enabled: true
@@ -339,8 +285,6 @@ transceiver_qsfp_default_mode_4x10: true
 virtual_source_nat_vrfs:
 - name: VRF10
   ip_address: 10.255.10.8
-- name: VRF11
-  ip_address: 10.255.11.8
 vlan_interfaces:
 - name: Vlan4093
   description: MLAG_L3
@@ -373,26 +317,6 @@ vlan_interfaces:
   mtu: 1500
   tenant: TENANT1
   type: underlay_peering
-- name: Vlan21
-  description: VRF11_VLAN21
-  shutdown: false
-  vrf: VRF11
-  ip_address_virtual: 10.10.21.1/24
-  tenant: TENANT1
-- name: Vlan22
-  description: VRF11_VLAN22
-  shutdown: false
-  vrf: VRF11
-  ip_address_virtual: 10.10.22.1/24
-  tenant: TENANT1
-- name: Vlan3010
-  description: MLAG_L3_VRF_VRF11
-  shutdown: false
-  vrf: VRF11
-  ip_address: 1.1.1.105/31
-  mtu: 1500
-  tenant: TENANT1
-  type: underlay_peering
 vlan_internal_order:
   allocation: ascending
   range:
@@ -420,17 +344,6 @@ vlans:
   trunk_groups:
   - MLAG
   tenant: TENANT1
-- id: 21
-  name: VRF11_VLAN21
-  tenant: TENANT1
-- id: 22
-  name: VRF11_VLAN22
-  tenant: TENANT1
-- id: 3010
-  name: MLAG_L3_VRF_VRF11
-  trunk_groups:
-  - MLAG
-  tenant: TENANT1
 - id: 3401
   name: L2_VLAN3401
   tenant: TENANT1
@@ -441,9 +354,6 @@ vrfs:
 - name: default
   ip_routing: false
 - name: VRF10
-  ip_routing: true
-  tenant: TENANT1
-- name: VRF11
   ip_routing: true
   tenant: TENANT1
 vxlan_interface:
@@ -458,10 +368,6 @@ vxlan_interface:
         vni: 10011
       - id: 12
         vni: 10012
-      - id: 21
-        vni: 10021
-      - id: 22
-        vni: 10022
       - id: 3401
         vni: 13401
       - id: 3402
@@ -469,5 +375,3 @@ vxlan_interface:
       vrfs:
       - name: VRF10
         vni: 10
-      - name: VRF11
-        vni: 11
