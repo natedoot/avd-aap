@@ -1,6 +1,6 @@
 ---
 - name: Update Arista fabric configuration
-  hosts: all
+  hosts: DC1_FABRIC
   connection: local
   gather_facts: false
   collections:
@@ -40,12 +40,12 @@
       delegate_to: localhost
       run_once: true
       loop:
-       - dest: /tmp/avd/inventory/intended/
-         src:  /runner/inventory/intended/structured_configs
-       - dest: /tmp/avd/inventory/intended/
-         src:  /runner/inventory/intended/configs
-       - dest: /tmp/avd/inventory/documentation/
-         src:  /runner/inventory/documentation/DC1_FABRIC
+      - dest: /tmp/avd/intended/
+        src:  /runner/intended/structured_configs
+      - dest: /tmp/avd/intended/
+        src:  /runner/intended/configs
+      - dest: /tmp/avd/documentation/
+        src:  /runner/documentation/DC1_FABRIC
 
     - name: Publish the changes
       ansible.scm.git_publish:
