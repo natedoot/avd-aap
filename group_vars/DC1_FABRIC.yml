@@ -30,18 +30,23 @@ default_interfaces:
     downlink_interfaces: [ Ethernet4 ]
 
 # CloudVision Portal definitions
-cv_settings:
-  cvaas:
-    enabled: true
-    clusters:
-      - name: prod
-        region: us-central1-b
-        vrf: default
-  terminattr:
+# cv_settings:
+#   cvaas:
+#     enabled: true
+#     clusters:
+#       - name: prod
+#         region: us-central1-b
+#         vrf: default
+#   terminattr:
 
-    # Disable AAA authorization and accounting.
-    # When setting this flag, all commands pushed from CloudVision are applied directly to the CLI without authorization.
-    disable_aaa: true
+#     # Disable AAA authorization and accounting.
+#     # When setting this flag, all commands pushed from CloudVision are applied directly to the CLI without authorization.
+#     disable_aaa: true
+
+cvp_instance_ips:
+  - apiserver.cv-prod-us-central1-b.arista.io:443
+cvp_token_file: /tmp/token
+terminattr_disable_aaa: True
 
 custom_structured_configuration_aaa_authorization:
   exec:
