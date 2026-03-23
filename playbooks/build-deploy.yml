@@ -38,15 +38,16 @@
     - name: Generate EOS intended configuration and device documentation
       delegate_to: localhost
       register: eos_config
-      eos_cli_config_gen:
+      import_role:
+        name: eos_cli_config_gen
+      vars:
+        root_dir: "{{ repository['path'] }}/{{ artifacts_folder }}"
         structured_config_filename: "{{ structured_dir }}/{{ inventory_hostname }}.{{ avd_structured_config_file_format }}"
         config_filename: "{{ root_dir }}/{{ output_dir_name }}/configs/{{ inventory_hostname }}.cfg"
         documentation_filename: "{{ root_dir }}/{{ documentation_dir_name }}/{{ inventory_hostname }}.md"
-      vars:
-        root_dir: "{{ repository['path'] }}/{{ artifacts_folder }}"
     
     - name: Deploy configurations and tags to CloudVision
-      #when: eos_config.changed
+      when: eos_config.changed
       #delegate_to: cloudvision
       import_role:
         name: cv_deploy
@@ -59,7 +60,7 @@
         cv_server: www.cv-prod-us-central1-b.arista.io
 
     - name: Publish artifacts
-      #when: eos_config.changed
+      when: eos_config.changed
       run_once: true
       delegate_to: localhost
       git_publish:
