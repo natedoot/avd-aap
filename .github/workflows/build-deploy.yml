@@ -39,6 +39,7 @@ jobs:
           EOF
 
           curl --fail --show-error --silent \
+            -k \
             -X POST \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${AAP_TOKEN}" \
