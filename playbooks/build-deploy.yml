@@ -16,7 +16,7 @@
       ansible.scm.git_retrieve:
         origin:
           url: "https://github.com/natedoot/avd-aap.git"
-        parent_directory: /tmp/
+        #parent_directory: /tmp/
         branch:
           name: main
           duplicate_detection: no
