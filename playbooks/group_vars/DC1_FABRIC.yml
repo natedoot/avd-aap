@@ -44,7 +44,7 @@ default_interfaces:
 #     disable_aaa: true
 
 cvp_instance_ips:
-  - apiserver.arista.io:443
+  - apiserver.arista.io
 cvp_token_file: /tmp/cv-onboarding-token
 terminattr_disable_aaa: True
 
