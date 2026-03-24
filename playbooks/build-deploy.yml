@@ -13,6 +13,8 @@
     artifacts_repository: "https://github.com/natedoot/avd-aap.git"
     artifacts_branch: "main"
     artifacts_folder: "artifacts"
+    changes_name: "Update AVD artifacts from AAP build-deploy job"
+    changes_description: "Job ID: {{ awx_job_id }}"
 
   tasks:
     - name: Generate intended variables
@@ -22,6 +24,71 @@
     - name: Generate device intended config and documentation
       ansible.builtin.include_role:
         name: eos_cli_config_gen
+
+    - name: Retrieve latest artifacts repository
+      delegate_to: localhost
+      run_once: true
+      ansible.scm.git_retrieve:
+        origin:
+          url: "{{ artifacts_repository }}"
+        branch:
+          name: "{{ artifacts_branch }}"
+          duplicate_detection: false
+      register: repository
+
+    - name: Remove previous rendered artifacts
+      delegate_to: localhost
+      run_once: true
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ repository.path }}/{{ artifacts_folder }}/intended/configs"
+        - "{{ repository.path }}/{{ artifacts_folder }}/intended/structured_configs"
+        - "{{ repository.path }}/{{ artifacts_folder }}/documentation"
+
+    - name: Recreate rendered artifact directories
+      delegate_to: localhost
+      run_once: true
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - "{{ repository.path }}/{{ artifacts_folder }}/intended"
+        - "{{ repository.path }}/{{ artifacts_folder }}/intended/configs"
+        - "{{ repository.path }}/{{ artifacts_folder }}/intended/structured_configs"
+        - "{{ repository.path }}/{{ artifacts_folder }}/documentation"
+
+    - name: Copy rendered configs into artifacts repo
+      delegate_to: localhost
+      run_once: true
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        remote_src: true
+        mode: preserve
+      loop:
+        - src: "/runner/inventory/intended/configs/"
+          dest: "{{ repository.path }}/{{ artifacts_folder }}/intended/configs/"
+        - src: "/runner/inventory/intended/structured_configs/"
+          dest: "{{ repository.path }}/{{ artifacts_folder }}/intended/structured_configs/"
+        - src: "/runner/inventory/documentation/"
+          dest: "{{ repository.path }}/{{ artifacts_folder }}/documentation/"
+
+    - name: Publish updated rendered artifacts
+      delegate_to: localhost
+      run_once: true
+      ansible.scm.git_publish:
+        commit:
+          message: |
+            {{ changes_name }}
+
+            {{ changes_description }}
+        token: "{{ github_token }}"
+        path: "{{ repository.path }}"
+        include:
+          - "{{ artifacts_folder }}"
 
     - name: Provision CV with AVD configuration
       ansible.builtin.include_role:

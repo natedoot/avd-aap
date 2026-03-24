@@ -13,7 +13,6 @@
     artifacts_folder: "artifacts"
     anta_folder: "anta"
     anta_root_dir: "{{ repository.path }}/{{ artifacts_folder }}"
-    anta_output_dir: "{{ repository.path }}/{{ artifacts_folder }}/{{ anta_folder }}"
     changes_name: "Update ANTA validation results from AAP"
     changes_description: "Job ID: {{ awx_job_id }}"
     github_pat: "{{ lookup('env', 'GITHUB_TOKEN') }}"
@@ -29,6 +28,16 @@
           name: "{{ artifacts_branch }}"
           duplicate_detection: false
       register: repository
+
+    - name: Remove previous ANTA reports and logs
+      delegate_to: localhost
+      run_once: true
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ repository.path }}/{{ artifacts_folder }}/{{ anta_folder }}/reports"
+        - "{{ repository.path }}/{{ artifacts_folder }}/{{ anta_folder }}/logs"
 
     - name: Ensure ANTA artifact directories exist
       delegate_to: localhost

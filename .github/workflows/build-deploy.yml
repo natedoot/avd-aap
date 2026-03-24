@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'group_vars/**'
+      - 'playbooks/group_vars/**'
       - 'playbooks/build-deploy.yml'
 
 jobs:
