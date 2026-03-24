@@ -21,10 +21,6 @@
       ansible.builtin.include_vars:
         file: "{{ playbook_dir }}/group_vars/DC1_FABRIC.yml"
 
-    - name: Load DC1 vars
-      ansible.builtin.include_vars:
-        file: "{{ playbook_dir }}/group_vars/DC1.yml"
-
     - name: Load SPINES vars
       ansible.builtin.include_vars:
         file: "{{ playbook_dir }}/group_vars/SPINES.yml"
