@@ -5,45 +5,118 @@
   gather_facts: false
   collections:
     - arista.avd
+    - ansible.scm
+
   vars:
-    fabric_dir_name: "{{ fabric_name }}"
+    github_token: "{{ lookup('env', 'GITHUB_TOKEN') }}"
     cv_token: "{{ lookup('env', 'CV_TOKEN') }}"
+    artifacts_repository: "https://github.com/natedoot/avd-aap.git"
+    artifacts_branch: "main"
+    artifacts_folder: "artifacts"
+    changes_name: "Update AVD artifacts from AAP build-deploy job"
+    changes_description: "Job: https://{{ awx_execution_node }}/execution/jobs/playbook/{{ awx_job_id }}"
+
+  pre_tasks:
+    - name: Load DC1_FABRIC vars
+      ansible.builtin.include_vars:
+        file: "{{ playbook_dir }}/group_vars/DC1_FABRIC.yml"
+
+    - name: Load DC1 vars
+      ansible.builtin.include_vars:
+        file: "{{ playbook_dir }}/group_vars/DC1.yml"
+
+    - name: Load SPINES vars
+      ansible.builtin.include_vars:
+        file: "{{ playbook_dir }}/group_vars/SPINES.yml"
+
+    - name: Load L3_LEAVES vars
+      ansible.builtin.include_vars:
+        file: "{{ playbook_dir }}/group_vars/L3_LEAVES.yml"
+
+    - name: Load NETWORK_SERVICES vars
+      ansible.builtin.include_vars:
+        file: "{{ playbook_dir }}/group_vars/NETWORK_SERVICES.yml"
+
+    - name: Load CONNECTED_ENDPOINTS vars
+      ansible.builtin.include_vars:
+        file: "{{ playbook_dir }}/group_vars/CONNECTED_ENDPOINTS.yml"
 
   tasks:
-    - name: Show playbook dir
-      ansible.builtin.debug:
-        var: playbook_dir
-
-    - name: Show inventory file
-      ansible.builtin.debug:
-        var: inventory_file
-
-    - name: Show inventory dir
-      ansible.builtin.debug:
-        var: inventory_dir
-
-    - name: Show group names for first host
-      ansible.builtin.debug:
-        msg:
-          host: "{{ inventory_hostname }}"
-          groups: "{{ group_names }}"
-      run_once: true
-
-    - name: Show a variable you changed in group_vars
-      ansible.builtin.debug:
-        var: some_var_you_recently_changed
-      run_once: true
-
     - name: Generate intended variables
-      include_role:
+      ansible.builtin.include_role:
         name: eos_designs
 
     - name: Generate device intended config and documentation
-      include_role:
+      ansible.builtin.include_role:
         name: eos_cli_config_gen
 
     - name: Provision CV with AVD configuration
-      include_role:
+      ansible.builtin.include_role:
         name: cv_deploy
       vars:
         cv_server: www.cv-prod-us-central1-b.arista.io
+
+    - name: Retrieve latest artifacts repository
+      delegate_to: localhost
+      run_once: true
+      ansible.scm.git_retrieve:
+        origin:
+          url: "{{ artifacts_repository }}"
+        branch:
+          name: "{{ artifacts_branch }}"
+          duplicate_detection: false
+      register: repository
+
+    - name: Remove previous rendered artifacts
+      delegate_to: localhost
+      run_once: true
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ repository.path }}/{{ artifacts_folder }}/intended/configs"
+        - "{{ repository.path }}/{{ artifacts_folder }}/intended/structured_configs"
+        - "{{ repository.path }}/{{ artifacts_folder }}/documentation"
+
+    - name: Recreate rendered artifact directories
+      delegate_to: localhost
+      run_once: true
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - "{{ repository.path }}/{{ artifacts_folder }}/intended"
+        - "{{ repository.path }}/{{ artifacts_folder }}/intended/configs"
+        - "{{ repository.path }}/{{ artifacts_folder }}/intended/structured_configs"
+        - "{{ repository.path }}/{{ artifacts_folder }}/documentation"
+
+    - name: Copy rendered configs into artifacts repo
+      delegate_to: localhost
+      run_once: true
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        remote_src: true
+        mode: preserve
+      loop:
+        - src: "/runner/inventory/intended/configs/"
+          dest: "{{ repository.path }}/{{ artifacts_folder }}/intended/configs/"
+        - src: "/runner/inventory/intended/structured_configs/"
+          dest: "{{ repository.path }}/{{ artifacts_folder }}/intended/structured_configs/"
+        - src: "/runner/inventory/documentation/"
+          dest: "{{ repository.path }}/{{ artifacts_folder }}/documentation/"
+
+    - name: Publish updated rendered artifacts
+      delegate_to: localhost
+      run_once: true
+      ansible.scm.git_publish:
+        commit:
+          message: |
+            {{ changes_name }}
+
+            {{ changes_description }}
+        token: "{{ github_token }}"
+        path: "{{ repository.path }}"
+        include:
+          - "{{ artifacts_folder }}"
