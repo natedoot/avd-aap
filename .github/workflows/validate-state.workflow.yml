@@ -14,9 +14,7 @@ permissions:
 
 jobs:
   validate-state:
-    runs-on:
-      - self-hosted
-      - lab
+    runs-on: self-hosted
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
