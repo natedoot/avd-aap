@@ -44,8 +44,8 @@ default_interfaces:
 #     disable_aaa: true
 
 cvp_instance_ips:
-  - apiserver.cv-prod-us-central1-b.arista.io:443
-cvp_token_file: /tmp/token
+  - apiserver.arista.io:443
+cvp_token_file: /tmp/cv-onboarding-token
 terminattr_disable_aaa: True
 
 custom_structured_configuration_aaa_authorization:
@@ -58,7 +58,7 @@ local_users:
   - name: admin
     privilege: 15
     role: network-admin
-    sha512_password: $6$uvAdkfgXMogaI31a$s2pkc9g5uzKUfOCDEx8YAuAcNCnY.IiF/W3IBMW9o4rTlHF1KxDeTgNUmGAqxI2hFHXMvlrOrZdfP8KPMoHa3.
+    sha512_password: $6$ViCjfR5/45mDVAaB$qP2hoaKkM/jds67sbX95PL4pcoKD3ZNQ5za8B2kbIQQ8mVDJpC1zUI.hBW2MEzCWZRMVXPYEWCixPyhWB6PxH.
   - name: cvpadmin
     privilege: 15
     role: network-admin
