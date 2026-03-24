@@ -5,23 +5,33 @@
   gather_facts: false
   collections:
     - arista.avd
-    - ansible.scm
   vars:
     fabric_dir_name: "{{ fabric_name }}"
-    github_token: "{{ lookup('env', 'GITHUB_TOKEN') }}"
     cv_token: "{{ lookup('env', 'CV_TOKEN') }}"
 
   tasks:
-    - name: Retrieve a repository from a distant location and make it available to the local EE
-      ansible.scm.git_retrieve:
-        origin:
-          url: "https://github.com/natedoot/avd-aap.git"
-        #parent_directory: /tmp/
-        branch:
-          name: main
-          duplicate_detection: no
-      register: repository
-      delegate_to: localhost
+    - name: Show playbook dir
+      ansible.builtin.debug:
+        var: playbook_dir
+
+    - name: Show inventory file
+      ansible.builtin.debug:
+        var: inventory_file
+
+    - name: Show inventory dir
+      ansible.builtin.debug:
+        var: inventory_dir
+
+    - name: Show group names for first host
+      ansible.builtin.debug:
+        msg:
+          host: "{{ inventory_hostname }}"
+          groups: "{{ group_names }}"
+      run_once: true
+
+    - name: Show a variable you changed in group_vars
+      ansible.builtin.debug:
+        var: some_var_you_recently_changed
       run_once: true
 
     - name: Generate intended variables
@@ -31,48 +41,6 @@
     - name: Generate device intended config and documentation
       include_role:
         name: eos_cli_config_gen
-
-    - name: Check generated AVD paths
-      ansible.builtin.stat:
-        path: "{{ item }}"
-      loop:
-        - /runner/project/intended/structured_configs
-        - /runner/project/intended/configs
-        - /runner/project/documentation/DC1_FABRIC
-      delegate_to: localhost
-      run_once: true
-      register: avd_paths
-
-    - name: Show generated AVD path checks
-      ansible.builtin.debug:
-        var: avd_paths.results
-      run_once: true
-
-    - name: Copy generated artifacts into repository
-      ansible.builtin.copy:
-        dest: "{{ item.dest }}"
-        src: "{{ item.src }}"
-        force: true
-        remote_src: true
-      delegate_to: localhost
-      run_once: true
-      loop:
-        - dest: "{{ repository.path }}/intended/"
-          src: /runner/project/intended/structured_configs
-        - dest: "{{ repository.path }}/intended/"
-          src: /runner/project/intended/configs
-        - dest: "{{ repository.path }}/documentation/"
-          src: /runner/project/documentation/DC1_FABRIC
-
-    - name: Publish the changes
-      ansible.scm.git_publish:
-        path: "{{ repository['path'] }}"
-        token: "{{ github_token }}"
-        user:
-          name: "natedoot"
-          email: "nate.shaw@arista.com"
-      delegate_to: localhost
-      run_once: true
 
     - name: Provision CV with AVD configuration
       include_role:
