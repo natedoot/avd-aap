@@ -1,0 +1,324 @@
+Device,Test Name,Test Status,Message(s),Test description,Test category
+dc1-leaf1a,VerifyInterfacesStatus,failure,"Interface: Loopback11 - Not configured - Interface: Port-Channel4 - Status mismatch - Expected: up/up, Actual: down/lowerLayerDown - Interface: Vlan3010 - Not configured",Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
+dc1-leaf1a,VerifyPortChannels,failure,"Interface: Port-Channel4 - Inactive port(s) - Ethernet4, PeerEthernet4",Verifies there are no inactive ports in port channels.,Interfaces
+dc1-leaf1a,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
+Mar 25 13:58:43 dc1-leaf1a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1448) -- Master ProcMgr (PID=1448) exiting.
+ Mar 25 13:58:43 dc1-leaf1a StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1917) at tbl://stpListen/+n closed by peer (EOF)
+ Mar 25 13:58:43 dc1-leaf1a StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1917))
+ Mar 25 13:59:57 dc1-leaf1a Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.1.97 (VRF VRF10 AS 65101) 6/7 (Cease/connection collision resolution) 0 bytes 
+ Mar 25 14:24:26 dc1-leaf1a Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.1.97 (VRF VRF11 AS 65101) 6/3 (Cease/peer de-configured <Hard Reset>) 0 bytes
+ Mar 25 17:12:31 dc1-leaf1a ConfigAgent: %SYS-3-CONFIG_SESSION_COMMIT_TIMER_TIMEDOUT: The commit timer on session cvp-provisioning-a3b66a74-9b55-40fb-b387-c1b0688b3c10 has expired.The system configuration will be rolled back.
+ Mar 25 17:21:28 dc1-leaf1a ConfigAgent: %SYS-3-CONFIG_SESSION_COMMIT_TIMER_TIMEDOUT: The commit timer on session cvp-provisioning-dfd87666-2189-4f65-919d-2c120eba5e42 has expired.The system configuration will be rolled back.
+ 
+",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
+dc1-leaf1a,VerifyMlagInterfaces,failure,MLAG status is not ok - Inactive Ports: 1 Partial Active Ports: 0,Verifies there are no inactive or active-partial MLAG ports.,MLAG
+dc1-leaf1a,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
+dc1-leaf1b,VerifyInterfacesStatus,failure,"Interface: Loopback11 - Not configured - Interface: Port-Channel4 - Status mismatch - Expected: up/up, Actual: down/lowerLayerDown - Interface: Vlan3010 - Not configured",Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
+dc1-leaf1b,VerifyPortChannels,failure,"Interface: Port-Channel4 - Inactive port(s) - Ethernet4, PeerEthernet4",Verifies there are no inactive ports in port channels.,Interfaces
+dc1-leaf1b,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
+Mar 25 13:58:55 dc1-leaf1b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1452) -- Master ProcMgr (PID=1452) exiting.
+ Mar 25 13:58:55 dc1-leaf1b Stp: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to StpTxRx (pid:1893) at tbl://stpTxRxListen/+n closed by peer (EOF)
+ Mar 25 13:58:55 dc1-leaf1b Stp: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpTxRxListen/+n-in)(StpTxRx (pid:1893))
+ Mar 25 13:59:58 dc1-leaf1b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.1.96 (VRF VRF10 AS 65101) 6/7 (Cease/connection collision resolution) 0 bytes 
+ Mar 25 14:24:25 dc1-leaf1b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.1.96 (VRF VRF11 AS 65101) 6/3 (Cease/peer de-configured <Hard Reset>) 0 bytes
+ Mar 25 17:12:31 dc1-leaf1b ConfigAgent: %SYS-3-CONFIG_SESSION_COMMIT_TIMER_TIMEDOUT: The commit timer on session cvp-provisioning-431255c0-9fcb-4106-88f6-c67b1d1317fc has expired.The system configuration will be rolled back.
+ Mar 25 17:21:28 dc1-leaf1b ConfigAgent: %SYS-3-CONFIG_SESSION_COMMIT_TIMER_TIMEDOUT: The commit timer on session cvp-provisioning-c7e2d4da-e27e-4038-85d2-4f64567b92ba has expired.The system configuration will be rolled back.
+ 
+",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
+dc1-leaf1b,VerifyMlagInterfaces,failure,MLAG status is not ok - Inactive Ports: 1 Partial Active Ports: 0,Verifies there are no inactive or active-partial MLAG ports.,MLAG
+dc1-leaf1b,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
+dc1-leaf2a,VerifyInterfacesStatus,failure,"Interface: Loopback11 - Not configured - Interface: Port-Channel4 - Status mismatch - Expected: up/up, Actual: down/lowerLayerDown - Interface: Vlan3010 - Not configured",Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
+dc1-leaf2a,VerifyPortChannels,failure,"Interface: Port-Channel4 - Inactive port(s) - Ethernet4, PeerEthernet4",Verifies there are no inactive ports in port channels.,Interfaces
+dc1-leaf2a,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
+Mar 25 13:59:05 dc1-leaf2a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1452) -- Master ProcMgr (PID=1452) exiting.
+ Mar 25 14:24:26 dc1-leaf2a Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.1.101 (VRF VRF11 AS 65102) 6/3 (Cease/peer de-configured <Hard Reset>) 0 bytes
+ Mar 25 17:12:31 dc1-leaf2a ConfigAgent: %SYS-3-CONFIG_SESSION_COMMIT_TIMER_TIMEDOUT: The commit timer on session cvp-provisioning-c8f547f3-20d9-47c7-b14c-3a84503bdb06 has expired.The system configuration will be rolled back.
+ Mar 25 17:21:29 dc1-leaf2a ConfigAgent: %SYS-3-CONFIG_SESSION_COMMIT_TIMER_TIMEDOUT: The commit timer on session cvp-provisioning-2bb58230-38af-49c1-8e4a-9bd9767d9462 has expired.The system configuration will be rolled back.
+ 
+",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
+dc1-leaf2a,VerifyMlagInterfaces,failure,MLAG status is not ok - Inactive Ports: 1 Partial Active Ports: 0,Verifies there are no inactive or active-partial MLAG ports.,MLAG
+dc1-leaf2a,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
+dc1-leaf2b,VerifyInterfacesStatus,failure,"Interface: Loopback11 - Not configured - Interface: Port-Channel4 - Status mismatch - Expected: up/up, Actual: down/lowerLayerDown - Interface: Vlan3010 - Not configured",Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
+dc1-leaf2b,VerifyPortChannels,failure,"Interface: Port-Channel4 - Inactive port(s) - Ethernet4, PeerEthernet4",Verifies there are no inactive ports in port channels.,Interfaces
+dc1-leaf2b,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
+Mar 25 13:58:39 dc1-leaf2b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1451) -- Master ProcMgr (PID=1451) exiting.
+ Mar 25 13:58:39 dc1-leaf2b StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1926) at tbl://stpListen/+n closed by peer (EOF)
+ Mar 25 13:58:39 dc1-leaf2b StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1926))
+ Mar 25 14:24:26 dc1-leaf2b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.1.100 (VRF VRF11 AS 65102) 6/3 (Cease/peer de-configured <Hard Reset>) 0 bytes
+ Mar 25 17:12:31 dc1-leaf2b ConfigAgent: %SYS-3-CONFIG_SESSION_COMMIT_TIMER_TIMEDOUT: The commit timer on session cvp-provisioning-b287b21a-1a59-4df9-8d95-a0ba9a1021de has expired.The system configuration will be rolled back.
+ Mar 25 17:21:28 dc1-leaf2b ConfigAgent: %SYS-3-CONFIG_SESSION_COMMIT_TIMER_TIMEDOUT: The commit timer on session cvp-provisioning-5353991b-f5be-4026-91e0-70a93f08d2fa has expired.The system configuration will be rolled back.
+ 
+",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
+dc1-leaf2b,VerifyMlagInterfaces,failure,MLAG status is not ok - Inactive Ports: 1 Partial Active Ports: 0,Verifies there are no inactive or active-partial MLAG ports.,MLAG
+dc1-leaf2b,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
+dc1-leaf3a,VerifyInterfacesStatus,failure,Interface: Loopback11 - Not configured - Interface: Vlan3010 - Not configured,Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
+dc1-leaf3a,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
+Mar 25 13:58:41 dc1-leaf3a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1453) -- Master ProcMgr (PID=1453) exiting.
+ Mar 25 13:58:41 dc1-leaf3a Stp: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to StpTxRx (pid:1882) at tbl://stpTxRxListen/+n closed by peer (EOF)
+ Mar 25 13:58:41 dc1-leaf3a Stp: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpTxRxListen/+n-in)(StpTxRx (pid:1882))
+ Mar 25 13:59:38 dc1-leaf3a Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.0.1 (VRF default AS 65100) 6/7 (Cease/connection collision resolution) 0 bytes 
+ Mar 25 14:24:24 dc1-leaf3a Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.1.105 (VRF VRF11 AS 65103) 6/3 (Cease/peer de-configured <Hard Reset>) 0 bytes
+ Mar 25 17:12:30 dc1-leaf3a ConfigAgent: %SYS-3-CONFIG_SESSION_COMMIT_TIMER_TIMEDOUT: The commit timer on session cvp-provisioning-fa260ef0-b748-4072-b75b-9118fd9bb402 has expired.The system configuration will be rolled back.
+ Mar 25 17:21:28 dc1-leaf3a ConfigAgent: %SYS-3-CONFIG_SESSION_COMMIT_TIMER_TIMEDOUT: The commit timer on session cvp-provisioning-6cb4d6e1-56c2-43fe-9552-8fc24994c94c has expired.The system configuration will be rolled back.
+ 
+",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
+dc1-leaf3a,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
+dc1-leaf3b,VerifyInterfacesStatus,failure,Interface: Loopback11 - Not configured - Interface: Vlan3010 - Not configured,Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
+dc1-leaf3b,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
+Mar 25 13:58:36 dc1-leaf3b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1449) -- Master ProcMgr (PID=1449) exiting.
+ Mar 25 13:58:36 dc1-leaf3b StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1909) at tbl://stpListen/+n closed by peer (EOF)
+ Mar 25 13:58:36 dc1-leaf3b StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1909))
+ Mar 25 13:58:36 dc1-leaf3b ConfigAgent: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Sysdb (pid:1649) at tbl://sysdb/+n closed by peer (EOF)
+ Mar 25 13:58:36 dc1-leaf3b ConfigAgent: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://sysdb/+n-in)(Sysdb (pid:1649))
+ Mar 25 13:58:36 dc1-leaf3b ConfigAgent: %FWK-3-MOUNT_CLOSED_EXIT: Process exiting.
+ Mar 25 13:59:39 dc1-leaf3b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.20 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
+ Mar 25 13:59:39 dc1-leaf3b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.22 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
+ Mar 25 14:24:24 dc1-leaf3b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.1.104 (VRF VRF11 AS 65103) 6/3 (Cease/peer de-configured <Hard Reset>) 0 bytes
+ Mar 25 17:12:30 dc1-leaf3b ConfigAgent: %SYS-3-CONFIG_SESSION_COMMIT_TIMER_TIMEDOUT: The commit timer on session cvp-provisioning-fbd580a6-7df2-4d5b-90bf-0d13d0dfd849 has expired.The system configuration will be rolled back.
+ Mar 25 17:21:28 dc1-leaf3b ConfigAgent: %SYS-3-CONFIG_SESSION_COMMIT_TIMER_TIMEDOUT: The commit timer on session cvp-provisioning-5f3aa502-7468-409f-bf2c-b6cfc24949bc has expired.The system configuration will be rolled back.
+ 
+",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
+dc1-leaf3b,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
+dc1-spine1,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
+Mar 25 13:58:32 dc1-spine1 ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1412) -- Master ProcMgr (PID=1412) exiting.
+ Mar 25 13:58:32 dc1-spine1 Stp: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to StpTxRx (pid:1834) at tbl://stpTxRxListen/+n closed by peer (EOF)
+ Mar 25 13:58:32 dc1-spine1 Stp: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpTxRxListen/+n-in)(StpTxRx (pid:1834))
+ Mar 25 13:59:39 dc1-spine1 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.21 (VRF default AS 65103) 6/5 (Cease/connection rejected) 0 bytes
+ Mar 25 13:59:39 dc1-spine1 Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.0.7 (VRF default AS 65103) 6/7 (Cease/connection collision resolution) 0 bytes 
+ Mar 25 17:12:31 dc1-spine1 ConfigAgent: %SYS-3-CONFIG_SESSION_COMMIT_TIMER_TIMEDOUT: The commit timer on session cvp-provisioning-e933339f-5703-4442-a83b-c5b22eedd5d6 has expired.The system configuration will be rolled back.
+ Mar 25 17:21:28 dc1-spine1 ConfigAgent: %SYS-3-CONFIG_SESSION_COMMIT_TIMER_TIMEDOUT: The commit timer on session cvp-provisioning-7bfe3be7-8a3b-4da8-9629-ff603275b90c has expired.The system configuration will be rolled back.
+ 
+",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
+dc1-spine1,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
+dc1-spine2,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
+Mar 25 13:58:40 dc1-spine2 ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1409) -- Master ProcMgr (PID=1409) exiting.
+ Mar 25 13:58:40 dc1-spine2 Stp: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to StpTxRx (pid:1839) at tbl://stpTxRxListen/+n closed by peer (EOF)
+ Mar 25 13:58:40 dc1-spine2 Stp: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpTxRxListen/+n-in)(StpTxRx (pid:1839))
+ Mar 25 13:59:39 dc1-spine2 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.23 (VRF default AS 65103) 6/5 (Cease/connection rejected) 0 bytes
+ Mar 25 17:12:31 dc1-spine2 ConfigAgent: %SYS-3-CONFIG_SESSION_COMMIT_TIMER_TIMEDOUT: The commit timer on session cvp-provisioning-c44801dc-b134-468f-81b8-67a4a8a3c669 has expired.The system configuration will be rolled back.
+ Mar 25 17:21:29 dc1-spine2 ConfigAgent: %SYS-3-CONFIG_SESSION_COMMIT_TIMER_TIMEDOUT: The commit timer on session cvp-provisioning-61008bc7-ec49-4d23-96cb-f72a5f7070fc has expired.The system configuration will be rolled back.
+ 
+",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
+dc1-spine2,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
+dc1-leaf1a,VerifyEnvironmentCooling,skipped,VerifyEnvironmentCooling test is not supported on vEOS-lab,Verifies the status of power supply fans and all fan trays.,Hardware
+dc1-leaf1a,VerifyEnvironmentPower,skipped,VerifyEnvironmentPower test is not supported on vEOS-lab,Verifies the power supplies state and input voltage.,Hardware
+dc1-leaf1a,VerifyEnvironmentSystemCooling,skipped,VerifyEnvironmentSystemCooling test is not supported on vEOS-lab,Verifies the device's system cooling status.,Hardware
+dc1-leaf1a,VerifyInventory,skipped,VerifyInventory test is not supported on vEOS-lab,Verifies the physical hardware inventory of the device.,Hardware
+dc1-leaf1a,VerifyTemperature,skipped,VerifyTemperature test is not supported on vEOS-lab,Verifies if the device temperature is within acceptable limits.,Hardware
+dc1-leaf1a,VerifyTransceiversManufacturers,skipped,VerifyTransceiversManufacturers test is not supported on vEOS-lab,Verifies if all the transceivers come from approved manufacturers.,Hardware
+dc1-leaf1a,VerifyTransceiversTemperature,skipped,VerifyTransceiversTemperature test is not supported on vEOS-lab,Verifies if all the transceivers are operating at an acceptable temperature.,Hardware
+dc1-leaf1b,VerifyEnvironmentCooling,skipped,VerifyEnvironmentCooling test is not supported on vEOS-lab,Verifies the status of power supply fans and all fan trays.,Hardware
+dc1-leaf1b,VerifyEnvironmentPower,skipped,VerifyEnvironmentPower test is not supported on vEOS-lab,Verifies the power supplies state and input voltage.,Hardware
+dc1-leaf1b,VerifyEnvironmentSystemCooling,skipped,VerifyEnvironmentSystemCooling test is not supported on vEOS-lab,Verifies the device's system cooling status.,Hardware
+dc1-leaf1b,VerifyInventory,skipped,VerifyInventory test is not supported on vEOS-lab,Verifies the physical hardware inventory of the device.,Hardware
+dc1-leaf1b,VerifyTemperature,skipped,VerifyTemperature test is not supported on vEOS-lab,Verifies if the device temperature is within acceptable limits.,Hardware
+dc1-leaf1b,VerifyTransceiversManufacturers,skipped,VerifyTransceiversManufacturers test is not supported on vEOS-lab,Verifies if all the transceivers come from approved manufacturers.,Hardware
+dc1-leaf1b,VerifyTransceiversTemperature,skipped,VerifyTransceiversTemperature test is not supported on vEOS-lab,Verifies if all the transceivers are operating at an acceptable temperature.,Hardware
+dc1-leaf2a,VerifyEnvironmentCooling,skipped,VerifyEnvironmentCooling test is not supported on vEOS-lab,Verifies the status of power supply fans and all fan trays.,Hardware
+dc1-leaf2a,VerifyEnvironmentPower,skipped,VerifyEnvironmentPower test is not supported on vEOS-lab,Verifies the power supplies state and input voltage.,Hardware
+dc1-leaf2a,VerifyEnvironmentSystemCooling,skipped,VerifyEnvironmentSystemCooling test is not supported on vEOS-lab,Verifies the device's system cooling status.,Hardware
+dc1-leaf2a,VerifyInventory,skipped,VerifyInventory test is not supported on vEOS-lab,Verifies the physical hardware inventory of the device.,Hardware
+dc1-leaf2a,VerifyTemperature,skipped,VerifyTemperature test is not supported on vEOS-lab,Verifies if the device temperature is within acceptable limits.,Hardware
+dc1-leaf2a,VerifyTransceiversManufacturers,skipped,VerifyTransceiversManufacturers test is not supported on vEOS-lab,Verifies if all the transceivers come from approved manufacturers.,Hardware
+dc1-leaf2a,VerifyTransceiversTemperature,skipped,VerifyTransceiversTemperature test is not supported on vEOS-lab,Verifies if all the transceivers are operating at an acceptable temperature.,Hardware
+dc1-leaf2b,VerifyEnvironmentCooling,skipped,VerifyEnvironmentCooling test is not supported on vEOS-lab,Verifies the status of power supply fans and all fan trays.,Hardware
+dc1-leaf2b,VerifyEnvironmentPower,skipped,VerifyEnvironmentPower test is not supported on vEOS-lab,Verifies the power supplies state and input voltage.,Hardware
+dc1-leaf2b,VerifyEnvironmentSystemCooling,skipped,VerifyEnvironmentSystemCooling test is not supported on vEOS-lab,Verifies the device's system cooling status.,Hardware
+dc1-leaf2b,VerifyInventory,skipped,VerifyInventory test is not supported on vEOS-lab,Verifies the physical hardware inventory of the device.,Hardware
+dc1-leaf2b,VerifyTemperature,skipped,VerifyTemperature test is not supported on vEOS-lab,Verifies if the device temperature is within acceptable limits.,Hardware
+dc1-leaf2b,VerifyTransceiversManufacturers,skipped,VerifyTransceiversManufacturers test is not supported on vEOS-lab,Verifies if all the transceivers come from approved manufacturers.,Hardware
+dc1-leaf2b,VerifyTransceiversTemperature,skipped,VerifyTransceiversTemperature test is not supported on vEOS-lab,Verifies if all the transceivers are operating at an acceptable temperature.,Hardware
+dc1-leaf3a,VerifyEnvironmentCooling,skipped,VerifyEnvironmentCooling test is not supported on vEOS-lab,Verifies the status of power supply fans and all fan trays.,Hardware
+dc1-leaf3a,VerifyEnvironmentPower,skipped,VerifyEnvironmentPower test is not supported on vEOS-lab,Verifies the power supplies state and input voltage.,Hardware
+dc1-leaf3a,VerifyEnvironmentSystemCooling,skipped,VerifyEnvironmentSystemCooling test is not supported on vEOS-lab,Verifies the device's system cooling status.,Hardware
+dc1-leaf3a,VerifyInventory,skipped,VerifyInventory test is not supported on vEOS-lab,Verifies the physical hardware inventory of the device.,Hardware
+dc1-leaf3a,VerifyTemperature,skipped,VerifyTemperature test is not supported on vEOS-lab,Verifies if the device temperature is within acceptable limits.,Hardware
+dc1-leaf3a,VerifyTransceiversManufacturers,skipped,VerifyTransceiversManufacturers test is not supported on vEOS-lab,Verifies if all the transceivers come from approved manufacturers.,Hardware
+dc1-leaf3a,VerifyTransceiversTemperature,skipped,VerifyTransceiversTemperature test is not supported on vEOS-lab,Verifies if all the transceivers are operating at an acceptable temperature.,Hardware
+dc1-leaf3b,VerifyEnvironmentCooling,skipped,VerifyEnvironmentCooling test is not supported on vEOS-lab,Verifies the status of power supply fans and all fan trays.,Hardware
+dc1-leaf3b,VerifyEnvironmentPower,skipped,VerifyEnvironmentPower test is not supported on vEOS-lab,Verifies the power supplies state and input voltage.,Hardware
+dc1-leaf3b,VerifyEnvironmentSystemCooling,skipped,VerifyEnvironmentSystemCooling test is not supported on vEOS-lab,Verifies the device's system cooling status.,Hardware
+dc1-leaf3b,VerifyInventory,skipped,VerifyInventory test is not supported on vEOS-lab,Verifies the physical hardware inventory of the device.,Hardware
+dc1-leaf3b,VerifyTemperature,skipped,VerifyTemperature test is not supported on vEOS-lab,Verifies if the device temperature is within acceptable limits.,Hardware
+dc1-leaf3b,VerifyTransceiversManufacturers,skipped,VerifyTransceiversManufacturers test is not supported on vEOS-lab,Verifies if all the transceivers come from approved manufacturers.,Hardware
+dc1-leaf3b,VerifyTransceiversTemperature,skipped,VerifyTransceiversTemperature test is not supported on vEOS-lab,Verifies if all the transceivers are operating at an acceptable temperature.,Hardware
+dc1-spine1,VerifyEnvironmentCooling,skipped,VerifyEnvironmentCooling test is not supported on vEOS-lab,Verifies the status of power supply fans and all fan trays.,Hardware
+dc1-spine1,VerifyEnvironmentPower,skipped,VerifyEnvironmentPower test is not supported on vEOS-lab,Verifies the power supplies state and input voltage.,Hardware
+dc1-spine1,VerifyEnvironmentSystemCooling,skipped,VerifyEnvironmentSystemCooling test is not supported on vEOS-lab,Verifies the device's system cooling status.,Hardware
+dc1-spine1,VerifyInventory,skipped,VerifyInventory test is not supported on vEOS-lab,Verifies the physical hardware inventory of the device.,Hardware
+dc1-spine1,VerifyTemperature,skipped,VerifyTemperature test is not supported on vEOS-lab,Verifies if the device temperature is within acceptable limits.,Hardware
+dc1-spine1,VerifyTransceiversManufacturers,skipped,VerifyTransceiversManufacturers test is not supported on vEOS-lab,Verifies if all the transceivers come from approved manufacturers.,Hardware
+dc1-spine1,VerifyTransceiversTemperature,skipped,VerifyTransceiversTemperature test is not supported on vEOS-lab,Verifies if all the transceivers are operating at an acceptable temperature.,Hardware
+dc1-spine2,VerifyEnvironmentCooling,skipped,VerifyEnvironmentCooling test is not supported on vEOS-lab,Verifies the status of power supply fans and all fan trays.,Hardware
+dc1-spine2,VerifyEnvironmentPower,skipped,VerifyEnvironmentPower test is not supported on vEOS-lab,Verifies the power supplies state and input voltage.,Hardware
+dc1-spine2,VerifyEnvironmentSystemCooling,skipped,VerifyEnvironmentSystemCooling test is not supported on vEOS-lab,Verifies the device's system cooling status.,Hardware
+dc1-spine2,VerifyInventory,skipped,VerifyInventory test is not supported on vEOS-lab,Verifies the physical hardware inventory of the device.,Hardware
+dc1-spine2,VerifyTemperature,skipped,VerifyTemperature test is not supported on vEOS-lab,Verifies if the device temperature is within acceptable limits.,Hardware
+dc1-spine2,VerifyTransceiversManufacturers,skipped,VerifyTransceiversManufacturers test is not supported on vEOS-lab,Verifies if all the transceivers come from approved manufacturers.,Hardware
+dc1-spine2,VerifyTransceiversTemperature,skipped,VerifyTransceiversTemperature test is not supported on vEOS-lab,Verifies if all the transceivers are operating at an acceptable temperature.,Hardware
+dc1-leaf1a,VerifyBGPPeerSession,success,,Verifies the session state of BGP peers.,BGP
+dc1-leaf1a,VerifyRunningConfigDiffs,success,,Verifies there is no difference between the running-config and the startup-config.,Configuration
+dc1-leaf1a,VerifyZeroTouch,success,,Verifies ZeroTouch is disabled.,Configuration
+dc1-leaf1a,VerifyLLDPNeighbors,success,,Verifies the connection status of the specified LLDP (Link Layer Discovery Protocol) neighbors.,Connectivity
+dc1-leaf1a,VerifyReachability,success,,Verifies point-to-point reachability between Ethernet interfaces.,Connectivity
+dc1-leaf1a,VerifyIllegalLACP,success,,Verifies there are no illegal LACP packets in port channels.,Interfaces
+dc1-leaf1a,VerifyInterfaceDiscards,success,,Verifies that the interfaces packet discard counters are equal to zero.,Interfaces
+dc1-leaf1a,VerifyInterfaceErrDisabled,success,,Verifies there are no interfaces in the errdisabled state.,Interfaces
+dc1-leaf1a,VerifyInterfaceErrors,success,,Verifies that the interfaces error counters are equal to zero.,Interfaces
+dc1-leaf1a,VerifyInterfaceUtilization,success,,Verifies that the utilization of interfaces is below a certain threshold.,Interfaces
+dc1-leaf1a,VerifyMlagConfigSanity,success,,Verifies there are no MLAG config-sanity inconsistencies.,MLAG
+dc1-leaf1a,VerifyMlagStatus,success,,Verifies the health status of the MLAG configuration.,MLAG
+dc1-leaf1a,VerifyRoutingProtocolModel,success,,Verifies the configured routing protocol model.,Routing
+dc1-leaf1a,VerifySTPCounters,success,,Verifies there is no errors in STP BPDU packets.,STP
+dc1-leaf1a,VerifyAgentLogs,success,,Verifies there are no agent crash reports.,System
+dc1-leaf1a,VerifyCoredump,success,,Verifies there are no core dump files.,System
+dc1-leaf1a,VerifyFileSystemUtilization,success,,Verifies that no partition is utilizing more than 75% of its disk space.,System
+dc1-leaf1a,VerifyMaintenance,success,,Verifies that the device is not currently under or entering maintenance.,System
+dc1-leaf1a,VerifyMemoryUtilization,success,,Verifies whether the memory utilization is below 75%.,System
+dc1-leaf1a,VerifyReloadCause,success,,Verifies the last reload cause of the device.,System
+dc1-leaf1a,VerifyVxlanConfigSanity,success,,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
+dc1-leaf1b,VerifyBGPPeerSession,success,,Verifies the session state of BGP peers.,BGP
+dc1-leaf1b,VerifyRunningConfigDiffs,success,,Verifies there is no difference between the running-config and the startup-config.,Configuration
+dc1-leaf1b,VerifyZeroTouch,success,,Verifies ZeroTouch is disabled.,Configuration
+dc1-leaf1b,VerifyLLDPNeighbors,success,,Verifies the connection status of the specified LLDP (Link Layer Discovery Protocol) neighbors.,Connectivity
+dc1-leaf1b,VerifyReachability,success,,Verifies point-to-point reachability between Ethernet interfaces.,Connectivity
+dc1-leaf1b,VerifyIllegalLACP,success,,Verifies there are no illegal LACP packets in port channels.,Interfaces
+dc1-leaf1b,VerifyInterfaceDiscards,success,,Verifies that the interfaces packet discard counters are equal to zero.,Interfaces
+dc1-leaf1b,VerifyInterfaceErrDisabled,success,,Verifies there are no interfaces in the errdisabled state.,Interfaces
+dc1-leaf1b,VerifyInterfaceErrors,success,,Verifies that the interfaces error counters are equal to zero.,Interfaces
+dc1-leaf1b,VerifyInterfaceUtilization,success,,Verifies that the utilization of interfaces is below a certain threshold.,Interfaces
+dc1-leaf1b,VerifyMlagConfigSanity,success,,Verifies there are no MLAG config-sanity inconsistencies.,MLAG
+dc1-leaf1b,VerifyMlagStatus,success,,Verifies the health status of the MLAG configuration.,MLAG
+dc1-leaf1b,VerifyRoutingProtocolModel,success,,Verifies the configured routing protocol model.,Routing
+dc1-leaf1b,VerifySTPCounters,success,,Verifies there is no errors in STP BPDU packets.,STP
+dc1-leaf1b,VerifyAgentLogs,success,,Verifies there are no agent crash reports.,System
+dc1-leaf1b,VerifyCoredump,success,,Verifies there are no core dump files.,System
+dc1-leaf1b,VerifyFileSystemUtilization,success,,Verifies that no partition is utilizing more than 75% of its disk space.,System
+dc1-leaf1b,VerifyMaintenance,success,,Verifies that the device is not currently under or entering maintenance.,System
+dc1-leaf1b,VerifyMemoryUtilization,success,,Verifies whether the memory utilization is below 75%.,System
+dc1-leaf1b,VerifyReloadCause,success,,Verifies the last reload cause of the device.,System
+dc1-leaf1b,VerifyVxlanConfigSanity,success,,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
+dc1-leaf2a,VerifyBGPPeerSession,success,,Verifies the session state of BGP peers.,BGP
+dc1-leaf2a,VerifyRunningConfigDiffs,success,,Verifies there is no difference between the running-config and the startup-config.,Configuration
+dc1-leaf2a,VerifyZeroTouch,success,,Verifies ZeroTouch is disabled.,Configuration
+dc1-leaf2a,VerifyLLDPNeighbors,success,,Verifies the connection status of the specified LLDP (Link Layer Discovery Protocol) neighbors.,Connectivity
+dc1-leaf2a,VerifyReachability,success,,Verifies point-to-point reachability between Ethernet interfaces.,Connectivity
+dc1-leaf2a,VerifyIllegalLACP,success,,Verifies there are no illegal LACP packets in port channels.,Interfaces
+dc1-leaf2a,VerifyInterfaceDiscards,success,,Verifies that the interfaces packet discard counters are equal to zero.,Interfaces
+dc1-leaf2a,VerifyInterfaceErrDisabled,success,,Verifies there are no interfaces in the errdisabled state.,Interfaces
+dc1-leaf2a,VerifyInterfaceErrors,success,,Verifies that the interfaces error counters are equal to zero.,Interfaces
+dc1-leaf2a,VerifyInterfaceUtilization,success,,Verifies that the utilization of interfaces is below a certain threshold.,Interfaces
+dc1-leaf2a,VerifyMlagConfigSanity,success,,Verifies there are no MLAG config-sanity inconsistencies.,MLAG
+dc1-leaf2a,VerifyMlagStatus,success,,Verifies the health status of the MLAG configuration.,MLAG
+dc1-leaf2a,VerifyRoutingProtocolModel,success,,Verifies the configured routing protocol model.,Routing
+dc1-leaf2a,VerifySTPCounters,success,,Verifies there is no errors in STP BPDU packets.,STP
+dc1-leaf2a,VerifyAgentLogs,success,,Verifies there are no agent crash reports.,System
+dc1-leaf2a,VerifyCoredump,success,,Verifies there are no core dump files.,System
+dc1-leaf2a,VerifyFileSystemUtilization,success,,Verifies that no partition is utilizing more than 75% of its disk space.,System
+dc1-leaf2a,VerifyMaintenance,success,,Verifies that the device is not currently under or entering maintenance.,System
+dc1-leaf2a,VerifyMemoryUtilization,success,,Verifies whether the memory utilization is below 75%.,System
+dc1-leaf2a,VerifyReloadCause,success,,Verifies the last reload cause of the device.,System
+dc1-leaf2a,VerifyVxlanConfigSanity,success,,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
+dc1-leaf2b,VerifyBGPPeerSession,success,,Verifies the session state of BGP peers.,BGP
+dc1-leaf2b,VerifyRunningConfigDiffs,success,,Verifies there is no difference between the running-config and the startup-config.,Configuration
+dc1-leaf2b,VerifyZeroTouch,success,,Verifies ZeroTouch is disabled.,Configuration
+dc1-leaf2b,VerifyLLDPNeighbors,success,,Verifies the connection status of the specified LLDP (Link Layer Discovery Protocol) neighbors.,Connectivity
+dc1-leaf2b,VerifyReachability,success,,Verifies point-to-point reachability between Ethernet interfaces.,Connectivity
+dc1-leaf2b,VerifyIllegalLACP,success,,Verifies there are no illegal LACP packets in port channels.,Interfaces
+dc1-leaf2b,VerifyInterfaceDiscards,success,,Verifies that the interfaces packet discard counters are equal to zero.,Interfaces
+dc1-leaf2b,VerifyInterfaceErrDisabled,success,,Verifies there are no interfaces in the errdisabled state.,Interfaces
+dc1-leaf2b,VerifyInterfaceErrors,success,,Verifies that the interfaces error counters are equal to zero.,Interfaces
+dc1-leaf2b,VerifyInterfaceUtilization,success,,Verifies that the utilization of interfaces is below a certain threshold.,Interfaces
+dc1-leaf2b,VerifyMlagConfigSanity,success,,Verifies there are no MLAG config-sanity inconsistencies.,MLAG
+dc1-leaf2b,VerifyMlagStatus,success,,Verifies the health status of the MLAG configuration.,MLAG
+dc1-leaf2b,VerifyRoutingProtocolModel,success,,Verifies the configured routing protocol model.,Routing
+dc1-leaf2b,VerifySTPCounters,success,,Verifies there is no errors in STP BPDU packets.,STP
+dc1-leaf2b,VerifyAgentLogs,success,,Verifies there are no agent crash reports.,System
+dc1-leaf2b,VerifyCoredump,success,,Verifies there are no core dump files.,System
+dc1-leaf2b,VerifyFileSystemUtilization,success,,Verifies that no partition is utilizing more than 75% of its disk space.,System
+dc1-leaf2b,VerifyMaintenance,success,,Verifies that the device is not currently under or entering maintenance.,System
+dc1-leaf2b,VerifyMemoryUtilization,success,,Verifies whether the memory utilization is below 75%.,System
+dc1-leaf2b,VerifyReloadCause,success,,Verifies the last reload cause of the device.,System
+dc1-leaf2b,VerifyVxlanConfigSanity,success,,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
+dc1-leaf3a,VerifyBGPPeerSession,success,,Verifies the session state of BGP peers.,BGP
+dc1-leaf3a,VerifyRunningConfigDiffs,success,,Verifies there is no difference between the running-config and the startup-config.,Configuration
+dc1-leaf3a,VerifyZeroTouch,success,,Verifies ZeroTouch is disabled.,Configuration
+dc1-leaf3a,VerifyLLDPNeighbors,success,,Verifies the connection status of the specified LLDP (Link Layer Discovery Protocol) neighbors.,Connectivity
+dc1-leaf3a,VerifyReachability,success,,Verifies point-to-point reachability between Ethernet interfaces.,Connectivity
+dc1-leaf3a,VerifyIllegalLACP,success,,Verifies there are no illegal LACP packets in port channels.,Interfaces
+dc1-leaf3a,VerifyInterfaceDiscards,success,,Verifies that the interfaces packet discard counters are equal to zero.,Interfaces
+dc1-leaf3a,VerifyInterfaceErrDisabled,success,,Verifies there are no interfaces in the errdisabled state.,Interfaces
+dc1-leaf3a,VerifyInterfaceErrors,success,,Verifies that the interfaces error counters are equal to zero.,Interfaces
+dc1-leaf3a,VerifyInterfaceUtilization,success,,Verifies that the utilization of interfaces is below a certain threshold.,Interfaces
+dc1-leaf3a,VerifyPortChannels,success,,Verifies there are no inactive ports in port channels.,Interfaces
+dc1-leaf3a,VerifyMlagConfigSanity,success,,Verifies there are no MLAG config-sanity inconsistencies.,MLAG
+dc1-leaf3a,VerifyMlagInterfaces,success,,Verifies there are no inactive or active-partial MLAG ports.,MLAG
+dc1-leaf3a,VerifyMlagStatus,success,,Verifies the health status of the MLAG configuration.,MLAG
+dc1-leaf3a,VerifyRoutingProtocolModel,success,,Verifies the configured routing protocol model.,Routing
+dc1-leaf3a,VerifySTPCounters,success,,Verifies there is no errors in STP BPDU packets.,STP
+dc1-leaf3a,VerifyAgentLogs,success,,Verifies there are no agent crash reports.,System
+dc1-leaf3a,VerifyCoredump,success,,Verifies there are no core dump files.,System
+dc1-leaf3a,VerifyFileSystemUtilization,success,,Verifies that no partition is utilizing more than 75% of its disk space.,System
+dc1-leaf3a,VerifyMaintenance,success,,Verifies that the device is not currently under or entering maintenance.,System
+dc1-leaf3a,VerifyMemoryUtilization,success,,Verifies whether the memory utilization is below 75%.,System
+dc1-leaf3a,VerifyReloadCause,success,,Verifies the last reload cause of the device.,System
+dc1-leaf3a,VerifyVxlanConfigSanity,success,,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
+dc1-leaf3b,VerifyBGPPeerSession,success,,Verifies the session state of BGP peers.,BGP
+dc1-leaf3b,VerifyRunningConfigDiffs,success,,Verifies there is no difference between the running-config and the startup-config.,Configuration
+dc1-leaf3b,VerifyZeroTouch,success,,Verifies ZeroTouch is disabled.,Configuration
+dc1-leaf3b,VerifyLLDPNeighbors,success,,Verifies the connection status of the specified LLDP (Link Layer Discovery Protocol) neighbors.,Connectivity
+dc1-leaf3b,VerifyReachability,success,,Verifies point-to-point reachability between Ethernet interfaces.,Connectivity
+dc1-leaf3b,VerifyIllegalLACP,success,,Verifies there are no illegal LACP packets in port channels.,Interfaces
+dc1-leaf3b,VerifyInterfaceDiscards,success,,Verifies that the interfaces packet discard counters are equal to zero.,Interfaces
+dc1-leaf3b,VerifyInterfaceErrDisabled,success,,Verifies there are no interfaces in the errdisabled state.,Interfaces
+dc1-leaf3b,VerifyInterfaceErrors,success,,Verifies that the interfaces error counters are equal to zero.,Interfaces
+dc1-leaf3b,VerifyInterfaceUtilization,success,,Verifies that the utilization of interfaces is below a certain threshold.,Interfaces
+dc1-leaf3b,VerifyPortChannels,success,,Verifies there are no inactive ports in port channels.,Interfaces
+dc1-leaf3b,VerifyMlagConfigSanity,success,,Verifies there are no MLAG config-sanity inconsistencies.,MLAG
+dc1-leaf3b,VerifyMlagInterfaces,success,,Verifies there are no inactive or active-partial MLAG ports.,MLAG
+dc1-leaf3b,VerifyMlagStatus,success,,Verifies the health status of the MLAG configuration.,MLAG
+dc1-leaf3b,VerifyRoutingProtocolModel,success,,Verifies the configured routing protocol model.,Routing
+dc1-leaf3b,VerifySTPCounters,success,,Verifies there is no errors in STP BPDU packets.,STP
+dc1-leaf3b,VerifyAgentLogs,success,,Verifies there are no agent crash reports.,System
+dc1-leaf3b,VerifyCoredump,success,,Verifies there are no core dump files.,System
+dc1-leaf3b,VerifyFileSystemUtilization,success,,Verifies that no partition is utilizing more than 75% of its disk space.,System
+dc1-leaf3b,VerifyMaintenance,success,,Verifies that the device is not currently under or entering maintenance.,System
+dc1-leaf3b,VerifyMemoryUtilization,success,,Verifies whether the memory utilization is below 75%.,System
+dc1-leaf3b,VerifyReloadCause,success,,Verifies the last reload cause of the device.,System
+dc1-leaf3b,VerifyVxlanConfigSanity,success,,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
+dc1-spine1,VerifyBGPPeerSession,success,,Verifies the session state of BGP peers.,BGP
+dc1-spine1,VerifyRunningConfigDiffs,success,,Verifies there is no difference between the running-config and the startup-config.,Configuration
+dc1-spine1,VerifyZeroTouch,success,,Verifies ZeroTouch is disabled.,Configuration
+dc1-spine1,VerifyLLDPNeighbors,success,,Verifies the connection status of the specified LLDP (Link Layer Discovery Protocol) neighbors.,Connectivity
+dc1-spine1,VerifyReachability,success,,Verifies point-to-point reachability between Ethernet interfaces.,Connectivity
+dc1-spine1,VerifyInterfaceDiscards,success,,Verifies that the interfaces packet discard counters are equal to zero.,Interfaces
+dc1-spine1,VerifyInterfaceErrDisabled,success,,Verifies there are no interfaces in the errdisabled state.,Interfaces
+dc1-spine1,VerifyInterfaceErrors,success,,Verifies that the interfaces error counters are equal to zero.,Interfaces
+dc1-spine1,VerifyInterfaceUtilization,success,,Verifies that the utilization of interfaces is below a certain threshold.,Interfaces
+dc1-spine1,VerifyInterfacesStatus,success,,Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
+dc1-spine1,VerifyRoutingProtocolModel,success,,Verifies the configured routing protocol model.,Routing
+dc1-spine1,VerifySTPCounters,success,,Verifies there is no errors in STP BPDU packets.,STP
+dc1-spine1,VerifyAgentLogs,success,,Verifies there are no agent crash reports.,System
+dc1-spine1,VerifyCoredump,success,,Verifies there are no core dump files.,System
+dc1-spine1,VerifyFileSystemUtilization,success,,Verifies that no partition is utilizing more than 75% of its disk space.,System
+dc1-spine1,VerifyMaintenance,success,,Verifies that the device is not currently under or entering maintenance.,System
+dc1-spine1,VerifyMemoryUtilization,success,,Verifies whether the memory utilization is below 75%.,System
+dc1-spine1,VerifyReloadCause,success,,Verifies the last reload cause of the device.,System
+dc1-spine2,VerifyBGPPeerSession,success,,Verifies the session state of BGP peers.,BGP
+dc1-spine2,VerifyRunningConfigDiffs,success,,Verifies there is no difference between the running-config and the startup-config.,Configuration
+dc1-spine2,VerifyZeroTouch,success,,Verifies ZeroTouch is disabled.,Configuration
+dc1-spine2,VerifyLLDPNeighbors,success,,Verifies the connection status of the specified LLDP (Link Layer Discovery Protocol) neighbors.,Connectivity
+dc1-spine2,VerifyReachability,success,,Verifies point-to-point reachability between Ethernet interfaces.,Connectivity
+dc1-spine2,VerifyInterfaceDiscards,success,,Verifies that the interfaces packet discard counters are equal to zero.,Interfaces
+dc1-spine2,VerifyInterfaceErrDisabled,success,,Verifies there are no interfaces in the errdisabled state.,Interfaces
+dc1-spine2,VerifyInterfaceErrors,success,,Verifies that the interfaces error counters are equal to zero.,Interfaces
+dc1-spine2,VerifyInterfaceUtilization,success,,Verifies that the utilization of interfaces is below a certain threshold.,Interfaces
+dc1-spine2,VerifyInterfacesStatus,success,,Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
+dc1-spine2,VerifyRoutingProtocolModel,success,,Verifies the configured routing protocol model.,Routing
+dc1-spine2,VerifySTPCounters,success,,Verifies there is no errors in STP BPDU packets.,STP
+dc1-spine2,VerifyAgentLogs,success,,Verifies there are no agent crash reports.,System
+dc1-spine2,VerifyCoredump,success,,Verifies there are no core dump files.,System
+dc1-spine2,VerifyFileSystemUtilization,success,,Verifies that no partition is utilizing more than 75% of its disk space.,System
+dc1-spine2,VerifyMaintenance,success,,Verifies that the device is not currently under or entering maintenance.,System
+dc1-spine2,VerifyMemoryUtilization,success,,Verifies whether the memory utilization is below 75%.,System
+dc1-spine2,VerifyReloadCause,success,,Verifies the last reload cause of the device.,System

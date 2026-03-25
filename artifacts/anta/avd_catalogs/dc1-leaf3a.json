@@ -7,7 +7,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -19,7 +19,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -33,23 +33,23 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         },
         "neighbors": [
           {
             "port": "Ethernet1",
             "neighbor_device": "dc1-spine1",
-            "neighbor_port": "Ethernet2"
+            "neighbor_port": "Ethernet5"
           },
           {
             "port": "Ethernet2",
             "neighbor_device": "dc1-spine2",
-            "neighbor_port": "Ethernet2"
+            "neighbor_port": "Ethernet5"
           },
           {
             "port": "Ethernet3",
-            "neighbor_device": "dc1-leaf1a",
+            "neighbor_device": "dc1-leaf3b",
             "neighbor_port": "Ethernet3"
           }
         ],
@@ -64,21 +64,21 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         },
         "hosts": [
           {
-            "destination": "1.1.255.4",
-            "source": "1.1.255.5",
-            "description": "dc1-spine1_Ethernet2",
+            "destination": "1.1.255.16",
+            "source": "1.1.255.17",
+            "description": "dc1-spine1_Ethernet5",
             "vrf": "default",
             "repeat": 1
           },
           {
-            "destination": "1.1.255.6",
-            "source": "1.1.255.7",
-            "description": "dc1-spine2_Ethernet2",
+            "destination": "1.1.255.18",
+            "source": "1.1.255.19",
+            "description": "dc1-spine2_Ethernet5",
             "vrf": "default",
             "repeat": 1
           }
@@ -94,7 +94,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         },
         "states": [
@@ -109,7 +109,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         },
         "states": [
@@ -124,7 +124,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -136,7 +136,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         },
         "requirements": {
@@ -155,7 +155,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -167,7 +167,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         },
         "manufacturers": [
@@ -183,7 +183,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -197,7 +197,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -209,7 +209,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -221,7 +221,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -233,7 +233,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -245,7 +245,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -257,7 +257,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         },
         "interfaces": [
@@ -271,10 +271,6 @@
           },
           {
             "name": "Ethernet3",
-            "status": "up"
-          },
-          {
-            "name": "Ethernet4",
             "status": "up"
           },
           {
@@ -295,10 +291,6 @@
           },
           {
             "name": "Port-Channel3",
-            "status": "up"
-          },
-          {
-            "name": "Port-Channel4",
             "status": "up"
           },
           {
@@ -347,7 +339,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -361,7 +353,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -375,7 +367,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -387,7 +379,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -399,7 +391,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -413,7 +405,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         },
         "bgp_peers": [
@@ -426,15 +418,15 @@
             "vrf": "default"
           },
           {
-            "peer_address": "1.1.1.96",
+            "peer_address": "1.1.1.105",
             "vrf": "default"
           },
           {
-            "peer_address": "1.1.255.4",
+            "peer_address": "1.1.255.16",
             "vrf": "default"
           },
           {
-            "peer_address": "1.1.255.6",
+            "peer_address": "1.1.255.18",
             "vrf": "default"
           }
         ]
@@ -449,7 +441,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         },
         "model": "multi-agent"
@@ -464,7 +456,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -478,7 +470,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -490,7 +482,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -502,7 +494,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -514,7 +506,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -526,7 +518,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -538,7 +530,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
@@ -550,7 +542,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         },
         "allowed_causes": [
@@ -570,7 +562,7 @@
         },
         "filters": {
           "tags": [
-            "dc1-leaf1b"
+            "dc1-leaf3a"
           ]
         }
       }
