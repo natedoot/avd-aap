@@ -92,11 +92,11 @@ loopback_interfaces:
   shutdown: false
   vrf: VRF10
   ip_address: 10.255.10.6/32
-- name: Loopback11
-  description: DIAG_VRF_VRF11
+- name: Loopback12
+  description: DIAG_VRF_VRF12
   shutdown: false
-  vrf: VRF11
-  ip_address: 10.255.11.6/32
+  vrf: VRF12
+  ip_address: 10.255.12.6/32
 management_api_http:
   enable_http: true
   enable_https: true
@@ -351,24 +351,24 @@ router_bgp:
       connected:
         enabled: true
         route_map: RM-CONN-2-BGP-VRFS
-  - name: VRF11
-    rd: 1.1.0.6:11
+  - name: VRF12
+    rd: 1.1.0.6:12
     route_targets:
       import:
       - address_family: evpn
         route_targets:
-        - '11:11'
+        - '12:12'
       export:
       - address_family: evpn
         route_targets:
-        - '11:11'
+        - '12:12'
     router_id: 1.1.0.6
     updates:
       wait_install: true
     neighbors:
     - ip_address: 1.1.1.100
       peer_group: MLAG-IPv4-UNDERLAY-PEER
-      description: dc1-leaf2a_Vlan3010
+      description: dc1-leaf2a_Vlan3011
     redistribute:
       connected:
         enabled: true
@@ -384,8 +384,8 @@ transceiver_qsfp_default_mode_4x10: true
 virtual_source_nat_vrfs:
 - name: VRF10
   ip_address: 10.255.10.6
-- name: VRF11
-  ip_address: 10.255.11.6
+- name: VRF12
+  ip_address: 10.255.12.6
 vlan_interfaces:
 - name: Vlan4093
   description: MLAG_L3
@@ -425,25 +425,25 @@ vlan_interfaces:
     - TENANT1
     type: underlay_peering
 - name: Vlan21
-  description: VRF11_VLAN21
+  description: VRF12_VLAN21
   shutdown: false
-  vrf: VRF11
+  vrf: VRF12
   ip_address_virtual: 10.10.21.1/24
   metadata:
     tenants:
     - TENANT1
 - name: Vlan22
-  description: VRF11_VLAN22
+  description: VRF12_VLAN22
   shutdown: false
-  vrf: VRF11
+  vrf: VRF12
   ip_address_virtual: 10.10.22.1/24
   metadata:
     tenants:
     - TENANT1
-- name: Vlan3010
-  description: MLAG_L3_VRF_VRF11
+- name: Vlan3011
+  description: MLAG_L3_VRF_VRF12
   shutdown: false
-  vrf: VRF11
+  vrf: VRF12
   ip_address: 1.1.1.101/31
   mtu: 1500
   metadata:
@@ -488,17 +488,17 @@ vlans:
     tenants:
     - TENANT1
 - id: 21
-  name: VRF11_VLAN21
+  name: VRF12_VLAN21
   metadata:
     tenants:
     - TENANT1
 - id: 22
-  name: VRF11_VLAN22
+  name: VRF12_VLAN22
   metadata:
     tenants:
     - TENANT1
-- id: 3010
-  name: MLAG_L3_VRF_VRF11
+- id: 3011
+  name: MLAG_L3_VRF_VRF12
   trunk_groups:
   - MLAG
   metadata:
@@ -522,7 +522,7 @@ vrfs:
   metadata:
     tenants:
     - TENANT1
-- name: VRF11
+- name: VRF12
   ip_routing: true
   metadata:
     tenants:
@@ -550,5 +550,5 @@ vxlan_interface:
       vrfs:
       - name: VRF10
         vni: 10
-      - name: VRF11
-        vni: 11
+      - name: VRF12
+        vni: 12
