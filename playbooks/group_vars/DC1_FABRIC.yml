@@ -50,6 +50,11 @@ custom_structured_configuration_aaa_authorization:
 
 mgmt_interface_vrf: default
 
+management_eapi:
+  enabled: true
+  enable_http: true
+  enable_https: true
+
 aaa_settings:
   local_users: 
     - name: admin
