@@ -35,9 +35,20 @@ jobs:
           set -euo pipefail
           ansible-galaxy collection install arista.avd ansible.scm --force
 
+      - name: Verify GitHub token exists
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if [ -z "${GITHUB_TOKEN:-}" ]; then
+            echo "GITHUB_TOKEN is empty"
+            exit 1
+          fi
+          echo "GITHUB_TOKEN is set"
+
       - name: Run ANTA validation playbook
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_PAT }}
+          GITHUB_TOKEN: ${{ github.token }}
           ANTA_USERNAME: ${{ secrets.ANTA_USERNAME }}
           ANTA_PASSWORD: ${{ secrets.ANTA_PASSWORD }}
         run: |
