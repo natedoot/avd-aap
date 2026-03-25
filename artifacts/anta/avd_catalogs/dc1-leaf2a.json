@@ -290,7 +290,7 @@
             "status": "up"
           },
           {
-            "name": "Loopback11",
+            "name": "Loopback12",
             "status": "up"
           },
           {
@@ -322,7 +322,7 @@
             "status": "up"
           },
           {
-            "name": "Vlan3010",
+            "name": "Vlan3011",
             "status": "up"
           },
           {
