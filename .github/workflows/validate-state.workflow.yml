@@ -33,7 +33,7 @@ jobs:
       - name: Install Ansible collections
         run: |
           set -euo pipefail
-          ansible-galaxy collection install arista.avd ansible.scm
+          ansible-galaxy collection install arista.avd ansible.scm --force
 
       - name: Run ANTA validation playbook
         env:
@@ -42,4 +42,4 @@ jobs:
           ANTA_PASSWORD: ${{ secrets.ANTA_PASSWORD }}
         run: |
           set -euo pipefail
-          ansible-playbook -i inventory.yml playbooks/validate-state.yml -vvv
+          ansible-playbook -i inventory.yml playbooks/validate-state.yml -vv

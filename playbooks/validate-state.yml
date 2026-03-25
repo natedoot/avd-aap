@@ -12,12 +12,25 @@
     artifacts_branch: "main"
     artifacts_folder: "artifacts"
     anta_folder: "anta"
-    anta_root_dir: "{{ repository.path }}/{{ artifacts_folder }}"
-    changes_name: "Update ANTA validation results from AAP"
-    changes_description: "Job ID: {{ awx_job_id }}"
+    fail_on_anta_failure: true
+
     github_pat: "{{ lookup('env', 'GITHUB_TOKEN') }}"
+    github_run_id: "{{ lookup('env', 'GITHUB_RUN_ID') | default('unknown', true) }}"
+    github_repository: "{{ lookup('env', 'GITHUB_REPOSITORY') | default('unknown', true) }}"
+    github_sha: "{{ lookup('env', 'GITHUB_SHA') | default('unknown', true) }}"
 
   tasks:
+    - name: Build commit metadata
+      delegate_to: localhost
+      run_once: true
+      ansible.builtin.set_fact:
+        changes_name: "Update ANTA validation results from GitHub Actions"
+        changes_description: |
+          Repository: {{ github_repository }}
+          Run ID: {{ github_run_id }}
+          Commit: {{ github_sha }}
+        anta_validation_failed: false
+
     - name: Retrieve latest artifacts repository
       delegate_to: localhost
       run_once: true
@@ -29,6 +42,17 @@
           duplicate_detection: false
       register: repository
 
+    - name: Build ANTA paths
+      delegate_to: localhost
+      run_once: true
+      ansible.builtin.set_fact:
+        artifacts_root_dir: "{{ repository.path }}/{{ artifacts_folder }}"
+        anta_root_dir: "{{ repository.path }}/{{ artifacts_folder }}"
+        anta_base_dir: "{{ repository.path }}/{{ artifacts_folder }}/{{ anta_folder }}"
+        anta_reports_dir: "{{ repository.path }}/{{ artifacts_folder }}/{{ anta_folder }}/reports"
+        anta_logs_dir: "{{ repository.path }}/{{ artifacts_folder }}/{{ anta_folder }}/logs"
+        anta_avd_catalogs_dir: "{{ repository.path }}/{{ artifacts_folder }}/{{ anta_folder }}/avd_catalogs"
+
     - name: Remove previous ANTA reports and logs
       delegate_to: localhost
       run_once: true
@@ -36,8 +60,8 @@
         path: "{{ item }}"
         state: absent
       loop:
-        - "{{ repository.path }}/{{ artifacts_folder }}/{{ anta_folder }}/reports"
-        - "{{ repository.path }}/{{ artifacts_folder }}/{{ anta_folder }}/logs"
+        - "{{ anta_reports_dir }}"
+        - "{{ anta_logs_dir }}"
 
     - name: Ensure ANTA artifact directories exist
       delegate_to: localhost
@@ -47,28 +71,59 @@
         state: directory
         mode: "0755"
       loop:
-        - "{{ repository.path }}/{{ artifacts_folder }}"
-        - "{{ repository.path }}/{{ artifacts_folder }}/{{ anta_folder }}"
-        - "{{ repository.path }}/{{ artifacts_folder }}/{{ anta_folder }}/avd_catalogs"
-        - "{{ repository.path }}/{{ artifacts_folder }}/{{ anta_folder }}/reports"
-        - "{{ repository.path }}/{{ artifacts_folder }}/{{ anta_folder }}/logs"
+        - "{{ artifacts_root_dir }}"
+        - "{{ anta_base_dir }}"
+        - "{{ anta_avd_catalogs_dir }}"
+        - "{{ anta_reports_dir }}"
+        - "{{ anta_logs_dir }}"
 
-    - name: Test network states
-      ansible.builtin.import_role:
-        name: anta_runner
-      vars:
-        root_dir: "{{ anta_root_dir }}"
+    - name: Run ANTA validation and always publish artifacts
+      block:
+        - name: Test network states
+          ansible.builtin.import_role:
+            name: anta_runner
+          vars:
+            root_dir: "{{ anta_root_dir }}"
 
-    - name: Publish ANTA artifacts
-      run_once: true
+      rescue:
+        - name: Mark ANTA validation as failed
+          delegate_to: localhost
+          run_once: true
+          ansible.builtin.set_fact:
+            anta_validation_failed: true
+
+        - name: Report validation failure before publishing
+          delegate_to: localhost
+          run_once: true
+          ansible.builtin.debug:
+            msg:
+              - "ANTA validation reported failures."
+              - "Artifacts will still be published."
+              - "Reports directory: {{ anta_reports_dir }}"
+              - "Logs directory: {{ anta_logs_dir }}"
+
+      always:
+        - name: Publish ANTA artifacts
+          run_once: true
+          delegate_to: localhost
+          ansible.scm.git_publish:
+            commit:
+              message: |
+                {{ changes_name }}
+
+                {{ changes_description }}
+            token: "{{ github_pat }}"
+            path: "{{ repository.path }}"
+            include:
+              - "{{ artifacts_folder }}/{{ anta_folder }}"
+
+    - name: Fail play after publishing if ANTA validation failed
       delegate_to: localhost
-      ansible.scm.git_publish:
-        commit:
-          message: |
-            {{ changes_name }}
-
-            {{ changes_description }}
-        token: "{{ github_pat }}"
-        path: "{{ repository.path }}"
-        include:
-          - "{{ artifacts_folder }}/{{ anta_folder }}"
+      run_once: true
+      ansible.builtin.fail:
+        msg: >-
+          ANTA validation failed, but artifacts were published successfully to
+          {{ artifacts_repository }} on branch {{ artifacts_branch }}.
+      when:
+        - anta_validation_failed | bool
+        - fail_on_anta_failure | bool
