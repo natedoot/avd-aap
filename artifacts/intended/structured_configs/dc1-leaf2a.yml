@@ -95,6 +95,11 @@ loopback_interfaces:
   shutdown: false
   vrf: VRF10
   ip_address: 10.255.10.5/32
+management_api_http:
+  enable_http: true
+  enable_https: true
+  enable_vrfs:
+  - name: default
 management_interfaces:
 - name: Management1
   description: OOB_MANAGEMENT

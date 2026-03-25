@@ -7,6 +7,7 @@
   - [IP Name Servers](#ip-name-servers)
   - [Domain Lookup](#domain-lookup)
   - [NTP](#ntp)
+  - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
   - [Local Users](#local-users)
   - [Enable Password](#enable-password)
@@ -116,6 +117,33 @@ NTP servers VRF: default
 !
 ntp local-interface Management1
 ntp server pool.ntp.org prefer iburst
+```
+
+### Management API HTTP
+
+#### Management API HTTP Summary
+
+| HTTP | HTTPS | UNIX-Socket | Default Services | Session Timeout |
+| ---- | ----- | ----------- | ---------------- | --------------- |
+| True | True | - | - | 1440 minutes |
+
+#### Management API VRF Access
+
+| VRF Name | IPv4 ACL | IPv6 ACL |
+| -------- | -------- | -------- |
+| default | - | - |
+
+#### Management API HTTP Device Configuration
+
+```eos
+!
+management api http-commands
+   protocol https
+   protocol http
+   no shutdown
+   !
+   vrf default
+      no shutdown
 ```
 
 ## Authentication
