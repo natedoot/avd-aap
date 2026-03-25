@@ -7,8 +7,9 @@ fabric_name: DC1_FABRIC
 underlay_routing_protocol: ebgp
 overlay_routing_protocol: ebgp
 
-name_servers:
-  - 169.254.169.254
+dns_settings:
+  servers:
+    - 169.254.169.254
 
 ntp_settings:
   servers:
@@ -30,23 +31,18 @@ default_interfaces:
     downlink_interfaces: [ Ethernet4 ]
 
 # CloudVision Portal definitions
-# cv_settings:
-#   cvaas:
-#     enabled: true
-#     clusters:
-#       - name: prod
-#         region: us-central1-b
-#         vrf: default
-#   terminattr:
+cv_settings:
+  cvaas:
+    enabled: true
+    clusters:
+      - name: prod
+        region: us-central1-b
+        vrf: default
+  terminattr:
 
-#     # Disable AAA authorization and accounting.
-#     # When setting this flag, all commands pushed from CloudVision are applied directly to the CLI without authorization.
-#     disable_aaa: true
-
-cvp_instance_ips:
-  - apiserver.arista.io
-cvp_token_file: /tmp/cv-onboarding-token
-terminattr_disable_aaa: True
+    # Disable AAA authorization and accounting.
+    # When setting this flag, all commands pushed from CloudVision are applied directly to the CLI without authorization.
+    disable_aaa: true
 
 custom_structured_configuration_aaa_authorization:
   exec:
@@ -54,15 +50,16 @@ custom_structured_configuration_aaa_authorization:
 
 mgmt_interface_vrf: default
 
-local_users: 
-  - name: admin
-    privilege: 15
-    role: network-admin
-    sha512_password: $6$ViCjfR5/45mDVAaB$qP2hoaKkM/jds67sbX95PL4pcoKD3ZNQ5za8B2kbIQQ8mVDJpC1zUI.hBW2MEzCWZRMVXPYEWCixPyhWB6PxH.
-  - name: cvpadmin
-    privilege: 15
-    role: network-admin
-    sha512_password: $6$JIWpYntS5KpTMCGF$el6rGKnDYPqxKeMcJGutPctkOMiHrV/bej1DTmdTR8jEnuV/gQbTYa76slNHP1vwyN8Gq2kbNsMmXUwVhkwjy1
+aaa_settings:
+  local_users: 
+    - name: admin
+      privilege: 15
+      role: network-admin
+      sha512_password: $6$ViCjfR5/45mDVAaB$qP2hoaKkM/jds67sbX95PL4pcoKD3ZNQ5za8B2kbIQQ8mVDJpC1zUI.hBW2MEzCWZRMVXPYEWCixPyhWB6PxH.
+    - name: cvpadmin
+      privilege: 15
+      role: network-admin
+      sha512_password: $6$JIWpYntS5KpTMCGF$el6rGKnDYPqxKeMcJGutPctkOMiHrV/bej1DTmdTR8jEnuV/gQbTYa76slNHP1vwyN8Gq2kbNsMmXUwVhkwjy1
 
 network_services_keys: # default=[{'name': 'tenants'}]
   - name: tenants
