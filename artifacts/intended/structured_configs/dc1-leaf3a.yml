@@ -49,9 +49,6 @@ ethernet_interfaces:
   switchport:
     enabled: false
 hostname: dc1-leaf3a
-ip_domain_lookup:
-  source_interfaces:
-  - name: Management1
 ip_igmp_snooping:
   globally_enabled: true
 ip_name_server:

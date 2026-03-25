@@ -83,9 +83,6 @@ ethernet_interfaces:
   switchport:
     enabled: false
 hostname: dc1-spine2
-ip_domain_lookup:
-  source_interfaces:
-  - name: Management1
 ip_name_server:
   vrfs:
   - name: default
