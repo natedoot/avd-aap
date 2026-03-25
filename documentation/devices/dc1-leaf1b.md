@@ -5,8 +5,8 @@
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
   - [IP Name Servers](#ip-name-servers)
+  - [Domain Lookup](#domain-lookup)
   - [NTP](#ntp)
-  - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
   - [Local Users](#local-users)
   - [Enable Password](#enable-password)
@@ -65,9 +65,9 @@
 
 ##### IPv6
 
-| Management Interface | Description | Type | VRF | IPv6 Address | IPv6 Gateway |
-| -------------------- | ----------- | ---- | --- | ------------ | ------------ |
-| Management1 | OOB_MANAGEMENT | oob | default | - | - |
+| Management Interface | Description | Type | VRF | IPv6 Address | IPv6 Gateway | ND RA RX Accept | ND RA Disabled | ND Managed Config Flag |
+| -------------------- | ----------- | ---- | --- | ------------ | ------------ | --------------- | -------------- | ---------------------- |
+| Management1 | OOB_MANAGEMENT | oob | default | - | - | - | - | - |
 
 #### Management Interfaces Device Configuration
 
@@ -93,6 +93,20 @@ interface Management1
 ip name-server vrf default 169.254.169.254
 ```
 
+### Domain Lookup
+
+#### DNS Domain Lookup Summary
+
+| Source interface | vrf |
+| ---------------- | --- |
+| Management1 | - |
+
+#### DNS Domain Lookup Device Configuration
+
+```eos
+ip domain lookup source-interface Management1
+```
+
 ### NTP
 
 #### NTP Summary
@@ -105,9 +119,11 @@ ip name-server vrf default 169.254.169.254
 
 ##### NTP Servers
 
-| Server | VRF | Preferred | Burst | iBurst | Version | Min Poll | Max Poll | Local-interface | Key |
-| ------ | --- | --------- | ----- | ------ | ------- | -------- | -------- | --------------- | --- |
-| pool.ntp.org | default | True | - | True | - | - | - | - | - |
+NTP servers VRF: default
+
+| Server | Preferred | Burst | iBurst | Version | Min Poll | Max Poll | Local-interface | Key |
+| ------ | --------- | ----- | ------ | ------- | -------- | -------- | --------------- | --- |
+| pool.ntp.org | True | - | True | - | - | - | - | - |
 
 #### NTP Device Configuration
 
@@ -115,32 +131,6 @@ ip name-server vrf default 169.254.169.254
 !
 ntp local-interface Management1
 ntp server pool.ntp.org prefer iburst
-```
-
-### Management API HTTP
-
-#### Management API HTTP Summary
-
-| HTTP | HTTPS | UNIX-Socket | Default Services |
-| ---- | ----- | ----------- | ---------------- |
-| False | True | - | - |
-
-#### Management API VRF Access
-
-| VRF Name | IPv4 ACL | IPv6 ACL |
-| -------- | -------- | -------- |
-| default | - | - |
-
-#### Management API HTTP Device Configuration
-
-```eos
-!
-management api http-commands
-   protocol https
-   no shutdown
-   !
-   vrf default
-      no shutdown
 ```
 
 ## Authentication
@@ -255,7 +245,7 @@ spanning-tree mst 0 priority 4096
 ### Internal VLAN Allocation Policy Summary
 
 | Policy Allocation | Range Beginning | Range Ending |
-| ------------------| --------------- | ------------ |
+| ----------------- | --------------- | ------------ |
 | ascending | 1006 | 1199 |
 
 ### Internal VLAN Allocation Policy Device Configuration
@@ -325,8 +315,8 @@ vlan 4094
 
 ##### IPv4
 
-| Interface | Description | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
-| --------- | ----------- | ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
+| Interface | Description | Channel Group | IP Address | VRF | MTU | Shutdown | ACL In | ACL Out |
+| --------- | ----------- | ------------- | ---------- | --- | --- | -------- | ------ | ------- |
 | Ethernet1 | P2P_dc1-spine1_Ethernet2 | - | 1.1.255.5/31 | default | 1500 | False | - | - |
 | Ethernet2 | P2P_dc1-spine2_Ethernet2 | - | 1.1.255.7/31 | default | 1500 | False | - | - |
 
@@ -366,7 +356,7 @@ interface Ethernet4
 ##### L2
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
-| --------- | ----------- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
+| --------- | ----------- | ---- | ----- | ----------- | ----------- | --------------------- | ------------------ | ------- | -------- |
 | Port-Channel3 | MLAG_dc1-leaf1a_Port-Channel3 | trunk | - | - | MLAG | - | - | - | - |
 | Port-Channel4 | SERVERS_dc1-leaf1-server1_Bond1 | trunk | 11-12,21-22 | 4092 | - | - | - | 4 | - |
 
@@ -406,8 +396,8 @@ interface Port-Channel4
 
 ##### IPv6
 
-| Interface | Description | VRF | IPv6 Address |
-| --------- | ----------- | --- | ------------ |
+| Interface | Description | VRF | IPv6 Addresses |
+| --------- | ----------- | --- | -------------- |
 | Loopback0 | ROUTER_ID | default | - |
 | Loopback1 | VXLAN_TUNNEL_SOURCE | default | - |
 | Loopback10 | DIAG_VRF_VRF10 | VRF10 | - |
@@ -437,8 +427,8 @@ interface Loopback10
 
 #### VLAN Interfaces Summary
 
-| Interface | Description | VRF |  MTU | Shutdown |
-| --------- | ----------- | --- | ---- | -------- |
+| Interface | Description | VRF | MTU | Shutdown |
+| --------- | ----------- | --- | --- | -------- |
 | Vlan11 | VRF10_VLAN11 | VRF10 | - | False |
 | Vlan12 | VRF10_VLAN12 | VRF10 | - | False |
 | Vlan3009 | MLAG_L3_VRF_VRF10 | VRF10 | 1500 | False |
@@ -449,11 +439,11 @@ interface Loopback10
 
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ------ | ------- |
-| Vlan11 |  VRF10  |  -  |  10.10.11.1/24  |  -  |  -  |  -  |
-| Vlan12 |  VRF10  |  -  |  10.10.12.1/24  |  -  |  -  |  -  |
-| Vlan3009 |  VRF10  |  1.1.1.97/31  |  -  |  -  |  -  |  -  |
-| Vlan4093 |  default  |  1.1.1.97/31  |  -  |  -  |  -  |  -  |
-| Vlan4094 |  default  |  1.1.1.65/31  |  -  |  -  |  -  |  -  |
+| Vlan11 | VRF10 | - | 10.10.11.1/24 | - | - | - |
+| Vlan12 | VRF10 | - | 10.10.12.1/24 | - | - | - |
+| Vlan3009 | VRF10 | 1.1.1.97/31 | - | - | - | - |
+| Vlan4093 | default | 1.1.1.97/31 | - | - | - | - |
+| Vlan4094 | default | 1.1.1.65/31 | - | - | - | - |
 
 #### VLAN Interfaces Device Configuration
 
@@ -598,7 +588,7 @@ ASN Notation: asplain
 | ---------- |
 | update wait-install |
 | no bgp default ipv4-unicast |
-| maximum-paths 4 ecmp 4 |
+| maximum-paths 4 |
 
 #### Router BGP Peer Groups
 
@@ -619,7 +609,7 @@ ASN Notation: asplain
 | -------- | ----- |
 | Address Family | ipv4 |
 | Send community | all |
-| Maximum routes | 12000 |
+| Maximum routes | 256000 |
 
 ##### MLAG-IPv4-UNDERLAY-PEER
 
@@ -629,7 +619,7 @@ ASN Notation: asplain
 | Remote AS | 65101 |
 | Next-hop self | True |
 | Send community | all |
-| Maximum routes | 12000 |
+| Maximum routes | 256000 |
 
 #### BGP Neighbors
 
@@ -673,7 +663,7 @@ router bgp 65101
    router-id 1.1.0.4
    update wait-install
    no bgp default ipv4-unicast
-   maximum-paths 4 ecmp 4
+   maximum-paths 4
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
@@ -682,14 +672,14 @@ router bgp 65101
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor IPv4-UNDERLAY-PEERS peer group
    neighbor IPv4-UNDERLAY-PEERS send-community
-   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
+   neighbor IPv4-UNDERLAY-PEERS maximum-routes 256000
    neighbor MLAG-IPv4-UNDERLAY-PEER peer group
    neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65101
    neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
    neighbor MLAG-IPv4-UNDERLAY-PEER description dc1-leaf1a
    neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
-   neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
+   neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 256000
    neighbor 1.1.0.1 peer group EVPN-OVERLAY-PEERS
    neighbor 1.1.0.1 remote-as 65100
    neighbor 1.1.0.1 description dc1-spine1_Loopback0
