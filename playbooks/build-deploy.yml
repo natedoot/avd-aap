@@ -95,3 +95,4 @@
         name: cv_deploy
       vars:
         cv_server: www.cv-prod-us-central1-b.arista.io
+        cv_run_change_control: true
