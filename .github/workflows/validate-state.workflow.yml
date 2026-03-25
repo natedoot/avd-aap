@@ -42,4 +42,4 @@ jobs:
           ANTA_PASSWORD: ${{ secrets.ANTA_PASSWORD }}
         run: |
           set -euo pipefail
-          ansible-playbook -i inventory.yml playbooks/validate-state.yml
+          ansible-playbook -i inventory.yml playbooks/validate-state.yml -vvv
