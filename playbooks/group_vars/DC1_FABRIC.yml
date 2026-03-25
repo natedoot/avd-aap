@@ -10,6 +10,7 @@ overlay_routing_protocol: ebgp
 dns_settings:
   servers:
     - ip_address: 169.254.169.254
+  set_source_interfaces: false
 
 ntp_settings:
   servers:
