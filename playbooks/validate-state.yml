@@ -1,6 +1,6 @@
 ---
 - name: Test Arista fabric state
-  hosts: VEOS
+  hosts: all
   connection: local
   gather_facts: false
   collections:
