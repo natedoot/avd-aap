@@ -75,3 +75,6 @@ custom_connected_endpoints_keys:
 
     # Type used for documentation.
     type: servers
+
+generate_cv_tags:
+  topology_hints: true
