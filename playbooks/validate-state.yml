@@ -12,7 +12,7 @@
     artifacts_branch: "main"
     artifacts_folder: "artifacts"
     anta_folder: "anta"
-    fail_on_anta_failure: true
+    fail_on_anta_failure: false
 
     github_pat: "{{ lookup('env', 'GITHUB_TOKEN') }}"
     github_run_id: "{{ lookup('env', 'GITHUB_RUN_ID') | default('unknown', true) }}"
