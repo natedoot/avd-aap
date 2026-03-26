@@ -119,6 +119,12 @@ metadata:
   is_deployed: true
   platform: vEOS-LAB
   fabric_name: DC1_FABRIC
+  cv_tags:
+    device_tags:
+    - name: topology_hint_fabric
+      value: DC1_FABRIC
+    - name: topology_hint_type
+      value: spine
 ntp:
   local_interface:
     name: Management1

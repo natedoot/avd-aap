@@ -113,6 +113,14 @@ metadata:
   is_deployed: true
   platform: vEOS-LAB
   fabric_name: DC1_FABRIC
+  cv_tags:
+    device_tags:
+    - name: topology_hint_fabric
+      value: DC1_FABRIC
+    - name: topology_hint_type
+      value: leaf
+    - name: topology_hint_rack
+      value: DC1_L3_LEAF2
 mlag_configuration:
   domain_id: DC1_L3_LEAF2
   local_interface: Vlan4094
