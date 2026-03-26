@@ -2,5 +2,4 @@ avd-ee/context
 .devcontainer/
 digital_twin/
 *.tok
-act-inventory.yml
 ee-build/
