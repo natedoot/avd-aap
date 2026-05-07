@@ -274,6 +274,16 @@ router_bgp:
       - 10011:10011
     redistribute_routes:
     - learned
+  - id: 12
+    metadata:
+      tenants:
+      - TENANT1
+    rd: 1.1.0.6:10012
+    route_targets:
+      both:
+      - 10012:10012
+    redistribute_routes:
+    - learned
   - id: 21
     metadata:
       tenants:
@@ -404,6 +414,14 @@ vlan_interfaces:
   metadata:
     tenants:
     - TENANT1
+- name: Vlan12
+  description: VRF10_VLAN12
+  shutdown: false
+  vrf: VRF10
+  ip_address_virtual: 10.10.12.1/24
+  metadata:
+    tenants:
+    - TENANT1
 - name: Vlan3009
   description: MLAG_L3_VRF_VRF10
   shutdown: false
@@ -465,6 +483,11 @@ vlans:
   metadata:
     tenants:
     - TENANT1
+- id: 12
+  name: VRF10_VLAN12
+  metadata:
+    tenants:
+    - TENANT1
 - id: 3009
   name: MLAG_L3_VRF_VRF10
   trunk_groups:
@@ -522,6 +545,8 @@ vxlan_interface:
       vlans:
       - id: 11
         vni: 10011
+      - id: 12
+        vni: 10012
       - id: 21
         vni: 10021
       - id: 22
