@@ -47,6 +47,7 @@ jobs:
       - name: Run build and deploy playbook
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          CV_TOKEN: ${{ secrets.CV_TOKEN }}
         run: |
           set -euo pipefail
           ansible-playbook -i inventory.yml playbooks/build-deploy.yml
