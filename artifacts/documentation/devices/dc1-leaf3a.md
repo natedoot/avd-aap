@@ -278,7 +278,6 @@ vlan internal order ascending range 1006 1199
 | 12 | VRF10_VLAN12 | - |
 | 21 | VRF12_VLAN21 | - |
 | 22 | VRF12_VLAN22 | - |
-| 23 | VRF12_VLAN23 | - |
 | 3009 | MLAG_L3_VRF_VRF10 | MLAG |
 | 3011 | MLAG_L3_VRF_VRF12 | MLAG |
 | 3401 | L2_VLAN3401 | - |
@@ -301,9 +300,6 @@ vlan 21
 !
 vlan 22
    name VRF12_VLAN22
-!
-vlan 23
-   name VRF12_VLAN23
 !
 vlan 3009
    name MLAG_L3_VRF_VRF10
@@ -454,7 +450,6 @@ interface Loopback12
 | Vlan12 | VRF10_VLAN12 | VRF10 | - | False |
 | Vlan21 | VRF12_VLAN21 | VRF12 | - | False |
 | Vlan22 | VRF12_VLAN22 | VRF12 | - | False |
-| Vlan23 | VRF12_VLAN23 | VRF12 | - | False |
 | Vlan3009 | MLAG_L3_VRF_VRF10 | VRF10 | 1500 | False |
 | Vlan3011 | MLAG_L3_VRF_VRF12 | VRF12 | 1500 | False |
 | Vlan4093 | MLAG_L3 | default | 1500 | False |
@@ -468,7 +463,6 @@ interface Loopback12
 | Vlan12 | VRF10 | - | 10.10.12.1/24 | - | - | - |
 | Vlan21 | VRF12 | - | 10.10.21.1/24 | - | - | - |
 | Vlan22 | VRF12 | - | 10.10.22.1/24 | - | - | - |
-| Vlan23 | VRF12 | - | 10.10.23.1/24 | - | - | - |
 | Vlan3009 | VRF10 | 1.1.1.104/31 | - | - | - | - |
 | Vlan3011 | VRF12 | 1.1.1.104/31 | - | - | - | - |
 | Vlan4093 | default | 1.1.1.104/31 | - | - | - | - |
@@ -501,12 +495,6 @@ interface Vlan22
    no shutdown
    vrf VRF12
    ip address virtual 10.10.22.1/24
-!
-interface Vlan23
-   description VRF12_VLAN23
-   no shutdown
-   vrf VRF12
-   ip address virtual 10.10.23.1/24
 !
 interface Vlan3009
    description MLAG_L3_VRF_VRF10
@@ -554,7 +542,6 @@ interface Vlan4094
 | 12 | 10012 | - | - |
 | 21 | 10021 | - | - |
 | 22 | 10022 | - | - |
-| 23 | 10023 | - | - |
 | 3401 | 13401 | - | - |
 | 3402 | 13402 | - | - |
 
@@ -578,7 +565,6 @@ interface Vxlan1
    vxlan vlan 12 vni 10012
    vxlan vlan 21 vni 10021
    vxlan vlan 22 vni 10022
-   vxlan vlan 23 vni 10023
    vxlan vlan 3401 vni 13401
    vxlan vlan 3402 vni 13402
    vxlan vrf VRF10 vni 10
@@ -714,7 +700,6 @@ ASN Notation: asplain
 | 12 | 1.1.0.7:10012 | 10012:10012 | - | - | learned |
 | 21 | 1.1.0.7:10021 | 10021:10021 | - | - | learned |
 | 22 | 1.1.0.7:10022 | 10022:10022 | - | - | learned |
-| 23 | 1.1.0.7:10023 | 10023:10023 | - | - | learned |
 | 3401 | 1.1.0.7:13401 | 13401:13401 | - | - | learned |
 | 3402 | 1.1.0.7:13402 | 13402:13402 | - | - | learned |
 
@@ -784,11 +769,6 @@ router bgp 65103
    vlan 22
       rd 1.1.0.7:10022
       route-target both 10022:10022
-      redistribute learned
-   !
-   vlan 23
-      rd 1.1.0.7:10023
-      route-target both 10023:10023
       redistribute learned
    !
    vlan 3401
