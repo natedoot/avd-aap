@@ -1,48 +1,48 @@
-name: Build and Deploy EOS Configuration using Ansible Automation Platform
+# name: Build and Deploy EOS Configuration using Ansible Automation Platform
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'group_vars/**'
-      - 'playbooks/group_vars/**'
-      - 'playbooks/build-deploy.yml'
+# on:
+#   push:
+#     branches:
+#       - main
+#     paths:
+#       - 'group_vars/**'
+#       - 'playbooks/group_vars/**'
+#       - 'playbooks/build-deploy.yml'
 
-jobs:
-  launch-job-template:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Launch AAP job template
-        env:
-          AAP_BASE_URL: ${{ secrets.AAP_WEBHOOK_URL }}
-          AAP_TOKEN: ${{ secrets.AAP_TOKEN }}
-          GITHUB_REF_NAME: ${{ github.ref_name }}
-          GITHUB_SHA: ${{ github.sha }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          GITHUB_RUN_ID: ${{ github.run_id }}
-          GITHUB_EVENT_NAME: ${{ github.event_name }}
-          GITHUB_SERVER_URL: ${{ github.server_url }}
-        run: |
-          set -euo pipefail
+# jobs:
+#   launch-job-template:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Launch AAP job template
+#         env:
+#           AAP_BASE_URL: ${{ secrets.AAP_WEBHOOK_URL }}
+#           AAP_TOKEN: ${{ secrets.AAP_TOKEN }}
+#           GITHUB_REF_NAME: ${{ github.ref_name }}
+#           GITHUB_SHA: ${{ github.sha }}
+#           GITHUB_REPOSITORY: ${{ github.repository }}
+#           GITHUB_RUN_ID: ${{ github.run_id }}
+#           GITHUB_EVENT_NAME: ${{ github.event_name }}
+#           GITHUB_SERVER_URL: ${{ github.server_url }}
+#         run: |
+#           set -euo pipefail
 
-          cat > launch_payload.json <<EOF
-          {
-            "extra_vars": {
-              "github_repository": "${GITHUB_REPOSITORY}",
-              "github_ref_name": "${GITHUB_REF_NAME}",
-              "github_sha": "${GITHUB_SHA}",
-              "github_event_name": "${GITHUB_EVENT_NAME}",
-              "github_run_id": "${GITHUB_RUN_ID}",
-              "github_run_url": "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-            }
-          }
-          EOF
+#           cat > launch_payload.json <<EOF
+#           {
+#             "extra_vars": {
+#               "github_repository": "${GITHUB_REPOSITORY}",
+#               "github_ref_name": "${GITHUB_REF_NAME}",
+#               "github_sha": "${GITHUB_SHA}",
+#               "github_event_name": "${GITHUB_EVENT_NAME}",
+#               "github_run_id": "${GITHUB_RUN_ID}",
+#               "github_run_url": "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+#             }
+#           }
+#           EOF
 
-          curl --fail --show-error --silent \
-            -k \
-            -X POST \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${AAP_TOKEN}" \
-            --data @launch_payload.json \
-            "https://54.226.140.67/api/controller/v2/job_templates/9/launch/"
+#           curl --fail --show-error --silent \
+#             -k \
+#             -X POST \
+#             -H "Content-Type: application/json" \
+#             -H "Authorization: Bearer ${AAP_TOKEN}" \
+#             --data @launch_payload.json \
+#             "https://54.226.140.67/api/controller/v2/job_templates/9/launch/"
