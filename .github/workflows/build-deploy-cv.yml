@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 jobs:
-  validate-state:
+  build-deploy:
     runs-on: self-hosted
     steps:
       - name: Check out repository
