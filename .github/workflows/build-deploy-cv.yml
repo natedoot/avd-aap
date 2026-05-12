@@ -44,7 +44,7 @@ jobs:
           fi
           echo "GITHUB_TOKEN is set"
 
-      - name: Run ANTA validation playbook
+      - name: Run build and deploy playbook
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |

@@ -14,7 +14,7 @@
     artifacts_branch: "main"
     artifacts_folder: "artifacts"
     changes_name: "Update AVD artifacts from AAP build-deploy job"
-    changes_description: "Job ID: {{ awx_job_id }}"
+    #changes_description: "Job ID: {{ awx_job_id }}"
 
   tasks:
     - name: Generate intended variables
@@ -83,8 +83,6 @@
         commit:
           message: |
             {{ changes_name }}
-
-            {{ changes_description }}
         token: "{{ github_token }}"
         path: "{{ repository.path }}"
         include:
