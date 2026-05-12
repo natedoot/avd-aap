@@ -69,11 +69,11 @@
         remote_src: true
         mode: preserve
       loop:
-        - src: "/runner/inventory/intended/configs/"
+        - src: "/home/cvpadmin/actions-runner/_work/avd-aap/avd-aap/intended/configs/"
           dest: "{{ repository.path }}/{{ artifacts_folder }}/intended/configs/"
-        - src: "/runner/inventory/intended/structured_configs/"
+        - src: "/home/cvpadmin/actions-runner/_work/avd-aap/avd-aap/intended/structured_configs/"
           dest: "{{ repository.path }}/{{ artifacts_folder }}/intended/structured_configs/"
-        - src: "/runner/inventory/documentation/"
+        - src: "/home/cvpadmin/actions-runner/_work/avd-aap/avd-aap/documentation/"
           dest: "{{ repository.path }}/{{ artifacts_folder }}/documentation/"
 
     - name: Publish updated rendered artifacts
