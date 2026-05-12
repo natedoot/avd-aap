@@ -304,6 +304,16 @@ router_bgp:
       - 10022:10022
     redistribute_routes:
     - learned
+  - id: 23
+    metadata:
+      tenants:
+      - TENANT1
+    rd: 1.1.0.4:10023
+    route_targets:
+      both:
+      - 10023:10023
+    redistribute_routes:
+    - learned
   - id: 3401
     metadata:
       tenants:
@@ -448,6 +458,14 @@ vlan_interfaces:
   metadata:
     tenants:
     - TENANT1
+- name: Vlan23
+  description: VRF12_VLAN23
+  shutdown: false
+  vrf: VRF12
+  ip_address_virtual: 10.10.23.1/24
+  metadata:
+    tenants:
+    - TENANT1
 - name: Vlan3011
   description: MLAG_L3_VRF_VRF12
   shutdown: false
@@ -505,6 +523,11 @@ vlans:
   metadata:
     tenants:
     - TENANT1
+- id: 23
+  name: VRF12_VLAN23
+  metadata:
+    tenants:
+    - TENANT1
 - id: 3011
   name: MLAG_L3_VRF_VRF12
   trunk_groups:
@@ -551,6 +574,8 @@ vxlan_interface:
         vni: 10021
       - id: 22
         vni: 10022
+      - id: 23
+        vni: 10023
       - id: 3401
         vni: 13401
       - id: 3402
