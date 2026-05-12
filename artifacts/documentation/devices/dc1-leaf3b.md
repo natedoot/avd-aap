@@ -275,6 +275,7 @@ vlan internal order ascending range 1006 1199
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
 | 11 | VRF10_VLAN11 | - |
+| 12 | VRF10_VLAN12 | - |
 | 21 | VRF12_VLAN21 | - |
 | 22 | VRF12_VLAN22 | - |
 | 3009 | MLAG_L3_VRF_VRF10 | MLAG |
@@ -290,6 +291,9 @@ vlan internal order ascending range 1006 1199
 !
 vlan 11
    name VRF10_VLAN11
+!
+vlan 12
+   name VRF10_VLAN12
 !
 vlan 21
    name VRF12_VLAN21
@@ -443,6 +447,7 @@ interface Loopback12
 | Interface | Description | VRF | MTU | Shutdown |
 | --------- | ----------- | --- | --- | -------- |
 | Vlan11 | VRF10_VLAN11 | VRF10 | - | False |
+| Vlan12 | VRF10_VLAN12 | VRF10 | - | False |
 | Vlan21 | VRF12_VLAN21 | VRF12 | - | False |
 | Vlan22 | VRF12_VLAN22 | VRF12 | - | False |
 | Vlan3009 | MLAG_L3_VRF_VRF10 | VRF10 | 1500 | False |
@@ -455,6 +460,7 @@ interface Loopback12
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ------ | ------- |
 | Vlan11 | VRF10 | - | 10.10.11.1/24 | - | - | - |
+| Vlan12 | VRF10 | - | 10.10.12.1/24 | - | - | - |
 | Vlan21 | VRF12 | - | 10.10.21.1/24 | - | - | - |
 | Vlan22 | VRF12 | - | 10.10.22.1/24 | - | - | - |
 | Vlan3009 | VRF10 | 1.1.1.105/31 | - | - | - | - |
@@ -471,6 +477,12 @@ interface Vlan11
    no shutdown
    vrf VRF10
    ip address virtual 10.10.11.1/24
+!
+interface Vlan12
+   description VRF10_VLAN12
+   no shutdown
+   vrf VRF10
+   ip address virtual 10.10.12.1/24
 !
 interface Vlan21
    description VRF12_VLAN21
@@ -527,6 +539,7 @@ interface Vlan4094
 | VLAN | VNI | Flood List | Multicast Group |
 | ---- | --- | ---------- | --------------- |
 | 11 | 10011 | - | - |
+| 12 | 10012 | - | - |
 | 21 | 10021 | - | - |
 | 22 | 10022 | - | - |
 | 3401 | 13401 | - | - |
@@ -549,6 +562,7 @@ interface Vxlan1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
    vxlan vlan 11 vni 10011
+   vxlan vlan 12 vni 10012
    vxlan vlan 21 vni 10021
    vxlan vlan 22 vni 10022
    vxlan vlan 3401 vni 13401
@@ -683,6 +697,7 @@ ASN Notation: asplain
 | VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
 | ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
 | 11 | 1.1.0.8:10011 | 10011:10011 | - | - | learned |
+| 12 | 1.1.0.8:10012 | 10012:10012 | - | - | learned |
 | 21 | 1.1.0.8:10021 | 10021:10021 | - | - | learned |
 | 22 | 1.1.0.8:10022 | 10022:10022 | - | - | learned |
 | 3401 | 1.1.0.8:13401 | 13401:13401 | - | - | learned |
@@ -739,6 +754,11 @@ router bgp 65103
    vlan 11
       rd 1.1.0.8:10011
       route-target both 10011:10011
+      redistribute learned
+   !
+   vlan 12
+      rd 1.1.0.8:10012
+      route-target both 10012:10012
       redistribute learned
    !
    vlan 21
