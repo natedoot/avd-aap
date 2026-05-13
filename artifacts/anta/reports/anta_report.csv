@@ -2,9 +2,9 @@ Device,Test Name,Test Status,Message(s),Test description,Test category
 dc1-leaf1a,VerifyInterfacesStatus,failure,"Interface: Ethernet4 - Status mismatch - Expected: up/up, Actual: down/down - Interface: Port-Channel4 - Status mismatch - Expected: up/up, Actual: down/lowerLayerDown",Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
 dc1-leaf1a,VerifyPortChannels,failure,"Interface: Port-Channel4 - Inactive port(s) - Ethernet4, PeerEthernet4",Verifies there are no inactive ports in port channels.,Interfaces
 dc1-leaf1a,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
-May 12 17:56:34 dc1-leaf1a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1451) -- Master ProcMgr (PID=1451) exiting.
- May 12 17:57:51 dc1-leaf1a Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.2 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
- May 12 17:57:51 dc1-leaf1a Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.0 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
+May 13 17:57:19 dc1-leaf1a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1454) -- Master ProcMgr (PID=1454) exiting.
+ May 13 17:57:19 dc1-leaf1a StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1924) at tbl://stpListen/+n closed by peer (EOF)
+ May 13 17:57:19 dc1-leaf1a StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1924))
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-leaf1a,VerifyMlagInterfaces,failure,MLAG status is not ok - Inactive Ports: 1 Partial Active Ports: 0,Verifies there are no inactive or active-partial MLAG ports.,MLAG
@@ -12,9 +12,9 @@ dc1-leaf1a,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual
 dc1-leaf1b,VerifyInterfacesStatus,failure,"Interface: Ethernet4 - Status mismatch - Expected: up/up, Actual: down/down - Interface: Port-Channel4 - Status mismatch - Expected: up/up, Actual: down/lowerLayerDown",Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
 dc1-leaf1b,VerifyPortChannels,failure,"Interface: Port-Channel4 - Inactive port(s) - Ethernet4, PeerEthernet4",Verifies there are no inactive ports in port channels.,Interfaces
 dc1-leaf1b,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
-May 12 17:56:48 dc1-leaf1b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1450) -- Master ProcMgr (PID=1450) exiting.
- May 12 17:57:52 dc1-leaf1b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.6 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
- May 12 17:57:52 dc1-leaf1b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.4 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
+May 13 17:57:19 dc1-leaf1b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1450) -- Master ProcMgr (PID=1450) exiting.
+ May 13 17:58:19 dc1-leaf1b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.6 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
+ May 13 17:58:19 dc1-leaf1b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.4 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-leaf1b,VerifyMlagInterfaces,failure,MLAG status is not ok - Inactive Ports: 1 Partial Active Ports: 0,Verifies there are no inactive or active-partial MLAG ports.,MLAG
@@ -22,11 +22,9 @@ dc1-leaf1b,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual
 dc1-leaf2a,VerifyInterfacesStatus,failure,"Interface: Port-Channel4 - Status mismatch - Expected: up/up, Actual: down/lowerLayerDown",Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
 dc1-leaf2a,VerifyPortChannels,failure,"Interface: Port-Channel4 - Inactive port(s) - Ethernet4, PeerEthernet4",Verifies there are no inactive ports in port channels.,Interfaces
 dc1-leaf2a,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
-May 12 17:56:48 dc1-leaf2a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1450) -- Master ProcMgr (PID=1450) exiting.
- May 12 17:56:48 dc1-leaf2a StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1926) at tbl://stpListen/+n closed by peer (EOF)
- May 12 17:56:48 dc1-leaf2a StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1926))
- May 12 17:57:54 dc1-leaf2a Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.10 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
- May 12 17:57:54 dc1-leaf2a Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.8 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
+May 13 17:57:06 dc1-leaf2a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1454) -- Master ProcMgr (PID=1454) exiting.
+ May 13 17:57:06 dc1-leaf2a StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1902) at tbl://stpListen/+n closed by peer (EOF)
+ May 13 17:57:06 dc1-leaf2a StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1902))
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-leaf2a,VerifyMlagInterfaces,failure,MLAG status is not ok - Inactive Ports: 1 Partial Active Ports: 0,Verifies there are no inactive or active-partial MLAG ports.,MLAG
@@ -34,51 +32,52 @@ dc1-leaf2a,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual
 dc1-leaf2b,VerifyInterfacesStatus,failure,"Interface: Ethernet4 - Status mismatch - Expected: up/up, Actual: down/down - Interface: Port-Channel4 - Status mismatch - Expected: up/up, Actual: down/lowerLayerDown",Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
 dc1-leaf2b,VerifyPortChannels,failure,"Interface: Port-Channel4 - Inactive port(s) - Ethernet4, PeerEthernet4",Verifies there are no inactive ports in port channels.,Interfaces
 dc1-leaf2b,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
-May 12 17:56:43 dc1-leaf2b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1452) -- Master ProcMgr (PID=1452) exiting.
- May 12 17:56:44 dc1-leaf2b Stp: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to StpTxRx (pid:1894) at tbl://stpTxRxListen/+n closed by peer (EOF)
- May 12 17:56:44 dc1-leaf2b Stp: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpTxRxListen/+n-in)(StpTxRx (pid:1894))
- May 12 17:57:51 dc1-leaf2b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.14 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
- May 12 17:57:51 dc1-leaf2b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.12 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
+May 13 17:57:39 dc1-leaf2b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1449) -- Master ProcMgr (PID=1449) exiting.
+ May 13 17:58:46 dc1-leaf2b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.12 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
+ May 13 17:58:46 dc1-leaf2b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.14 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-leaf2b,VerifyMlagInterfaces,failure,MLAG status is not ok - Inactive Ports: 1 Partial Active Ports: 0,Verifies there are no inactive or active-partial MLAG ports.,MLAG
 dc1-leaf2b,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
 dc1-leaf3a,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
-May 12 17:56:43 dc1-leaf3a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1451) -- Master ProcMgr (PID=1451) exiting.
- May 12 17:56:43 dc1-leaf3a StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1935) at tbl://stpListen/+n closed by peer (EOF)
- May 12 17:56:43 dc1-leaf3a StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1935))
+May 13 17:57:15 dc1-leaf3a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1454) -- Master ProcMgr (PID=1454) exiting.
+ May 13 17:57:15 dc1-leaf3a StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1925) at tbl://stpListen/+n closed by peer (EOF)
+ May 13 17:57:15 dc1-leaf3a StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1925))
+ May 13 17:58:14 dc1-leaf3a Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.16 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
+ May 13 17:58:14 dc1-leaf3a Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.18 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-leaf3a,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
 dc1-leaf3b,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
-May 12 17:56:40 dc1-leaf3b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1452) -- Master ProcMgr (PID=1452) exiting.
- May 12 17:56:40 dc1-leaf3b StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1932) at tbl://stpListen/+n closed by peer (EOF)
- May 12 17:56:40 dc1-leaf3b StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1932))
- May 12 17:57:42 dc1-leaf3b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.22 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
- May 12 17:57:42 dc1-leaf3b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.20 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
+May 13 17:57:07 dc1-leaf3b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1450) -- Master ProcMgr (PID=1450) exiting.
+ May 13 17:57:07 dc1-leaf3b StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1915) at tbl://stpListen/+n closed by peer (EOF)
+ May 13 17:57:07 dc1-leaf3b StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1915))
+ May 13 17:57:08 dc1-leaf3b ConfigAgent: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Sysdb (pid:1649) at tbl://sysdb/+n closed by peer (EOF)
+ May 13 17:57:08 dc1-leaf3b ConfigAgent: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://sysdb/+n-in)(Sysdb (pid:1649))
+ May 13 17:57:08 dc1-leaf3b ConfigAgent: %FWK-3-MOUNT_CLOSED_EXIT: Process exiting.
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-leaf3b,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
 dc1-spine1,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
-May 12 17:56:30 dc1-spine1 ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1410) -- Master ProcMgr (PID=1410) exiting.
- May 12 17:56:30 dc1-spine1 Stp: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to StpTxRx (pid:1836) at tbl://stpTxRxListen/+n closed by peer (EOF)
- May 12 17:56:30 dc1-spine1 Stp: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpTxRxListen/+n-in)(StpTxRx (pid:1836))
- May 12 17:57:43 dc1-spine1 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.21 (VRF default AS 65103) 6/5 (Cease/connection rejected) 0 bytes
- May 12 17:57:51 dc1-spine1 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.13 (VRF default AS 65102) 6/5 (Cease/connection rejected) 0 bytes
- May 12 17:57:52 dc1-spine1 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.1 (VRF default AS 65101) 6/5 (Cease/connection rejected) 0 bytes
- May 12 17:57:52 dc1-spine1 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.5 (VRF default AS 65101) 6/5 (Cease/connection rejected) 0 bytes
- May 12 17:57:54 dc1-spine1 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.9 (VRF default AS 65102) 6/5 (Cease/connection rejected) 0 bytes
+May 13 17:57:08 dc1-spine1 ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1411) -- Master ProcMgr (PID=1411) exiting.
+ May 13 17:57:08 dc1-spine1 StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1867) at tbl://stpListen/+n closed by peer (EOF)
+ May 13 17:57:08 dc1-spine1 StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1867))
+ May 13 17:58:14 dc1-spine1 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.17 (VRF default AS 65103) 6/5 (Cease/connection rejected) 0 bytes
+ May 13 17:58:18 dc1-spine1 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.5 (VRF default AS 65101) 6/5 (Cease/connection rejected) 0 bytes
+ May 13 17:58:46 dc1-spine1 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.13 (VRF default AS 65102) 6/5 (Cease/connection rejected) 0 bytes
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-spine1,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
 dc1-spine2,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
-May 12 17:56:23 dc1-spine2 ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1407) -- Master ProcMgr (PID=1407) exiting.
- May 12 17:56:23 dc1-spine2 StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1867) at tbl://stpListen/+n closed by peer (EOF)
- May 12 17:57:43 dc1-spine2 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.23 (VRF default AS 65103) 6/5 (Cease/connection rejected) 0 bytes
- May 12 17:57:52 dc1-spine2 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.15 (VRF default AS 65102) 6/5 (Cease/connection rejected) 0 bytes
- May 12 17:57:52 dc1-spine2 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.3 (VRF default AS 65101) 6/5 (Cease/connection rejected) 0 bytes
- May 12 17:57:53 dc1-spine2 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.7 (VRF default AS 65101) 6/5 (Cease/connection rejected) 0 bytes
- May 12 17:57:54 dc1-spine2 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.11 (VRF default AS 65102) 6/5 (Cease/connection rejected) 0 bytes
+May 13 17:57:19 dc1-spine2 ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1412) -- Master ProcMgr (PID=1412) exiting.
+ May 13 17:57:19 dc1-spine2 StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1871) at tbl://stpListen/+n closed by peer (EOF)
+ May 13 17:57:19 dc1-spine2 StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1871))
+ May 13 17:57:19 dc1-spine2 ConfigAgent: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Sysdb (pid:1612) at tbl://sysdb/+n closed by peer (EOF)
+ May 13 17:57:19 dc1-spine2 ConfigAgent: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://sysdb/+n-in)(Sysdb (pid:1612))
+ May 13 17:57:19 dc1-spine2 ConfigAgent: %FWK-3-MOUNT_CLOSED_EXIT: Process exiting.
+ May 13 17:58:14 dc1-spine2 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.19 (VRF default AS 65103) 6/5 (Cease/connection rejected) 0 bytes
+ May 13 17:58:18 dc1-spine2 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.7 (VRF default AS 65101) 6/5 (Cease/connection rejected) 0 bytes
+ May 13 17:58:46 dc1-spine2 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.15 (VRF default AS 65102) 6/5 (Cease/connection rejected) 0 bytes
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-spine2,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
