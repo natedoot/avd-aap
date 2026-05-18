@@ -47,6 +47,9 @@
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
+- [Virtual Source NAT](#virtual-source-nat)
+  - [Virtual Source NAT Summary](#virtual-source-nat-summary)
+  - [Virtual Source NAT Configuration](#virtual-source-nat-configuration)
 
 ## Management
 
@@ -271,12 +274,50 @@ vlan internal order ascending range 1006 1199
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
+| 11 | VRF10_VLAN11 | - |
+| 12 | VRF10_VLAN12 | - |
+| 13 | VRF10_VLAN13 | - |
+| 21 | VRF12_VLAN21 | - |
+| 22 | VRF12_VLAN22 | - |
+| 3009 | MLAG_L3_VRF_VRF10 | MLAG |
+| 3011 | MLAG_L3_VRF_VRF12 | MLAG |
+| 3401 | L2_VLAN3401 | - |
+| 3402 | L2_VLAN3402 | - |
 | 4093 | MLAG_L3 | MLAG |
 | 4094 | MLAG | MLAG |
 
 ### VLANs Device Configuration
 
 ```eos
+!
+vlan 11
+   name VRF10_VLAN11
+!
+vlan 12
+   name VRF10_VLAN12
+!
+vlan 13
+   name VRF10_VLAN13
+!
+vlan 21
+   name VRF12_VLAN21
+!
+vlan 22
+   name VRF12_VLAN22
+!
+vlan 3009
+   name MLAG_L3_VRF_VRF10
+   trunk group MLAG
+!
+vlan 3011
+   name MLAG_L3_VRF_VRF12
+   trunk group MLAG
+!
+vlan 3401
+   name L2_VLAN3401
+!
+vlan 3402
+   name L2_VLAN3402
 !
 vlan 4093
    name MLAG_L3
@@ -364,6 +405,8 @@ interface Port-Channel3
 | --------- | ----------- | --- | ---------- |
 | Loopback0 | ROUTER_ID | default | 1.1.0.5/32 |
 | Loopback1 | VXLAN_TUNNEL_SOURCE | default | 1.1.1.5/32 |
+| Loopback10 | DIAG_VRF_VRF10 | VRF10 | 10.255.10.5/32 |
+| Loopback12 | DIAG_VRF_VRF12 | VRF12 | 10.255.12.5/32 |
 
 ##### IPv6
 
@@ -371,6 +414,8 @@ interface Port-Channel3
 | --------- | ----------- | --- | -------------- |
 | Loopback0 | ROUTER_ID | default | - |
 | Loopback1 | VXLAN_TUNNEL_SOURCE | default | - |
+| Loopback10 | DIAG_VRF_VRF10 | VRF10 | - |
+| Loopback12 | DIAG_VRF_VRF12 | VRF12 | - |
 
 #### Loopback Interfaces Device Configuration
 
@@ -385,6 +430,18 @@ interface Loopback1
    description VXLAN_TUNNEL_SOURCE
    no shutdown
    ip address 1.1.1.5/32
+!
+interface Loopback10
+   description DIAG_VRF_VRF10
+   no shutdown
+   vrf VRF10
+   ip address 10.255.10.5/32
+!
+interface Loopback12
+   description DIAG_VRF_VRF12
+   no shutdown
+   vrf VRF12
+   ip address 10.255.12.5/32
 ```
 
 ### VLAN Interfaces
@@ -393,6 +450,13 @@ interface Loopback1
 
 | Interface | Description | VRF | MTU | Shutdown |
 | --------- | ----------- | --- | --- | -------- |
+| Vlan11 | VRF10_VLAN11 | VRF10 | - | False |
+| Vlan12 | VRF10_VLAN12 | VRF10 | - | False |
+| Vlan13 | VRF10_VLAN13 | VRF10 | - | False |
+| Vlan21 | VRF12_VLAN21 | VRF12 | - | False |
+| Vlan22 | VRF12_VLAN22 | VRF12 | - | False |
+| Vlan3009 | MLAG_L3_VRF_VRF10 | VRF10 | 1500 | False |
+| Vlan3011 | MLAG_L3_VRF_VRF12 | VRF12 | 1500 | False |
 | Vlan4093 | MLAG_L3 | default | 1500 | False |
 | Vlan4094 | MLAG | default | 1500 | False |
 
@@ -400,12 +464,63 @@ interface Loopback1
 
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ------ | ------- |
+| Vlan11 | VRF10 | - | 10.10.11.1/24 | - | - | - |
+| Vlan12 | VRF10 | - | 10.10.12.1/24 | - | - | - |
+| Vlan13 | VRF10 | - | 10.10.13.1/24 | - | - | - |
+| Vlan21 | VRF12 | - | 10.10.21.1/24 | - | - | - |
+| Vlan22 | VRF12 | - | 10.10.22.1/24 | - | - | - |
+| Vlan3009 | VRF10 | 1.1.1.100/31 | - | - | - | - |
+| Vlan3011 | VRF12 | 1.1.1.100/31 | - | - | - | - |
 | Vlan4093 | default | 1.1.1.100/31 | - | - | - | - |
 | Vlan4094 | default | 1.1.1.68/31 | - | - | - | - |
 
 #### VLAN Interfaces Device Configuration
 
 ```eos
+!
+interface Vlan11
+   description VRF10_VLAN11
+   no shutdown
+   vrf VRF10
+   ip address virtual 10.10.11.1/24
+!
+interface Vlan12
+   description VRF10_VLAN12
+   no shutdown
+   vrf VRF10
+   ip address virtual 10.10.12.1/24
+!
+interface Vlan13
+   description VRF10_VLAN13
+   no shutdown
+   vrf VRF10
+   ip address virtual 10.10.13.1/24
+!
+interface Vlan21
+   description VRF12_VLAN21
+   no shutdown
+   vrf VRF12
+   ip address virtual 10.10.21.1/24
+!
+interface Vlan22
+   description VRF12_VLAN22
+   no shutdown
+   vrf VRF12
+   ip address virtual 10.10.22.1/24
+!
+interface Vlan3009
+   description MLAG_L3_VRF_VRF10
+   no shutdown
+   mtu 1500
+   vrf VRF10
+   ip address 1.1.1.100/31
+!
+interface Vlan3011
+   description MLAG_L3_VRF_VRF12
+   no shutdown
+   mtu 1500
+   vrf VRF12
+   ip address 1.1.1.100/31
 !
 interface Vlan4093
    description MLAG_L3
@@ -431,6 +546,25 @@ interface Vlan4094
 | UDP port | 4789 |
 | EVPN MLAG Shared Router MAC | mlag-system-id |
 
+##### VLAN to VNI, Flood List and Multicast Group Mappings
+
+| VLAN | VNI | Flood List | Multicast Group |
+| ---- | --- | ---------- | --------------- |
+| 11 | 10011 | - | - |
+| 12 | 10012 | - | - |
+| 13 | 10013 | - | - |
+| 21 | 10021 | - | - |
+| 22 | 10022 | - | - |
+| 3401 | 13401 | - | - |
+| 3402 | 13402 | - | - |
+
+##### VRF to VNI and Multicast Group Mappings
+
+| VRF | VNI | Overlay Multicast Group to Encap Mappings |
+| --- | --- | ----------------------------------------- |
+| VRF10 | 10 | - |
+| VRF12 | 12 | - |
+
 #### VXLAN Interface Device Configuration
 
 ```eos
@@ -440,6 +574,15 @@ interface Vxlan1
    vxlan source-interface Loopback1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
+   vxlan vlan 11 vni 10011
+   vxlan vlan 12 vni 10012
+   vxlan vlan 13 vni 10013
+   vxlan vlan 21 vni 10021
+   vxlan vlan 22 vni 10022
+   vxlan vlan 3401 vni 13401
+   vxlan vlan 3402 vni 13402
+   vxlan vrf VRF10 vni 10
+   vxlan vrf VRF12 vni 12
 ```
 
 ## Routing
@@ -473,12 +616,16 @@ ip virtual-router mac-address 00:1c:73:00:00:99
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | True |
+| VRF10 | True |
+| VRF12 | True |
 
 #### IP Routing Device Configuration
 
 ```eos
 !
 ip routing
+ip routing vrf VRF10
+ip routing vrf VRF12
 ```
 
 ### IPv6 Routing
@@ -489,6 +636,8 @@ ip routing
 | --- | --------------- |
 | default | False |
 | default | false |
+| VRF10 | false |
+| VRF12 | false |
 
 ### Router BGP
 
@@ -546,6 +695,8 @@ ASN Notation: asplain
 | 1.1.1.101 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - | - | - | - |
 | 1.1.255.8 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
 | 1.1.255.10 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 1.1.1.101 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | VRF10 | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - | - | - | - |
+| 1.1.1.101 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | VRF12 | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - | - | - | - |
 
 #### Router BGP EVPN Address Family
 
@@ -554,6 +705,25 @@ ASN Notation: asplain
 | Peer Group | Activate | Route-map In | Route-map Out | Peer-tag In | Peer-tag Out | Encapsulation | Next-hop-self Source Interface |
 | ---------- | -------- | ------------ | ------------- | ----------- | ------------ | ------------- | ------------------------------ |
 | EVPN-OVERLAY-PEERS | True | - | - | - | - | default | - |
+
+#### Router BGP VLANs
+
+| VLAN | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute |
+| ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
+| 11 | 1.1.0.5:10011 | 10011:10011 | - | - | learned |
+| 12 | 1.1.0.5:10012 | 10012:10012 | - | - | learned |
+| 13 | 1.1.0.5:10013 | 10013:10013 | - | - | learned |
+| 21 | 1.1.0.5:10021 | 10021:10021 | - | - | learned |
+| 22 | 1.1.0.5:10022 | 10022:10022 | - | - | learned |
+| 3401 | 1.1.0.5:13401 | 13401:13401 | - | - | learned |
+| 3402 | 1.1.0.5:13402 | 13402:13402 | - | - | learned |
+
+#### Router BGP VRFs
+
+| VRF | Route-Distinguisher | Redistribute | Graceful Restart |
+| --- | ------------------- | ------------ | ---------------- |
+| VRF10 | 1.1.0.5:10 | connected | - |
+| VRF12 | 1.1.0.5:12 | connected | - |
 
 #### Router BGP Device Configuration
 
@@ -596,6 +766,41 @@ router bgp 65102
    neighbor 1.1.255.10 description dc1-spine2_Ethernet3
    redistribute connected route-map RM-CONN-2-BGP
    !
+   vlan 11
+      rd 1.1.0.5:10011
+      route-target both 10011:10011
+      redistribute learned
+   !
+   vlan 12
+      rd 1.1.0.5:10012
+      route-target both 10012:10012
+      redistribute learned
+   !
+   vlan 13
+      rd 1.1.0.5:10013
+      route-target both 10013:10013
+      redistribute learned
+   !
+   vlan 21
+      rd 1.1.0.5:10021
+      route-target both 10021:10021
+      redistribute learned
+   !
+   vlan 22
+      rd 1.1.0.5:10022
+      route-target both 10022:10022
+      redistribute learned
+   !
+   vlan 3401
+      rd 1.1.0.5:13401
+      route-target both 13401:13401
+      redistribute learned
+   !
+   vlan 3402
+      rd 1.1.0.5:13402
+      route-target both 13402:13402
+      redistribute learned
+   !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
    !
@@ -603,6 +808,26 @@ router bgp 65102
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
+   !
+   vrf VRF10
+      rd 1.1.0.5:10
+      route-target import evpn 10:10
+      route-target export evpn 10:10
+      router-id 1.1.0.5
+      update wait-install
+      neighbor 1.1.1.101 peer group MLAG-IPv4-UNDERLAY-PEER
+      neighbor 1.1.1.101 description dc1-leaf2b_Vlan3009
+      redistribute connected route-map RM-CONN-2-BGP-VRFS
+   !
+   vrf VRF12
+      rd 1.1.0.5:12
+      route-target import evpn 12:12
+      route-target export evpn 12:12
+      router-id 1.1.0.5
+      update wait-install
+      neighbor 1.1.1.101 peer group MLAG-IPv4-UNDERLAY-PEER
+      neighbor 1.1.1.101 description dc1-leaf2b_Vlan3011
+      redistribute connected route-map RM-CONN-2-BGP-VRFS
 ```
 
 ## BFD
@@ -651,6 +876,12 @@ router bfd
 | 10 | permit 1.1.0.0/27 eq 32 |
 | 20 | permit 1.1.1.0/27 eq 32 |
 
+##### PL-MLAG-PEER-VRFS
+
+| Sequence | Action |
+| -------- | ------ |
+| 10 | permit 1.1.1.100/31 |
+
 #### Prefix-lists Device Configuration
 
 ```eos
@@ -658,6 +889,9 @@ router bfd
 ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
    seq 10 permit 1.1.0.0/27 eq 32
    seq 20 permit 1.1.1.0/27 eq 32
+!
+ip prefix-list PL-MLAG-PEER-VRFS
+   seq 10 permit 1.1.1.100/31
 ```
 
 ### Route-maps
@@ -669,6 +903,13 @@ ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 | Sequence | Type | Match | Set | Sub-Route-Map | Continue |
 | -------- | ---- | ----- | --- | ------------- | -------- |
 | 10 | permit | ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY | - | - | - |
+
+##### RM-CONN-2-BGP-VRFS
+
+| Sequence | Type | Match | Set | Sub-Route-Map | Continue |
+| -------- | ---- | ----- | --- | ------------- | -------- |
+| 10 | deny | ip address prefix-list PL-MLAG-PEER-VRFS | - | - | - |
+| 20 | permit | - | - | - | - |
 
 ##### RM-MLAG-PEER-IN
 
@@ -683,6 +924,11 @@ ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 route-map RM-CONN-2-BGP permit 10
    match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 !
+route-map RM-CONN-2-BGP-VRFS deny 10
+   match ip address prefix-list PL-MLAG-PEER-VRFS
+!
+route-map RM-CONN-2-BGP-VRFS permit 20
+!
 route-map RM-MLAG-PEER-IN permit 10
    description Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal routing
    set origin incomplete
@@ -694,8 +940,31 @@ route-map RM-MLAG-PEER-IN permit 10
 
 | VRF Name | IP Routing |
 | -------- | ---------- |
+| VRF10 | enabled |
+| VRF12 | enabled |
 
 ### VRF Instances Device Configuration
 
 ```eos
+!
+vrf instance VRF10
+!
+vrf instance VRF12
+```
+
+## Virtual Source NAT
+
+### Virtual Source NAT Summary
+
+| Source NAT VRF | Source NAT IPv4 Address | Source NAT IPv6 Address |
+| -------------- | ----------------------- | ----------------------- |
+| VRF10 | 10.255.10.5 | - |
+| VRF12 | 10.255.12.5 | - |
+
+### Virtual Source NAT Configuration
+
+```eos
+!
+ip address virtual source-nat vrf VRF10 address 10.255.10.5
+ip address virtual source-nat vrf VRF12 address 10.255.12.5
 ```
