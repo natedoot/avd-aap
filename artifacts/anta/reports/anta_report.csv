@@ -1,83 +1,64 @@
 Device,Test Name,Test Status,Message(s),Test description,Test category
-dc1-leaf1a,VerifyInterfacesStatus,failure,"Interface: Ethernet4 - Status mismatch - Expected: up/up, Actual: down/down - Interface: Port-Channel4 - Status mismatch - Expected: up/up, Actual: down/lowerLayerDown",Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
-dc1-leaf1a,VerifyPortChannels,failure,"Interface: Port-Channel4 - Inactive port(s) - Ethernet4, PeerEthernet4",Verifies there are no inactive ports in port channels.,Interfaces
 dc1-leaf1a,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
-May 13 17:57:19 dc1-leaf1a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1454) -- Master ProcMgr (PID=1454) exiting.
- May 13 17:57:19 dc1-leaf1a StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1924) at tbl://stpListen/+n closed by peer (EOF)
- May 13 17:57:19 dc1-leaf1a StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1924))
+May 18 15:56:20 dc1-leaf1a PhyEthtool: %ETH-3-NETLINKFAIL: Cannot init netlink stats cache : NETLINK Error Error fetching statistics  <extra parameters: '-31' >
+ May 18 15:56:27 dc1-leaf1a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1388) -- Master ProcMgr (PID=1388) exiting.
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
-dc1-leaf1a,VerifyMlagInterfaces,failure,MLAG status is not ok - Inactive Ports: 1 Partial Active Ports: 0,Verifies there are no inactive or active-partial MLAG ports.,MLAG
 dc1-leaf1a,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
-dc1-leaf1b,VerifyInterfacesStatus,failure,"Interface: Ethernet4 - Status mismatch - Expected: up/up, Actual: down/down - Interface: Port-Channel4 - Status mismatch - Expected: up/up, Actual: down/lowerLayerDown",Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
-dc1-leaf1b,VerifyPortChannels,failure,"Interface: Port-Channel4 - Inactive port(s) - Ethernet4, PeerEthernet4",Verifies there are no inactive ports in port channels.,Interfaces
+dc1-leaf1a,VerifyVxlanConfigSanity,failure,Vxlan Category: localVtep - Config sanity check is not passing,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
 dc1-leaf1b,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
-May 13 17:57:19 dc1-leaf1b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1450) -- Master ProcMgr (PID=1450) exiting.
- May 13 17:58:19 dc1-leaf1b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.6 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
- May 13 17:58:19 dc1-leaf1b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.4 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
+May 18 15:56:19 dc1-leaf1b PhyEthtool: %ETH-3-NETLINKFAIL: Cannot init netlink stats cache : NETLINK Error Error fetching statistics  <extra parameters: '-31' >
+ May 18 15:56:27 dc1-leaf1b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1393) -- Master ProcMgr (PID=1393) exiting.
+ May 18 15:56:27 dc1-leaf1b Stp: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to StpTxRx (pid:1793) at tbl://stpTxRxListen/+n closed by peer (EOF)
+ May 18 15:56:27 dc1-leaf1b Stp: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpTxRxListen/+n-in)(StpTxRx (pid:1793))
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
-dc1-leaf1b,VerifyMlagInterfaces,failure,MLAG status is not ok - Inactive Ports: 1 Partial Active Ports: 0,Verifies there are no inactive or active-partial MLAG ports.,MLAG
 dc1-leaf1b,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
-dc1-leaf2a,VerifyInterfacesStatus,failure,"Interface: Port-Channel4 - Status mismatch - Expected: up/up, Actual: down/lowerLayerDown",Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
-dc1-leaf2a,VerifyPortChannels,failure,"Interface: Port-Channel4 - Inactive port(s) - Ethernet4, PeerEthernet4",Verifies there are no inactive ports in port channels.,Interfaces
+dc1-leaf1b,VerifyVxlanConfigSanity,failure,Vxlan Category: localVtep - Config sanity check is not passing,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
 dc1-leaf2a,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
-May 13 17:57:06 dc1-leaf2a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1454) -- Master ProcMgr (PID=1454) exiting.
- May 13 17:57:06 dc1-leaf2a StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1902) at tbl://stpListen/+n closed by peer (EOF)
- May 13 17:57:06 dc1-leaf2a StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1902))
+May 18 15:56:19 dc1-leaf2a PhyEthtool: %ETH-3-NETLINKFAIL: Cannot init netlink stats cache : NETLINK Error Error fetching statistics  <extra parameters: '-31' >
+ May 18 15:56:27 dc1-leaf2a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1390) -- Master ProcMgr (PID=1390) exiting.
+ May 18 15:56:27 dc1-leaf2a Stp: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to StpTxRx (pid:1797) at tbl://stpTxRxListen/+n closed by peer (EOF)
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
-dc1-leaf2a,VerifyMlagInterfaces,failure,MLAG status is not ok - Inactive Ports: 1 Partial Active Ports: 0,Verifies there are no inactive or active-partial MLAG ports.,MLAG
 dc1-leaf2a,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
-dc1-leaf2b,VerifyInterfacesStatus,failure,"Interface: Ethernet4 - Status mismatch - Expected: up/up, Actual: down/down - Interface: Port-Channel4 - Status mismatch - Expected: up/up, Actual: down/lowerLayerDown",Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
-dc1-leaf2b,VerifyPortChannels,failure,"Interface: Port-Channel4 - Inactive port(s) - Ethernet4, PeerEthernet4",Verifies there are no inactive ports in port channels.,Interfaces
+dc1-leaf2a,VerifyVxlanConfigSanity,failure,Vxlan Category: localVtep - Config sanity check is not passing,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
 dc1-leaf2b,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
-May 13 17:57:39 dc1-leaf2b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1449) -- Master ProcMgr (PID=1449) exiting.
- May 13 17:58:46 dc1-leaf2b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.12 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
- May 13 17:58:46 dc1-leaf2b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.14 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
+May 18 15:56:19 dc1-leaf2b PhyEthtool: %ETH-3-NETLINKFAIL: Cannot init netlink stats cache : NETLINK Error Error fetching statistics  <extra parameters: '-31' >
+ May 18 15:56:27 dc1-leaf2b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1391) -- Master ProcMgr (PID=1391) exiting.
+ May 18 15:56:27 dc1-leaf2b StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1826) at tbl://stpListen/+n closed by peer (EOF)
+ May 18 15:56:27 dc1-leaf2b StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1826))
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
-dc1-leaf2b,VerifyMlagInterfaces,failure,MLAG status is not ok - Inactive Ports: 1 Partial Active Ports: 0,Verifies there are no inactive or active-partial MLAG ports.,MLAG
 dc1-leaf2b,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
+dc1-leaf2b,VerifyVxlanConfigSanity,failure,Vxlan Category: localVtep - Config sanity check is not passing,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
 dc1-leaf3a,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
-May 13 17:57:15 dc1-leaf3a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1454) -- Master ProcMgr (PID=1454) exiting.
- May 13 17:57:15 dc1-leaf3a StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1925) at tbl://stpListen/+n closed by peer (EOF)
- May 13 17:57:15 dc1-leaf3a StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1925))
- May 13 17:58:14 dc1-leaf3a Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.16 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
- May 13 17:58:14 dc1-leaf3a Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.255.18 (VRF default AS 65100) 6/5 (Cease/connection rejected) 0 bytes
+May 18 15:56:20 dc1-leaf3a PhyEthtool: %ETH-3-NETLINKFAIL: Cannot init netlink stats cache : NETLINK Error Error fetching statistics  <extra parameters: '-31' >
+ May 18 15:56:27 dc1-leaf3a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1393) -- Master ProcMgr (PID=1393) exiting.
+ May 18 15:56:27 dc1-leaf3a StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1825) at tbl://stpListen/+n closed by peer (EOF)
+ May 18 15:56:27 dc1-leaf3a StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1825))
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-leaf3a,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
+dc1-leaf3a,VerifyVxlanConfigSanity,failure,Vxlan Category: localVtep - Config sanity check is not passing,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
 dc1-leaf3b,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
-May 13 17:57:07 dc1-leaf3b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1450) -- Master ProcMgr (PID=1450) exiting.
- May 13 17:57:07 dc1-leaf3b StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1915) at tbl://stpListen/+n closed by peer (EOF)
- May 13 17:57:07 dc1-leaf3b StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1915))
- May 13 17:57:08 dc1-leaf3b ConfigAgent: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Sysdb (pid:1649) at tbl://sysdb/+n closed by peer (EOF)
- May 13 17:57:08 dc1-leaf3b ConfigAgent: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://sysdb/+n-in)(Sysdb (pid:1649))
- May 13 17:57:08 dc1-leaf3b ConfigAgent: %FWK-3-MOUNT_CLOSED_EXIT: Process exiting.
+May 18 15:56:19 dc1-leaf3b PhyEthtool: %ETH-3-NETLINKFAIL: Cannot init netlink stats cache : NETLINK Error Error fetching statistics  <extra parameters: '-31' >
+ May 18 15:56:27 dc1-leaf3b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1391) -- Master ProcMgr (PID=1391) exiting.
+ May 18 15:56:27 dc1-leaf3b StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1813) at tbl://stpListen/+n closed by peer (EOF)
+ May 18 15:56:27 dc1-leaf3b StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1813))
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-leaf3b,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
+dc1-leaf3b,VerifyVxlanConfigSanity,failure,Vxlan Category: localVtep - Config sanity check is not passing,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
 dc1-spine1,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
-May 13 17:57:08 dc1-spine1 ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1411) -- Master ProcMgr (PID=1411) exiting.
- May 13 17:57:08 dc1-spine1 StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1867) at tbl://stpListen/+n closed by peer (EOF)
- May 13 17:57:08 dc1-spine1 StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1867))
- May 13 17:58:14 dc1-spine1 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.17 (VRF default AS 65103) 6/5 (Cease/connection rejected) 0 bytes
- May 13 17:58:18 dc1-spine1 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.5 (VRF default AS 65101) 6/5 (Cease/connection rejected) 0 bytes
- May 13 17:58:46 dc1-spine1 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.13 (VRF default AS 65102) 6/5 (Cease/connection rejected) 0 bytes
+May 18 15:56:19 dc1-spine1 PhyEthtool: %ETH-3-NETLINKFAIL: Cannot init netlink stats cache : NETLINK Error Error fetching statistics  <extra parameters: '-31' >
+ May 18 15:56:25 dc1-spine1 ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1390) -- Master ProcMgr (PID=1390) exiting.
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-spine1,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
 dc1-spine2,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
-May 13 17:57:19 dc1-spine2 ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1412) -- Master ProcMgr (PID=1412) exiting.
- May 13 17:57:19 dc1-spine2 StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1871) at tbl://stpListen/+n closed by peer (EOF)
- May 13 17:57:19 dc1-spine2 StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1871))
- May 13 17:57:19 dc1-spine2 ConfigAgent: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Sysdb (pid:1612) at tbl://sysdb/+n closed by peer (EOF)
- May 13 17:57:19 dc1-spine2 ConfigAgent: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://sysdb/+n-in)(Sysdb (pid:1612))
- May 13 17:57:19 dc1-spine2 ConfigAgent: %FWK-3-MOUNT_CLOSED_EXIT: Process exiting.
- May 13 17:58:14 dc1-spine2 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.19 (VRF default AS 65103) 6/5 (Cease/connection rejected) 0 bytes
- May 13 17:58:18 dc1-spine2 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.7 (VRF default AS 65101) 6/5 (Cease/connection rejected) 0 bytes
- May 13 17:58:46 dc1-spine2 Bgp: %BGP-3-NOTIFICATION: received from neighbor 1.1.255.15 (VRF default AS 65102) 6/5 (Cease/connection rejected) 0 bytes
+May 18 15:56:19 dc1-spine2 PhyEthtool: %ETH-3-NETLINKFAIL: Cannot init netlink stats cache : NETLINK Error Error fetching statistics  <extra parameters: '-31' >
+ May 18 15:56:25 dc1-spine2 ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1393) -- Master ProcMgr (PID=1393) exiting.
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-spine2,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
@@ -147,7 +128,10 @@ dc1-leaf1a,VerifyInterfaceDiscards,success,,Verifies that the interfaces packet 
 dc1-leaf1a,VerifyInterfaceErrDisabled,success,,Verifies there are no interfaces in the errdisabled state.,Interfaces
 dc1-leaf1a,VerifyInterfaceErrors,success,,Verifies that the interfaces error counters are equal to zero.,Interfaces
 dc1-leaf1a,VerifyInterfaceUtilization,success,,Verifies that the utilization of interfaces is below a certain threshold.,Interfaces
+dc1-leaf1a,VerifyInterfacesStatus,success,,Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
+dc1-leaf1a,VerifyPortChannels,success,,Verifies there are no inactive ports in port channels.,Interfaces
 dc1-leaf1a,VerifyMlagConfigSanity,success,,Verifies there are no MLAG config-sanity inconsistencies.,MLAG
+dc1-leaf1a,VerifyMlagInterfaces,success,,Verifies there are no inactive or active-partial MLAG ports.,MLAG
 dc1-leaf1a,VerifyMlagStatus,success,,Verifies the health status of the MLAG configuration.,MLAG
 dc1-leaf1a,VerifyRoutingProtocolModel,success,,Verifies the configured routing protocol model.,Routing
 dc1-leaf1a,VerifySTPCounters,success,,Verifies there is no errors in STP BPDU packets.,STP
@@ -157,7 +141,6 @@ dc1-leaf1a,VerifyFileSystemUtilization,success,,Verifies that no partition is ut
 dc1-leaf1a,VerifyMaintenance,success,,Verifies that the device is not currently under or entering maintenance.,System
 dc1-leaf1a,VerifyMemoryUtilization,success,,Verifies whether the memory utilization is below 75%.,System
 dc1-leaf1a,VerifyReloadCause,success,,Verifies the last reload cause of the device.,System
-dc1-leaf1a,VerifyVxlanConfigSanity,success,,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
 dc1-leaf1b,VerifyBGPPeerSession,success,,Verifies the session state of BGP peers.,BGP
 dc1-leaf1b,VerifyRunningConfigDiffs,success,,Verifies there is no difference between the running-config and the startup-config.,Configuration
 dc1-leaf1b,VerifyZeroTouch,success,,Verifies ZeroTouch is disabled.,Configuration
@@ -168,7 +151,10 @@ dc1-leaf1b,VerifyInterfaceDiscards,success,,Verifies that the interfaces packet 
 dc1-leaf1b,VerifyInterfaceErrDisabled,success,,Verifies there are no interfaces in the errdisabled state.,Interfaces
 dc1-leaf1b,VerifyInterfaceErrors,success,,Verifies that the interfaces error counters are equal to zero.,Interfaces
 dc1-leaf1b,VerifyInterfaceUtilization,success,,Verifies that the utilization of interfaces is below a certain threshold.,Interfaces
+dc1-leaf1b,VerifyInterfacesStatus,success,,Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
+dc1-leaf1b,VerifyPortChannels,success,,Verifies there are no inactive ports in port channels.,Interfaces
 dc1-leaf1b,VerifyMlagConfigSanity,success,,Verifies there are no MLAG config-sanity inconsistencies.,MLAG
+dc1-leaf1b,VerifyMlagInterfaces,success,,Verifies there are no inactive or active-partial MLAG ports.,MLAG
 dc1-leaf1b,VerifyMlagStatus,success,,Verifies the health status of the MLAG configuration.,MLAG
 dc1-leaf1b,VerifyRoutingProtocolModel,success,,Verifies the configured routing protocol model.,Routing
 dc1-leaf1b,VerifySTPCounters,success,,Verifies there is no errors in STP BPDU packets.,STP
@@ -178,7 +164,6 @@ dc1-leaf1b,VerifyFileSystemUtilization,success,,Verifies that no partition is ut
 dc1-leaf1b,VerifyMaintenance,success,,Verifies that the device is not currently under or entering maintenance.,System
 dc1-leaf1b,VerifyMemoryUtilization,success,,Verifies whether the memory utilization is below 75%.,System
 dc1-leaf1b,VerifyReloadCause,success,,Verifies the last reload cause of the device.,System
-dc1-leaf1b,VerifyVxlanConfigSanity,success,,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
 dc1-leaf2a,VerifyBGPPeerSession,success,,Verifies the session state of BGP peers.,BGP
 dc1-leaf2a,VerifyRunningConfigDiffs,success,,Verifies there is no difference between the running-config and the startup-config.,Configuration
 dc1-leaf2a,VerifyZeroTouch,success,,Verifies ZeroTouch is disabled.,Configuration
@@ -189,7 +174,10 @@ dc1-leaf2a,VerifyInterfaceDiscards,success,,Verifies that the interfaces packet 
 dc1-leaf2a,VerifyInterfaceErrDisabled,success,,Verifies there are no interfaces in the errdisabled state.,Interfaces
 dc1-leaf2a,VerifyInterfaceErrors,success,,Verifies that the interfaces error counters are equal to zero.,Interfaces
 dc1-leaf2a,VerifyInterfaceUtilization,success,,Verifies that the utilization of interfaces is below a certain threshold.,Interfaces
+dc1-leaf2a,VerifyInterfacesStatus,success,,Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
+dc1-leaf2a,VerifyPortChannels,success,,Verifies there are no inactive ports in port channels.,Interfaces
 dc1-leaf2a,VerifyMlagConfigSanity,success,,Verifies there are no MLAG config-sanity inconsistencies.,MLAG
+dc1-leaf2a,VerifyMlagInterfaces,success,,Verifies there are no inactive or active-partial MLAG ports.,MLAG
 dc1-leaf2a,VerifyMlagStatus,success,,Verifies the health status of the MLAG configuration.,MLAG
 dc1-leaf2a,VerifyRoutingProtocolModel,success,,Verifies the configured routing protocol model.,Routing
 dc1-leaf2a,VerifySTPCounters,success,,Verifies there is no errors in STP BPDU packets.,STP
@@ -199,7 +187,6 @@ dc1-leaf2a,VerifyFileSystemUtilization,success,,Verifies that no partition is ut
 dc1-leaf2a,VerifyMaintenance,success,,Verifies that the device is not currently under or entering maintenance.,System
 dc1-leaf2a,VerifyMemoryUtilization,success,,Verifies whether the memory utilization is below 75%.,System
 dc1-leaf2a,VerifyReloadCause,success,,Verifies the last reload cause of the device.,System
-dc1-leaf2a,VerifyVxlanConfigSanity,success,,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
 dc1-leaf2b,VerifyBGPPeerSession,success,,Verifies the session state of BGP peers.,BGP
 dc1-leaf2b,VerifyRunningConfigDiffs,success,,Verifies there is no difference between the running-config and the startup-config.,Configuration
 dc1-leaf2b,VerifyZeroTouch,success,,Verifies ZeroTouch is disabled.,Configuration
@@ -210,7 +197,10 @@ dc1-leaf2b,VerifyInterfaceDiscards,success,,Verifies that the interfaces packet 
 dc1-leaf2b,VerifyInterfaceErrDisabled,success,,Verifies there are no interfaces in the errdisabled state.,Interfaces
 dc1-leaf2b,VerifyInterfaceErrors,success,,Verifies that the interfaces error counters are equal to zero.,Interfaces
 dc1-leaf2b,VerifyInterfaceUtilization,success,,Verifies that the utilization of interfaces is below a certain threshold.,Interfaces
+dc1-leaf2b,VerifyInterfacesStatus,success,,Verifies the operational states of specified interfaces to ensure they match expected configurations.,Interfaces
+dc1-leaf2b,VerifyPortChannels,success,,Verifies there are no inactive ports in port channels.,Interfaces
 dc1-leaf2b,VerifyMlagConfigSanity,success,,Verifies there are no MLAG config-sanity inconsistencies.,MLAG
+dc1-leaf2b,VerifyMlagInterfaces,success,,Verifies there are no inactive or active-partial MLAG ports.,MLAG
 dc1-leaf2b,VerifyMlagStatus,success,,Verifies the health status of the MLAG configuration.,MLAG
 dc1-leaf2b,VerifyRoutingProtocolModel,success,,Verifies the configured routing protocol model.,Routing
 dc1-leaf2b,VerifySTPCounters,success,,Verifies there is no errors in STP BPDU packets.,STP
@@ -220,7 +210,6 @@ dc1-leaf2b,VerifyFileSystemUtilization,success,,Verifies that no partition is ut
 dc1-leaf2b,VerifyMaintenance,success,,Verifies that the device is not currently under or entering maintenance.,System
 dc1-leaf2b,VerifyMemoryUtilization,success,,Verifies whether the memory utilization is below 75%.,System
 dc1-leaf2b,VerifyReloadCause,success,,Verifies the last reload cause of the device.,System
-dc1-leaf2b,VerifyVxlanConfigSanity,success,,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
 dc1-leaf3a,VerifyBGPPeerSession,success,,Verifies the session state of BGP peers.,BGP
 dc1-leaf3a,VerifyRunningConfigDiffs,success,,Verifies there is no difference between the running-config and the startup-config.,Configuration
 dc1-leaf3a,VerifyZeroTouch,success,,Verifies ZeroTouch is disabled.,Configuration
@@ -244,7 +233,6 @@ dc1-leaf3a,VerifyFileSystemUtilization,success,,Verifies that no partition is ut
 dc1-leaf3a,VerifyMaintenance,success,,Verifies that the device is not currently under or entering maintenance.,System
 dc1-leaf3a,VerifyMemoryUtilization,success,,Verifies whether the memory utilization is below 75%.,System
 dc1-leaf3a,VerifyReloadCause,success,,Verifies the last reload cause of the device.,System
-dc1-leaf3a,VerifyVxlanConfigSanity,success,,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
 dc1-leaf3b,VerifyBGPPeerSession,success,,Verifies the session state of BGP peers.,BGP
 dc1-leaf3b,VerifyRunningConfigDiffs,success,,Verifies there is no difference between the running-config and the startup-config.,Configuration
 dc1-leaf3b,VerifyZeroTouch,success,,Verifies ZeroTouch is disabled.,Configuration
@@ -268,7 +256,6 @@ dc1-leaf3b,VerifyFileSystemUtilization,success,,Verifies that no partition is ut
 dc1-leaf3b,VerifyMaintenance,success,,Verifies that the device is not currently under or entering maintenance.,System
 dc1-leaf3b,VerifyMemoryUtilization,success,,Verifies whether the memory utilization is below 75%.,System
 dc1-leaf3b,VerifyReloadCause,success,,Verifies the last reload cause of the device.,System
-dc1-leaf3b,VerifyVxlanConfigSanity,success,,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
 dc1-spine1,VerifyBGPPeerSession,success,,Verifies the session state of BGP peers.,BGP
 dc1-spine1,VerifyRunningConfigDiffs,success,,Verifies there is no difference between the running-config and the startup-config.,Configuration
 dc1-spine1,VerifyZeroTouch,success,,Verifies ZeroTouch is disabled.,Configuration

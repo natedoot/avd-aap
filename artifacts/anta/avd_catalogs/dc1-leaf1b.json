@@ -274,10 +274,6 @@
             "status": "up"
           },
           {
-            "name": "Ethernet4",
-            "status": "up"
-          },
-          {
             "name": "Loopback0",
             "status": "up"
           },
@@ -286,47 +282,7 @@
             "status": "up"
           },
           {
-            "name": "Loopback10",
-            "status": "up"
-          },
-          {
-            "name": "Loopback12",
-            "status": "up"
-          },
-          {
             "name": "Port-Channel3",
-            "status": "up"
-          },
-          {
-            "name": "Port-Channel4",
-            "status": "up"
-          },
-          {
-            "name": "Vlan11",
-            "status": "up"
-          },
-          {
-            "name": "Vlan12",
-            "status": "up"
-          },
-          {
-            "name": "Vlan13",
-            "status": "up"
-          },
-          {
-            "name": "Vlan21",
-            "status": "up"
-          },
-          {
-            "name": "Vlan22",
-            "status": "up"
-          },
-          {
-            "name": "Vlan3009",
-            "status": "up"
-          },
-          {
-            "name": "Vlan3011",
             "status": "up"
           },
           {
@@ -335,10 +291,6 @@
           },
           {
             "name": "Vlan4094",
-            "status": "up"
-          },
-          {
-            "name": "Vxlan1",
             "status": "up"
           }
         ]
