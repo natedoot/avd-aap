@@ -2,6 +2,7 @@ Device,Test Name,Test Status,Message(s),Test description,Test category
 dc1-leaf1a,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
 May 18 15:56:20 dc1-leaf1a PhyEthtool: %ETH-3-NETLINKFAIL: Cannot init netlink stats cache : NETLINK Error Error fetching statistics  <extra parameters: '-31' >
  May 18 15:56:27 dc1-leaf1a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1388) -- Master ProcMgr (PID=1388) exiting.
+ May 18 18:47:02 dc1-leaf1a Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.1.97 (VRF VRF12 AS 65101) 6/3 (Cease/peer de-configured <Hard Reset>) 0 bytes
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-leaf1a,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
@@ -10,6 +11,7 @@ May 18 15:56:19 dc1-leaf1b PhyEthtool: %ETH-3-NETLINKFAIL: Cannot init netlink s
  May 18 15:56:27 dc1-leaf1b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1393) -- Master ProcMgr (PID=1393) exiting.
  May 18 15:56:27 dc1-leaf1b Stp: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to StpTxRx (pid:1793) at tbl://stpTxRxListen/+n closed by peer (EOF)
  May 18 15:56:27 dc1-leaf1b Stp: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpTxRxListen/+n-in)(StpTxRx (pid:1793))
+ May 18 18:47:01 dc1-leaf1b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.1.96 (VRF VRF12 AS 65101) 6/3 (Cease/peer de-configured <Hard Reset>) 0 bytes
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-leaf1b,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
@@ -17,6 +19,7 @@ dc1-leaf2a,VerifyLoggingErrors,failure,"Device has reported syslog messages with
 May 18 15:56:19 dc1-leaf2a PhyEthtool: %ETH-3-NETLINKFAIL: Cannot init netlink stats cache : NETLINK Error Error fetching statistics  <extra parameters: '-31' >
  May 18 15:56:27 dc1-leaf2a ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1390) -- Master ProcMgr (PID=1390) exiting.
  May 18 15:56:27 dc1-leaf2a Stp: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to StpTxRx (pid:1797) at tbl://stpTxRxListen/+n closed by peer (EOF)
+ May 18 18:47:01 dc1-leaf2a Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.1.101 (VRF VRF12 AS 65102) 6/3 (Cease/peer de-configured <Hard Reset>) 0 bytes
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-leaf2a,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
@@ -25,6 +28,7 @@ May 18 15:56:19 dc1-leaf2b PhyEthtool: %ETH-3-NETLINKFAIL: Cannot init netlink s
  May 18 15:56:27 dc1-leaf2b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1391) -- Master ProcMgr (PID=1391) exiting.
  May 18 15:56:27 dc1-leaf2b StpTxRx: %FWK-3-SOCKET_CLOSE_REMOTE: Connection to Stp (pid:1826) at tbl://stpListen/+n closed by peer (EOF)
  May 18 15:56:27 dc1-leaf2b StpTxRx: %FWK-3-MOUNT_PEER_CLOSED: Peer closed socket connection. (tbl://stpListen/+n-in)(Stp (pid:1826))
+ May 18 18:47:01 dc1-leaf2b Bgp: %BGP-3-NOTIFICATION: sent to neighbor 1.1.1.100 (VRF VRF12 AS 65102) 6/3 (Cease/peer de-configured <Hard Reset>) 0 bytes
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-leaf2b,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
@@ -36,6 +40,7 @@ May 18 15:56:20 dc1-leaf3a PhyEthtool: %ETH-3-NETLINKFAIL: Cannot init netlink s
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-leaf3a,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
+dc1-leaf3a,VerifyVxlanConfigSanity,failure,Vxlan Category: localVtep - Config sanity check is not passing,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
 dc1-leaf3b,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
 May 18 15:56:19 dc1-leaf3b PhyEthtool: %ETH-3-NETLINKFAIL: Cannot init netlink stats cache : NETLINK Error Error fetching statistics  <extra parameters: '-31' >
  May 18 15:56:27 dc1-leaf3b ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1391) -- Master ProcMgr (PID=1391) exiting.
@@ -44,6 +49,7 @@ May 18 15:56:19 dc1-leaf3b PhyEthtool: %ETH-3-NETLINKFAIL: Cannot init netlink s
  
 ",Verifies there are no syslog messages with a severity of ERRORS or higher.,Logging
 dc1-leaf3b,VerifyNTP,failure,NTP status mismatch - Expected: synchronised Actual: unsynchronised,Verifies if NTP is synchronised.,System
+dc1-leaf3b,VerifyVxlanConfigSanity,failure,Vxlan Category: localVtep - Config sanity check is not passing,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
 dc1-spine1,VerifyLoggingErrors,failure,"Device has reported syslog messages with a severity of ERRORS or higher:
 May 18 15:56:19 dc1-spine1 PhyEthtool: %ETH-3-NETLINKFAIL: Cannot init netlink stats cache : NETLINK Error Error fetching statistics  <extra parameters: '-31' >
  May 18 15:56:25 dc1-spine1 ProcMgr: %PROCMGR-3-SHUTDOWNREQUESTED: ProcMgr shutdown requested via SIGQUIT or SIGTERM to worker (PID=1390) -- Master ProcMgr (PID=1390) exiting.
@@ -231,7 +237,6 @@ dc1-leaf3a,VerifyFileSystemUtilization,success,,Verifies that no partition is ut
 dc1-leaf3a,VerifyMaintenance,success,,Verifies that the device is not currently under or entering maintenance.,System
 dc1-leaf3a,VerifyMemoryUtilization,success,,Verifies whether the memory utilization is below 75%.,System
 dc1-leaf3a,VerifyReloadCause,success,,Verifies the last reload cause of the device.,System
-dc1-leaf3a,VerifyVxlanConfigSanity,success,,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
 dc1-leaf3b,VerifyBGPPeerSession,success,,Verifies the session state of BGP peers.,BGP
 dc1-leaf3b,VerifyRunningConfigDiffs,success,,Verifies there is no difference between the running-config and the startup-config.,Configuration
 dc1-leaf3b,VerifyZeroTouch,success,,Verifies ZeroTouch is disabled.,Configuration
@@ -255,7 +260,6 @@ dc1-leaf3b,VerifyFileSystemUtilization,success,,Verifies that no partition is ut
 dc1-leaf3b,VerifyMaintenance,success,,Verifies that the device is not currently under or entering maintenance.,System
 dc1-leaf3b,VerifyMemoryUtilization,success,,Verifies whether the memory utilization is below 75%.,System
 dc1-leaf3b,VerifyReloadCause,success,,Verifies the last reload cause of the device.,System
-dc1-leaf3b,VerifyVxlanConfigSanity,success,,Verifies there are no VXLAN config-sanity inconsistencies.,VXLAN
 dc1-spine1,VerifyBGPPeerSession,success,,Verifies the session state of BGP peers.,BGP
 dc1-spine1,VerifyRunningConfigDiffs,success,,Verifies there is no difference between the running-config and the startup-config.,Configuration
 dc1-spine1,VerifyZeroTouch,success,,Verifies ZeroTouch is disabled.,Configuration
