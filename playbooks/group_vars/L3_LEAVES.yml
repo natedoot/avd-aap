@@ -76,6 +76,7 @@ l3leaf:
       filter:
         tenants:
           - TENANT1
+          - TENANT2
       nodes:
         - name: dc1-leaf3a
           id: 5

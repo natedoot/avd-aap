@@ -33,6 +33,10 @@ tenants:
             name: VRF10_VLAN13
             enabled: true
             ip_address_virtual: 10.10.13.1/24
+  - name: TENANT2
+    # Number used to generate the VNI of each VLAN by adding the VLAN number in this tenant.
+    mac_vrf_vni_base: 10000
+    vrfs:
       - name: VRF12
         vrf_vni: 12
         vtep_diagnostic:
