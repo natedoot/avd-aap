@@ -4,40 +4,40 @@ all:
     VEOS:
       hosts:
         dc1-leaf1a:
-          ansible_host: 10.18.134.71
+          ansible_host: 10.18.183.41
           ansible_user: admin
-          ansible_password: admin
+          ansible_ssh_pass: admin
         dc1-leaf1b:
-          ansible_host: 10.18.134.73
+          ansible_host: 10.18.183.37
           ansible_user: admin
-          ansible_password: admin
+          ansible_ssh_pass: admin
         dc1-leaf2a:
-          ansible_host: 10.18.134.81
+          ansible_host: 10.18.183.45
           ansible_user: admin
-          ansible_password: admin
+          ansible_ssh_pass: admin
         dc1-leaf2b:
-          ansible_host: 10.18.134.74
+          ansible_host: 10.18.183.39
           ansible_user: admin
-          ansible_password: admin
+          ansible_ssh_pass: admin
         dc1-leaf3a:
-          ansible_host: 10.18.134.75
+          ansible_host: 10.18.183.46
           ansible_user: admin
-          ansible_password: admin
+          ansible_ssh_pass: admin
         dc1-leaf3b:
-          ansible_host: 10.18.134.70
+          ansible_host: 10.18.183.47
           ansible_user: admin
-          ansible_password: admin
+          ansible_ssh_pass: admin
         dc1-spine1:
-          ansible_host: 10.18.134.76
+          ansible_host: 10.18.183.50
           ansible_user: admin
-          ansible_password: admin
+          ansible_ssh_pass: admin
         dc1-spine2:
-          ansible_host: 10.18.134.79
+          ansible_host: 10.18.183.30
           ansible_user: admin
-          ansible_password: admin
+          ansible_ssh_pass: admin
     GENERIC:
       hosts:
         tool-server:
-          ansible_host: 10.18.134.77
+          ansible_host: 10.18.183.40
           ansible_user: cvpadmin
-          ansible_password: arista123
+          ansible_ssh_pass: arista123
